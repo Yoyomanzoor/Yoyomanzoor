@@ -1,3 +1,23 @@
+```diff
+    /#               
+   /###       /#                  /#
+   #####     /##                 /###
+      ###    ###         #       #####
+       ###   ###       ####   /    ###
+        ###   ###    ## ###   #    ##
+ #     #####   ###  ##  ###  ###  ##
+ ######## ###########    ####  ####
+   ####    ####   ####     #    ##
+                    ###
+       /#  /#        ####    سميد
+      /###/###/              منزور
+        #/  #/
+
+@@ yoyomanzoor           @@
+@@ smanzoor@uchicago.edu @@
+```
+
+<!--
 - 👋 Hi, I’m @Yoyomanzoor
 - 👀 I’m interested in 
   - systems biology to understand cancer, the microbiome, and health
@@ -7,6 +27,7 @@
 - 📫 How to reach me
   - smanzoor@uchicago.edu
   - smanzoor@luc.edu
+--->
 
 <!---
 Yoyomanzoor/Yoyomanzoor is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
