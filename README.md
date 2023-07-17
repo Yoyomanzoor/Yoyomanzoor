@@ -14,7 +14,7 @@
         #/  #/
 
 @@ yoyomanzoor           @@
-@@ smanzoor@uchicago.edu @@
+@@ smanzoor@umich.edu @@
 ```
 
 <!--
