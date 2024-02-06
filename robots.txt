@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://yoyomanzoor.github.io/sitemap.xml
+Sitemap: https://yoyomanzoor.github.ioYoyomanzoor/sitemap.xml
