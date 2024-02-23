@@ -1,41 +1,41 @@
 const resource = [
   /* --- CSS --- */
-  '/assets/css/jekyll-theme-chirpy.css',
+  '/Yoyomanzoor/assets/css/jekyll-theme-chirpy.css',
 
   /* --- PWA --- */
-  '/app.js',
-  '/sw.js',
+  '/Yoyomanzoor/app.js',
+  '/Yoyomanzoor/sw.js',
 
   /* --- HTML --- */
-  '/index.html',
-  '/404.html',
+  '/Yoyomanzoor/index.html',
+  '/Yoyomanzoor/404.html',
 
   
-    '/categories/',
+    '/Yoyomanzoor/categories/',
   
-    '/tags/',
+    '/Yoyomanzoor/tags/',
   
-    '/archives/',
+    '/Yoyomanzoor/archives/',
   
-    '/about/',
+    '/Yoyomanzoor/about/',
   
 
   /* --- Favicons & compressed JS --- */
   
   
-    '/assets/img/favicons/android-chrome-192x192.png',
-    '/assets/img/favicons/android-chrome-512x512.png',
-    '/assets/img/favicons/apple-touch-icon.png',
-    '/assets/img/favicons/favicon-16x16.png',
-    '/assets/img/favicons/favicon-32x32.png',
-    '/assets/img/favicons/favicon.ico',
-    '/assets/img/favicons/mstile-150x150.png',
-    '/assets/js/dist/categories.min.js',
-    '/assets/js/dist/commons.min.js',
-    '/assets/js/dist/home.min.js',
-    '/assets/js/dist/misc.min.js',
-    '/assets/js/dist/page.min.js',
-    '/assets/js/dist/post.min.js'
+    '/Yoyomanzoor/assets/img/favicons/android-chrome-192x192.png',
+    '/Yoyomanzoor/assets/img/favicons/android-chrome-512x512.png',
+    '/Yoyomanzoor/assets/img/favicons/apple-touch-icon.png',
+    '/Yoyomanzoor/assets/img/favicons/favicon-16x16.png',
+    '/Yoyomanzoor/assets/img/favicons/favicon-32x32.png',
+    '/Yoyomanzoor/assets/img/favicons/favicon.ico',
+    '/Yoyomanzoor/assets/img/favicons/mstile-150x150.png',
+    '/Yoyomanzoor/assets/js/dist/categories.min.js',
+    '/Yoyomanzoor/assets/js/dist/commons.min.js',
+    '/Yoyomanzoor/assets/js/dist/home.min.js',
+    '/Yoyomanzoor/assets/js/dist/misc.min.js',
+    '/Yoyomanzoor/assets/js/dist/page.min.js',
+    '/Yoyomanzoor/assets/js/dist/post.min.js'
 ];
 
 /* The request url with below domain will be cached */

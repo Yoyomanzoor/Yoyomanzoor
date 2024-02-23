@@ -8,6 +8,8 @@ theme: jekyll-theme-chirpy
 # otherwise, the layout language will use the default value of 'en'.
 lang: en
 
+icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+
 # Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
 timezone: America/Detroit
 

@@ -2,4 +2,4 @@ User-agent: *
 
 Disallow: /norobots/
 
-Sitemap: https://yoyomanzoor.github.io/sitemap.xml
+Sitemap: https://yoyomanzoor.github.io/Yoyomanzoor/sitemap.xml
