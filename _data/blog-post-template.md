@@ -5,6 +5,7 @@ date: YYYY-MM-DD
 description:
 tags:
 categories:
+comments: true
 ---
 
 

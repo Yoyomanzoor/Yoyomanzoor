@@ -1,5 +1,5 @@
 ---
-layout: distill
+layout: post
 title: clamshell surgery
 date: 2024-02-08 18:07:01
 description: Clinical pearls I've excised from my surgery rotation
@@ -53,15 +53,7 @@ Don't give NSAIDs after a total gastrectomy!
 
 ```mermaid
 graph TD;
-    A-->;
-```
-
-```mermaid
-sequenceDiagram
-    participant John
-    participant Alice
-    Alice->>John: Hello John, how are you?
-    John-->>Alice: Great!
+    A-->B;
 ```
 
 ### GU

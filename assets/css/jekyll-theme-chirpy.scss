@@ -1,0 +1,17 @@
+---
+---
+
+@import 'main';
+
+/* append your custom style below */
+
+// Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Scheherazade:400,700);
+
+// Font Variables
+$arabic-font: 'Scheherazade', sans-serif;
+
+// Styles
+arabic-text {
+  font-family: $arabic-font;
+}
