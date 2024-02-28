@@ -6,7 +6,7 @@ DDATETIME := $(shell date +"%Y-%m-%d %H:%M:%S")
 
 .PHONY: all
 all:
-	jekyll serve
+	jekyll serve --livereload
 
 .PHONY: post
 post: rename

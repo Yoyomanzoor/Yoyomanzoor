@@ -4,7 +4,7 @@ title: clamshell surgery
 date: 2024-02-08 18:07:01
 description: Clinical pearls I've excised from my surgery rotation
 tags: school
-categories: medicine
+categories: [medicine, notes]
 disqus_comments: true
 # featured: true
 # authors:
@@ -26,6 +26,8 @@ toc:
   - name: ID
   - name: dispo
 ---
+
+This is a collection of clinical pearls I've excised from my surgery rotation. It is organized into a systems-based A&P.
 
 ## assessment and plan
 
@@ -49,22 +51,39 @@ Don't give NSAIDs after a total gastrectomy!
 
 ### GI
 
-##### getting off TPN
+##### getting off NG tube
+
+Getting off the nasogastric tube is a process of trial and error. It is a balance between encouraging more PO intake and emesis.
 
 ```mermaid
-graph TD;
-    A-->B;
+flowchart TD;
+    A("NG LGWS")-->B(">300mL/shift");
+    A-->C("<300mL/shift");
+    B--keep in-->A;
+    C-->D("4 hr DD trial/gravity");
+    D-->E(">300mL or N/V");
+    E--failure-->A;
+    D-->F("<300mL");
+    F-->G("LWS for 30 minutes");
+    G-->H(">300mL residual volume");
+    H-->A;
+    G-->I("<300mL residual volume");
+    I-->J("off NGT");
 ```
 
 ### GU
 
 ### heme
 
+Almost all cancer patients get 30 days of lovenox.
+
 ##### when to get pRBCs
 
 The magic number for when to order blood transfusion is HgB < 7 (or HgB < 8 if relevant cardiac hx).
 
 ### endo
+
+You do not need tight glucose control. It is more harmful than helpful to tightly control glucose < 180, so leave it unless there is clinical indication or it is grossly high.
 
 ### ID
 
