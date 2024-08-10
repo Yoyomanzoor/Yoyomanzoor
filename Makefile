@@ -9,9 +9,13 @@ all:
 	jekyll serve --livereload
 
 .PHONY: site
-site:
-	bundle update
+site: bundle
 	bundle exec jekyll build --destination docs/
+
+.PHONY: bundle
+bundle:
+	bundle install
+	bundle update
 
 .PHONY: post
 post: rename
@@ -24,3 +28,8 @@ post: rename
 
 rename:
 	$(eval POST_NAME = $(shell echo $(POST_NAME) | tr ' ' -))
+
+.PHONY: clean
+clean:
+	rm -rf _site
+	rm -rf docs
