@@ -4,6 +4,11 @@ source "https://rubygems.org"
 
 gem "jekyll-theme-chirpy", "~> 6.4", ">= 6.4.2"
 
+group :jekyll_plugins do
+  gem "jekyll-feed"
+  gem "jekyll-imagemagick"
+end
+
 group :test do
   gem "html-proofer", "~> 4.4"
 end
