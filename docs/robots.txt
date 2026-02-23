@@ -1,5 +1,1 @@
-User-agent: *
-
-Disallow: /norobots/
-
-Sitemap: https://yoyomanzoor.github.io/Yoyomanzoor/sitemap.xml
+Sitemap: https://yoyomanzoor.github.io/Yoyo/sitemap.xml

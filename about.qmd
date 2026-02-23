@@ -1,0 +1,47 @@
+---
+title: "About"
+about:
+  template: solana  # You can also try 'jolla' or 'trestles'
+  image: images/prof_pic.jpg
+links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/Yoyomanzoor
+    - text: "{{< ai orcid >}} ORCID"
+      href: https://orcid.org/0000-0000-0000-0000
+    - icon: envelope
+      text: Email
+      href: mailto:smanzoor@umich.edu
+---
+
+I am [Yoyomanzoor](mailto:smanzoor@umich.edu), an MD-PhD student at the [University of Michigan](https://medschool.umich.edu/programs-admissions/md-phd-program) in Ann Arbor, Michigan. I am currently in my 4th year of the program and am pursuing my PhD in the [Neuroscience Graduate Program](https://medschool.umich.edu/interdisciplinary-programs/neuroscience-graduate-program) under the mentorship of Dr. [Joshua Welch](https://welch-lab.github.io/) in the [Department of Computational Medicine and Bioinformatics](https://medschool.umich.edu/departments/computational-medicine-bioinformatics).
+
+My research focuses on machine learning models for single-cell multi-omic data and parallel molecular biology tools to fund those models. I am particularly interested in predicting cell perturbations and gene regulatory networks. I dream of a future where a computer can generate genetic sequences to precisely control cell states and fates.
+
+
+
+## Selected Publications
+
+::: {#publications}
+September 15, 2023 **Gut microbes and the liver circadian clock partition glucose and lipid metabolism** • [{{< ai pubmed >}}](https://pubmed.ncbi.nlm.nih.gov/37986759/) • [{{< fa file-lines >}}](https://doi.org/10.1172/jci162515)
+
+November 6, 2023 **The Host-specific Microbiota is Required for Diet-Specific Metabolic Homeostasis ** • [{{< ai pubmed >}}](https://pubmed.ncbi.nlm.nih.gov/37986759/) • [{{< ai biorxiv >}}](https://doi.org/10.1101/2023.11.05.565654)
+
+June 2, 2020 **The promise and challenge of cancer microbiome research ** • [{{< ai pubmed >}}](https://pubmed.ncbi.nlm.nih.gov/32487228/) • [{{< fa file-lines >}}](https://doi.org/10.1186/s13059-020-02037-9)
+
+:::
+<style>
+#publications {
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+#publications a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#publications a:hover {
+  text-decoration: underline;
+}
+</style>

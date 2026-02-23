@@ -1,0 +1,32 @@
+project:
+  type: website
+  output-dir: docs
+
+shortcodes:
+  - github.lua
+
+website:
+  title: "Yoyomanzoor"
+  description: "Yoyomanzoor's personal site"
+  site-url: "https://yoyomanzoor.github.io/Yoyo"
+  search: true
+  favicon: "images/yoyo.png"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - href: blog.qmd
+        text: Blog
+    right:
+      - icon: github
+        href: https://github.com/Yoyomanzoor
+
+format:
+  html:
+    theme:
+      light: [flatly, shared.scss, flatly-custom.scss]
+      dark: [darkly, shared.scss, darkly-custom.scss]
+    toc: true
+    html-math-method: mathjax
+    fig-align: center

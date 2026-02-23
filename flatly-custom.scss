@@ -1,0 +1,23 @@
+/*-- scss:defaults --*/
+$navbar-bg: #fdfdfd; // Off-white for less eye strain
+$navbar-fg: #2c3e50;
+$body-bg: #ffffff;
+$link-color: #00274C;
+
+/*-- scss:rules --*/
+.navbar {
+  border-bottom: 1px solid #eeeeee !important;
+}
+
+// Subtle styling for code blocks
+pre, code {
+  background-color: #f7f9fa;
+  border: 1px solid #e9ecef;
+}
+
+:root {
+  --repo-bg: #fdfdfd; /* Matches your navbar-bg */
+  --repo-border: #eeeeee;
+  --repo-shadow: rgba(0, 0, 0, 0.04);
+  --repo-shadow-hover: rgba(0, 0, 0, 0.1);
+}

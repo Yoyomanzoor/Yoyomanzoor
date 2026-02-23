@@ -1,0 +1,24 @@
+/*-- scss:defaults --*/
+$navbar-bg: #303136; 
+$body-bg: #1a1b1e; // Slightly darker than navbar for depth
+$body-color: #dee2e6; // Soft white/grey text
+$link-color: #FFCB05; // Maize
+
+/*-- scss:rules --*/
+.navbar {
+  border-bottom: 1px solid #404146 !important;
+}
+
+// Academic blockquotes in dark mode
+blockquote {
+  border-left: 3px solid #495057;
+  color: #adb5bd;
+  padding-left: 1.5rem;
+}
+
+:root {
+  --repo-bg: #222327; /* Slightly lighter than your #1a1b1e body */
+  --repo-border: #404146; /* Matches your navbar border */
+  --repo-shadow: rgba(0, 0, 0, 0.25);
+  --repo-shadow-hover: rgba(0, 0, 0, 0.5);
+}

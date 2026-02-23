@@ -1,0 +1,100 @@
+/*-- scss:defaults --*/
+// 1. Import JetBrains Mono from Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url(http://fonts.googleapis.com/css?family=Scheherazade:400,700);
+
+// 2. Define your font families
+$font-family-mono: 'JetBrains Mono', monospace;
+$font-family-serif: "Georgia", "Times New Roman", serif;
+$arabic-font: 'Scheherazade', sans-serif;
+
+arabic-text {
+  font-family: $arabic-font;
+}
+
+// 3. Set Bootstrap defaults
+$headings-font-family: $font-family-mono;
+$presentation-font-size-root: 18px;
+$line-height-base: 1.7;
+
+$border-radius: 4px;
+$navbar-padding-y: 0.6rem;
+
+/*-- scss:rules --*/
+body {
+  font-family: $font-family-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Force the navbar to use the mono font
+.navbar,
+.navbar-brand,
+.nav-link {
+  font-family: $font-family-mono;
+  letter-spacing: -0.02rem;
+}
+
+.sidebar nav[role=doc-toc] {
+  font-size: 0.85rem;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  padding-left: 1rem;
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// GitHub Repo Card
+.github-repo-card {
+  display: block;
+  background-color: var(--repo-bg);
+  border: 1px solid var(--repo-border);
+  border-radius: $border-radius;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  color: inherit;
+  box-shadow: 0 3px 8px var(--repo-shadow); // New resting shadow
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px var(--repo-shadow-hover); // Enhanced hover shadow
+  }
+
+  .repo-title {
+    font-family: $font-family-mono;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $link-color;
+  }
+
+  .repo-desc {
+    font-family: $font-family-serif;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    opacity: 0.85;
+  }
+
+  .repo-meta {
+    font-family: $font-family-mono;
+    font-size: 0.8rem;
+    display: flex;
+    gap: 1rem;
+    opacity: 0.7;
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+---
+title: "Starting a new website!"
+description: "Notes on setting up a new website using Quarto and GitHub Pages."
+author: "Yoyomanzoor"
+date: "2026-02-20"
+categories:
+  - code
+---
+
+They say don't reinvent the wheel. But sometimes, you just want to build your own car.
+
+I've been experimenting with website generation over many iterations. My [first website](https://yoyomanzoor.github.io/Kit-Testing/) was a [jekyll](https://jekyllrb.com/) site, where I wrote all the HTML for index pages that linked to jupyter notebooks. Later, I tried [Bookdown](https://bookdown.org/) for a [website summarizing my methods for metabolic cage analysis](https://yoyomanzoor.github.io/Metabolic-Cages/).
+
+<!-- {{< github Yoyomanzoor/Yoyomanzoor >}} -->
