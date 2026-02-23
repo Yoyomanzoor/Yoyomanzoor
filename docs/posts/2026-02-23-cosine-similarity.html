@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yoyomanzoor">
-<meta name="dcterms.date" content="2026-02-21">
-<meta name="description" content="Modeling cell state perturbations">
+<meta name="dcterms.date" content="2026-02-23">
+<meta name="description" content="Review of cosine similarity">
 
-<title>modeling cell state perturbations – Yoyomanzoor</title>
+<title>Cosine Similarity – Yoyomanzoor</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -46,9 +46,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-916f9a9f6c38e84cd19c3bc48149bd26.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-cf3e212d2c8566853ec60d9c515a5c22.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-916f9a9f6c38e84cd19c3bc48149bd26.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d43b5189bbd57f1c5a43af5166cddb6c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-17eb3bdae85f575465ab0063b523ac92.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-d43b5189bbd57f1c5a43af5166cddb6c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -324,7 +324,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
+  <li><a href="#frobenius-norm" id="toc-frobenius-norm" class="nav-link active" data-scroll-target="#frobenius-norm">Frobenius norm</a></li>
+  <li><a href="#frobenius-inner-product" id="toc-frobenius-inner-product" class="nav-link" data-scroll-target="#frobenius-inner-product">Frobenius inner product</a></li>
+  <li><a href="#cosine-similarity" id="toc-cosine-similarity" class="nav-link" data-scroll-target="#cosine-similarity">Cosine similarity</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -334,7 +337,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">modeling cell state perturbations</h1>
+<h1 class="title">Cosine Similarity</h1>
   <div class="quarto-categories">
     <div class="quarto-category">math</div>
   </div>
@@ -342,7 +345,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Modeling cell state perturbations
+    Review of cosine similarity
   </div>
 </div>
 
@@ -359,7 +362,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 21, 2026</p>
+      <p class="date">February 23, 2026</p>
     </div>
   </div>
   
@@ -371,40 +374,46 @@ window.Quarto = {
 </header>
 
 
-<p>From a discussion with <a href="https://yixinwang.github.io/">Yixin Wang</a>, Josh and I talked about how we can model cell state perturbations. Below are my notes in reflection.</p>
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>The problem is given the initial cell states targeted by an enhancer <span class="math inline">\(X_{pre} \in X\)</span>, can we predict the cell states <span class="math inline">\(X_{post}\)</span> that would result from perturbations <span class="math inline">\(T_i \in T\)</span>? Formally,</p>
-<p><span id="eq-setup"><span class="math display">\[
-P(X_{post}|T) = \int P\left(X_{post}|X_{pre}, T\right) P\left(X_{pre}|T\right) dX_{pre}
-\tag{1}\]</span></span></p>
-<p>where <span class="math inline">\(P\left(X_{post}|T\right)\)</span> is observed as the cell state resulting from pertubations, <span class="math inline">\(P\left(X_{pre}|T\right)\)</span> is observed as the initial cell state prior to perturbations. <span class="math inline">\(P\left(X_{post}|X_{pre}, T\right)\)</span> is what the model will want to solve for. <span class="math inline">\(dX_{pre}\)</span> implies solving over all possible cell states.</p>
-<div class="cell" data-layout-align="center" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
-<div class="light-content">
-<div id="fig-cell-states-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" width="45%">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cell-states-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="2026-02-21-modeling-cell-states_files/figure-html/fig-cell-states-1.png" id="fig-cell-states-1" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" style="width:45.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-cell-states-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1
-</figcaption>
-</figure>
-</div>
-</div>
-<div class="dark-content">
-<div id="fig-cell-states-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" width="45%">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cell-states-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="2026-02-21-modeling-cell-states_files/figure-html/fig-cell-states-2.png" id="fig-cell-states-2" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" style="width:45.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-cell-states-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
+<section id="frobenius-norm" class="level2">
+<h2 class="anchored" data-anchor-id="frobenius-norm">Frobenius norm</h2>
+<p>The Frobenius norm of a matrix <span class="math inline">\(A\)</span> is defined as <span class="math display">\[||A||_F = \sqrt{\sum_{i,j} A_{ij}^2}\]</span></p>
+<p>where <span class="math inline">\(A_{ij}\)</span> are the elements of the matrix <span class="math inline">\(A\)</span>, and the sum is taken over all rows <span class="math inline">\(i\)</span> and columns <span class="math inline">\(j\)</span> of the matrix.</p>
+<p>For example, if we have a matrix: <span class="math display">\[A = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \\ 5 &amp; 6 \end{bmatrix}\]</span></p>
+<p>The Frobenius norm of <span class="math inline">\(A\)</span> would be calculated as: <span class="math display">\[||A||_F = \sqrt{1^2 + 2^2 + 3^2 + 4^2 + 5^2 + 6^2} = \sqrt{1 + 4 + 9 + 16 + 25 + 36} = \sqrt{91}\]</span></p>
+<p>The interpretation of the Frobenius norm is the Euclidean length of the matrix when it is flattened into one long vector. In the case of our matrix <span class="math inline">\(A \in \mathbb{R}^{3 \times 2}\)</span>, it is literally the distance from the origin to the point in 6-dimensional space <span class="math inline">\(\left(3 \cdot 2\right)\)</span> representing the magnitude of the elements of the matrix. It measures the overall magnitude of the matrix.</p>
+</section>
+<section id="frobenius-inner-product" class="level2">
+<h2 class="anchored" data-anchor-id="frobenius-inner-product">Frobenius inner product</h2>
+<p>The Frobenius inner product of two matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> of the same dimensions is defined as: <span class="math display">\[\left\langle A, B \right\rangle_F = \sum_{i,j} A_{ij} B_{ij} = \text{tr}\left(A^T B\right)\]</span></p>
+<p>This is essentially the sum of the products of corresponding elements from the two matrices. It can be thought of as a generalization of the dot product for vectors to matrices.</p>
+<p>For example, if we have two matrices: <span class="math display">\[A = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \\ 5 &amp; 6 \end{bmatrix}, \quad B = \begin{bmatrix} 7 &amp; 8 &amp; 9 \end{bmatrix}\]</span></p>
+<p>We can reshape <span class="math inline">\(B\)</span> to match the dimensions of <span class="math inline">\(A\)</span> (if necessary) by embedding into a 3x2 matrix, for example: <span class="math display">\[B' = \begin{bmatrix} 7 &amp; 0 \\ 8 &amp; 0 \\ 9 &amp; 0 \end{bmatrix}\]</span></p>
+<p><span class="math inline">\(\sum_{i,j} A_{ij} B'_{ij}\)</span> can be rewritten as <span class="math inline">\(\sum A \circ B'\)</span>, which is the sum of the Hadamard product of <span class="math inline">\(A\)</span> and <span class="math inline">\(B'\)</span>. The Hadamard product is the element-wise product of two matrices of the same dimensions. In this case, it would be calculated as: <span class="math display">\[A \circ B' = \begin{bmatrix} 1 \cdot 7 &amp; 2 \cdot 0 \\ 3 \cdot 8 &amp; 4 \cdot 0 \\ 5 \cdot 9 &amp; 6 \cdot 0 \end{bmatrix} = \begin{bmatrix} 7 &amp; 0 \\ 24 &amp; 0 \\ 45 &amp; 0 \end{bmatrix}\]</span></p>
+<p>Then the Frobenius inner product would be calculated as: <span class="math display">\[\left\langle A, B' \right\rangle_F = \sum A \circ B' = 7 + 0 + 24 + 0 + 45 + 0 = 76\]</span></p>
+<p>To explore how the Frobenius inner product can be expressed as the trace of the product of the transpose of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, we can compute <span class="math inline">\(A^T B\)</span>:</p>
+<p><span class="math display">\[A^T = \begin{bmatrix} 1 &amp; 3 &amp; 5 \\ 2 &amp; 4 &amp; 6 \end{bmatrix}\]</span></p>
+<p><span class="math display">\[A^T B' = \begin{bmatrix} 1 &amp; 3 &amp; 5 \\ 2 &amp; 4 &amp; 6 \end{bmatrix} \begin{bmatrix} 7 &amp; 0 \\ 8 &amp; 0 \\ 9 &amp; 0 \end{bmatrix} = \begin{bmatrix} (1 \cdot 7 + 3 \cdot 8 + 5 \cdot 9) &amp; (1 \cdot 0 + 3 \cdot 0 + 5 \cdot 0) \\ (2 \cdot 7 + 4 \cdot 8 + 6 \cdot 9) &amp; (2 \cdot 0 + 4 \cdot 0 + 6 \cdot 0) \end{bmatrix} = \begin{bmatrix} 76 &amp; 0 \\ (14 + 32 + 54) &amp; 0 \end{bmatrix} = \begin{bmatrix} 76 &amp; 0 \\ (100) &amp; 0 \end{bmatrix}\]</span></p>
+<p>The trace of <span class="math inline">\(A^T B'\)</span> is the sum of the diagonal elements: <span class="math display">\[\text{tr}(A^T B') = 76 + 0 = 76\]</span></p>
+<p>Thus, the Frobenius inner product <span class="math inline">\(\left\langle A, B' \right\rangle_F\)</span> can indeed be expressed as the trace of the product of the transpose of <span class="math inline">\(A\)</span> and <span class="math inline">\(B'\)</span>, confirming that: <span class="math display">\[\left\langle A, B' \right\rangle_F = \text{tr}(A^T B')\]</span></p>
+<p>The interpretation of the Frobenius inner product is the alignment of the matrices. The more dimensions that are aligned the larger the inner product. If the matrices are orthogonal, the inner product is zero. If they are perfectly aligned, the inner product is maximized. If they are opposite, the inner product is negative.</p>
+</section>
+<section id="cosine-similarity" class="level2">
+<h2 class="anchored" data-anchor-id="cosine-similarity">Cosine similarity</h2>
+<p>Reviewing the law of cosines, for two vectors <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span>, the cosine of the angle <span class="math inline">\(\theta\)</span> between them is given by: <span class="math display">\[\text{cos}(\theta) = \frac{u \cdot v}{||u|| \cdot ||v||}\]</span></p>
+<p>The cosine similarity between two matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> in <span class="math inline">\(\mathbb{R}^{m \times n}\)</span> can be defined analogously using the Frobenius inner product and Frobenius norms: <span class="math display">\[\text{cos}(\theta) = \frac{\left\langle A, B \right\rangle_F}{||A||_F \cdot ||B||_F}\]</span></p>
+<p>For example, if we have two matrices: <span class="math display">\[A = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \\ 5 &amp; 6 \end{bmatrix}, \quad B = \begin{bmatrix} 7 &amp; 0 \\ 8 &amp; 0 \\ 9 &amp; 0 \end{bmatrix}\]</span></p>
+<p>We can calculate the cosine similarity as follows:</p>
+<ol type="1">
+<li>Calculate the Frobenius inner product <span class="math inline">\(\left\langle A, B \right\rangle_F\)</span>: <span class="math display">\[\left\langle A, B \right\rangle_F = 76\]</span></li>
+<li>Calculate the Frobenius norms <span class="math inline">\(||A||_F\)</span> and <span class="math inline">\(||B||_F\)</span>: <span class="math display">\[||A||_F = \sqrt{91}\]</span> <span class="math display">\[||B||_F = \sqrt{7^2 + 0^2 + 8^2 + 0^2 + 9^2 + 0^2} = \sqrt{49 + 0 + 64 + 0 + 81 + 0} = \sqrt{194}\]</span></li>
+<li>Substitute these values into the cosine similarity formula: <span class="math display">\[\text{cos}(\theta) = \frac{76}{\sqrt{91} \cdot \sqrt{194}} \approx 0.57\]</span></li>
+</ol>
+<p>The intuition is to take the Frobenius inner product, which measures the alignment of the matrices, and normalize it by the product of their magnitudes (Frobenius norms). This gives us a measure of how similar the two matrices are in terms of their direction in the vector space, regardless of their magnitude. A cosine similarity of 1 means the matrices are perfectly aligned, 0 means they are orthogonal, and -1 means they are opposite.</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Geometrically, all <span class="math inline">\(\mathbb{R}^{m \times n}\)</span> matrices form vector space <span class="math inline">\(\mathbb{R}^{m \cdot n}\)</span></p>
+<p>The Frobenius norm is the length of a matrix in this vector space. The Frobenius inner product is the dot product in this vector space. The cosine similarity is the cosine of the angle between two matrices in this vector space.</p>
 
 
 </section>
