@@ -1,0 +1,14 @@
+---
+title: "Page Not Found"
+---
+
+This page is broken or the link is mistyped. Some things worth trying:
+
+- Do a handstand
+- Double check the link
+- [Email me](mailto:smanzoor@umich.edu)
+- You can stop doing a handstand now
+
+Meanwhile, enjoy this image of a neuron from a [1911 medical textbook](https://archive.org/details/textbookofphysio1911howe/page/130/mode/1up) by [William Howell](https://en.wikipedia.org/wiki/William_Henry_Howell).
+
+![](/images/neuron.jpg)

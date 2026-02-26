@@ -3,6 +3,7 @@ title: "Starting a new website!"
 description: "Notes on setting up a new website using Quarto and GitHub Pages."
 author: "Yoyomanzoor"
 date: "2026-02-20"
+draft: true
 categories:
   - code
 ---

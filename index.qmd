@@ -1,7 +1,13 @@
 ---
 title: "Yoyomanzoor"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: table
+  feed: true
+  categories: false
+  max-items: 5
+  table-hover: true
+  date-format: long
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Yoyomanzoor</title>
+<link>https://yoyomanzoor.github.io/Yoyo/</link>
+<atom:link href="https://yoyomanzoor.github.io/Yoyo/index.xml" rel="self" type="application/rss+xml"/>
+<description>Yoyomanzoor&#39;s personal site</description>
+<generator>quarto-1.8.27</generator>
+<lastBuildDate>Mon, 23 Feb 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Cosine Similarity</title>
+  <dc:creator>Yoyomanzoor </dc:creator>
+  <link>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="frobenius-norm" class="level2">
+<h2 class="anchored" data-anchor-id="frobenius-norm">Frobenius norm</h2>
+<p>The Frobenius norm of a matrix <img src="https://latex.codecogs.com/png.latex?A"> is defined as <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B%5Csum_%7Bi,j%7D%20A_%7Bij%7D%5E2%7D"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?A_%7Bij%7D"> are the elements of the matrix <img src="https://latex.codecogs.com/png.latex?A">, and the sum is taken over all rows <img src="https://latex.codecogs.com/png.latex?i"> and columns <img src="https://latex.codecogs.com/png.latex?j"> of the matrix.</p>
+<p>For example, if we have a matrix: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D"></p>
+<p>The Frobenius norm of <img src="https://latex.codecogs.com/png.latex?A"> would be calculated as: <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B1%5E2%20+%202%5E2%20+%203%5E2%20+%204%5E2%20+%205%5E2%20+%206%5E2%7D%20=%20%5Csqrt%7B1%20+%204%20+%209%20+%2016%20+%2025%20+%2036%7D%20=%20%5Csqrt%7B91%7D"></p>
+<p>The interpretation of the Frobenius norm is the Euclidean length of the matrix when it is flattened into one long vector. In the case of our matrix <img src="https://latex.codecogs.com/png.latex?A%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B3%20%5Ctimes%202%7D">, it is literally the distance from the origin to the point in 6-dimensional space <img src="https://latex.codecogs.com/png.latex?%5Cleft(3%20%5Ccdot%202%5Cright)"> representing the magnitude of the elements of the matrix. It measures the overall magnitude of the matrix.</p>
+</section>
+<section id="frobenius-inner-product" class="level2">
+<h2 class="anchored" data-anchor-id="frobenius-inner-product">Frobenius inner product</h2>
+<p>The Frobenius inner product of two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> of the same dimensions is defined as: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%20=%20%5Csum_%7Bi,j%7D%20A_%7Bij%7D%20B_%7Bij%7D%20=%20%5Ctext%7Btr%7D%5Cleft(A%5ET%20B%5Cright)"></p>
+<p>This is essentially the sum of the products of corresponding elements from the two matrices. It can be thought of as a generalization of the dot product for vectors to matrices.</p>
+<p>For example, if we have two matrices: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D,%20%5Cquad%20B%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%208%20&amp;%209%20%5Cend%7Bbmatrix%7D"></p>
+<p>We can reshape <img src="https://latex.codecogs.com/png.latex?B"> to match the dimensions of <img src="https://latex.codecogs.com/png.latex?A"> (if necessary) by embedding into a 3x2 matrix, for example: <img src="https://latex.codecogs.com/png.latex?B'%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi,j%7D%20A_%7Bij%7D%20B'_%7Bij%7D"> can be rewritten as <img src="https://latex.codecogs.com/png.latex?%5Csum%20A%20%5Ccirc%20B'">, which is the sum of the Hadamard product of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B'">. The Hadamard product is the element-wise product of two matrices of the same dimensions. In this case, it would be calculated as: <img src="https://latex.codecogs.com/png.latex?A%20%5Ccirc%20B'%20=%20%5Cbegin%7Bbmatrix%7D%201%20%5Ccdot%207%20&amp;%202%20%5Ccdot%200%20%5C%5C%203%20%5Ccdot%208%20&amp;%204%20%5Ccdot%200%20%5C%5C%205%20%5Ccdot%209%20&amp;%206%20%5Ccdot%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%2024%20&amp;%200%20%5C%5C%2045%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p>Then the Frobenius inner product would be calculated as: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F%20=%20%5Csum%20A%20%5Ccirc%20B'%20=%207%20+%200%20+%2024%20+%200%20+%2045%20+%200%20=%2076"></p>
+<p>To explore how the Frobenius inner product can be expressed as the trace of the product of the transpose of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B">, we can compute <img src="https://latex.codecogs.com/png.latex?A%5ET%20B">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?A%5ET%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%203%20&amp;%205%20%5C%5C%202%20&amp;%204%20&amp;%206%20%5Cend%7Bbmatrix%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?A%5ET%20B'%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%203%20&amp;%205%20%5C%5C%202%20&amp;%204%20&amp;%206%20%5Cend%7Bbmatrix%7D%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%20(1%20%5Ccdot%207%20+%203%20%5Ccdot%208%20+%205%20%5Ccdot%209)%20&amp;%20(1%20%5Ccdot%200%20+%203%20%5Ccdot%200%20+%205%20%5Ccdot%200)%20%5C%5C%20(2%20%5Ccdot%207%20+%204%20%5Ccdot%208%20+%206%20%5Ccdot%209)%20&amp;%20(2%20%5Ccdot%200%20+%204%20%5Ccdot%200%20+%206%20%5Ccdot%200)%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%2076%20&amp;%200%20%5C%5C%20(14%20+%2032%20+%2054)%20&amp;%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%2076%20&amp;%200%20%5C%5C%20(100)%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p>The trace of <img src="https://latex.codecogs.com/png.latex?A%5ET%20B'"> is the sum of the diagonal elements: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Btr%7D(A%5ET%20B')%20=%2076%20+%200%20=%2076"></p>
+<p>Thus, the Frobenius inner product <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F"> can indeed be expressed as the trace of the product of the transpose of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B'">, confirming that: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F%20=%20%5Ctext%7Btr%7D(A%5ET%20B')"></p>
+<p>The interpretation of the Frobenius inner product is the alignment of the matrices. The more dimensions that are aligned the larger the inner product. If the matrices are orthogonal, the inner product is zero. If they are perfectly aligned, the inner product is maximized. If they are opposite, the inner product is negative.</p>
+</section>
+<section id="cosine-similarity" class="level2">
+<h2 class="anchored" data-anchor-id="cosine-similarity">Cosine similarity</h2>
+<p>Reviewing the law of cosines, for two vectors <img src="https://latex.codecogs.com/png.latex?u"> and <img src="https://latex.codecogs.com/png.latex?v"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, the cosine of the angle <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> between them is given by: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7Bu%20%5Ccdot%20v%7D%7B%7C%7Cu%7C%7C%20%5Ccdot%20%7C%7Cv%7C%7C%7D"></p>
+<p>The cosine similarity between two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> can be defined analogously using the Frobenius inner product and Frobenius norms: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%7D%7B%7C%7CA%7C%7C_F%20%5Ccdot%20%7C%7CB%7C%7C_F%7D"></p>
+<p>For example, if we have two matrices: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D,%20%5Cquad%20B%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p>We can calculate the cosine similarity as follows:</p>
+<ol type="1">
+<li>Calculate the Frobenius inner product <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F">: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%20=%2076"></li>
+<li>Calculate the Frobenius norms <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F"> and <img src="https://latex.codecogs.com/png.latex?%7C%7CB%7C%7C_F">: <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B91%7D"> <img src="https://latex.codecogs.com/png.latex?%7C%7CB%7C%7C_F%20=%20%5Csqrt%7B7%5E2%20+%200%5E2%20+%208%5E2%20+%200%5E2%20+%209%5E2%20+%200%5E2%7D%20=%20%5Csqrt%7B49%20+%200%20+%2064%20+%200%20+%2081%20+%200%7D%20=%20%5Csqrt%7B194%7D"></li>
+<li>Substitute these values into the cosine similarity formula: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B76%7D%7B%5Csqrt%7B91%7D%20%5Ccdot%20%5Csqrt%7B194%7D%7D%20%5Capprox%200.57"></li>
+</ol>
+<p>The intuition is to take the Frobenius inner product, which measures the alignment of the matrices, and normalize it by the product of their magnitudes (Frobenius norms). This gives us a measure of how similar the two matrices are in terms of their direction in the vector space, regardless of their magnitude. A cosine similarity of 1 means the matrices are perfectly aligned, 0 means they are orthogonal, and -1 means they are opposite.</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Geometrically, all <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> matrices form vector space <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ccdot%20n%7D"></p>
+<p>The Frobenius norm is the length of a matrix in this vector space. The Frobenius inner product is the dot product in this vector space. The cosine similarity is the cosine of the angle between two matrices in this vector space.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>math</category>
+  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</guid>
+  <pubDate>Mon, 23 Feb 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>hyprland rice</title>
+  <link>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-09-hyprland-rice.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<a href="https://github.com/Yoyomanzoor/dotfiles" class="github-repo-card" target="_blank" rel="noopener noreferrer">
+  <div class="repo-title">
+    <i class="bi bi-github"></i> Yoyomanzoor/dotfiles
+  </div>
+  <div class="repo-desc">
+    Dotfiles for arch/hyprland
+  </div>
+  <div class="repo-meta">
+    <span><i class="bi bi-circle-fill" style="color: #3572A5; font-size: 0.5rem;"></i> N/A</span>
+    <span><i class="bi bi-star"></i> 0</span>
+    <span><i class="bi bi-diagram-2"></i> 0</span>
+  </div>
+</a>
+    
+<p>The past two weeks, I’ve been building an Arch rice with these specs:</p>
+<ul>
+<li>WM: Hyprland</li>
+<li>Terminal: alacritty, kitty</li>
+<li>Shell: fish + starship</li>
+<li>IDE: nvim, vscode, rstudio</li>
+<li>Bar: ags</li>
+<li>dmenu: ags, anyrun</li>
+<li>Browser: Vieb, qutebrowser, firefox</li>
+</ul>
+<p>It’s been a lot of fun (and a great way to procrastinate real work) to learn <code>ags</code> and working through configs. Currently, the desktop is stable and my daily driver. It works flawlessly at the moment. I’ve found it both entertaining and annoying to have built the environment I work in, on one hand it’s tailored to what I make it do. On the other, if I want it to do something, I need to build and test that thing myself. For example, I can’t just open up a widget store and install a specific widget (like in gnome or KDE). But, if I have the time, I could just make the app myself - e.g., I set up a prayer time widget, complete with notifications. So while I’m glad it works well enough I can use it daily, I have a long running list of things to build for it.</p>
+<p>This has been an interesting journey. It began when I bought a laptop last year and set it up as a Windows/Kubuntu dual boot. I was dual booting using an external SSD, which worked fine but was a little annoying to carry around a SSD everywhere. I was trying to get used to tiling windows managers using KWin Tiling/Bismuth. I then started using VMs running Ubuntu, originally since I needed RStudio and RStudio was not available at the time for Ubuntu 22.04 (which Kubuntu was built on). I ran Ubuntu with i3 (Regolith), and before I knew it I was spending more time in Ubuntu than Kubuntu because I found the tiling manager to be extremely responsive. It was also easy to customize using configs. I also tried VMs running EndeavourOS/Hyprland or Arch/Hyprland, but I was having a problem with GPU passthrough (my laptop has the newer Intel ARC GPUs, and I couldn’t find a good way to passthrough). Eventually I decided to start anew, bought an NVME and installed Arch + Hyprland, and here we are!</p>
+
+
+
+ ]]></description>
+  <category>programming</category>
+  <category>linux</category>
+  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-09-hyprland-rice.html</guid>
+  <pubDate>Fri, 09 Feb 2024 05:00:00 GMT</pubDate>
+  <media:content url="https://yoyomanzoor.github.io/Yoyo/images/hyprland.png" medium="image" type="image/png" height="90" width="144"/>
+</item>
+<item>
+  <title>the piece of meat the guides the body</title>
+  <link>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-06-heart.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<arabic-text>
+<blockquote class="blockquote">
+<div style="text-align:right">
+<p>حَدَّثَنَا أَبُو نُعَيْمٍ، حَدَّثَنَا زَكَرِيَّاءُ، عَنْ عَامِرٍ، قَالَ سَمِعْتُ النُّعْمَانَ بْنَ بَشِيرٍ، يَقُولُ سَمِعْتُ رَسُولَ اللَّهِ صلى الله عليه وسلم يَقُولُ ” الْحَلاَلُ بَيِّنٌ وَالْحَرَامُ بَيِّنٌ، وَبَيْنَهُمَا مُشَبَّهَاتٌ لاَ يَعْلَمُهَا كَثِيرٌ مِنَ النَّاسِ، فَمَنِ اتَّقَى الْمُشَبَّهَاتِ اسْتَبْرَأَ لِدِيِنِهِ وَعِرْضِهِ، وَمَنْ وَقَعَ فِي الشُّبُهَاتِ كَرَاعٍ يَرْعَى حَوْلَ الْحِمَى، يُوشِكُ أَنْ يُوَاقِعَهُ. أَلاَ وَإِنَّ لِكُلِّ مَلِكٍ حِمًى، أَلاَ إِنَّ حِمَى اللَّهِ فِي أَرْضِهِ مَحَارِمُهُ، أَلاَ وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ، وَإِذَا فَسَدَتْ فَسَدَ الْجَسَدُ كُلُّهُ. أَلاَ وَهِيَ الْقَلْبُ “.</p>
+</div>
+<br> I heard Allah’s Messenger (ﷺ) saying, ’Both legal and illegal things are evident but in between them there are doubtful (suspicious) things and most of the people have no knowledge about them. So whoever saves himself from these suspicious things saves his religion and his honor. And whoever indulges in these suspicious things is like a shepherd who grazes (his animals) near the Hima (private pasture) of someone else and at any moment he is liable to get in it. (O people!) Beware! Every king has a Hima and the Hima of Allah on the earth is His illegal (forbidden) things. Beware! There is a piece of flesh in the body if it becomes good (reformed) the whole body becomes good but if it gets corrupted the whole body gets corrupted and that is the heart. <br><br> Sahih al-Bukhari, 52
+</blockquote>
+<p></p>
+<p>At this very moment, where is most of the blood in your body? The body holds between 9 and 11 liters of blood. The heart holds about half a liter of blood. Thus, the majority of our blood is held in the complex set of arteries and veins throughout the body. The heart simply provides a gradient, a positive pressure during ‘systole’ and a negative pressure during ‘diastole’ that keeps the blood circulating through the body. Through this constant pressure gradient, the heart is able to perform the heraculean feat of perfusing blood through the entire body, from the brain to the fingertips. On average, every minute, the entire volume of blood manages to circulate through the body.</p>
+<p>Clinically, you can imagine an infection that makes it into the blood is not good. An infection that takes root in the heart is called <strong>endocarditis</strong>. The clinical presentation includes peripheral lesions (e.g.&nbsp;Janeway lesions, Osler nodes) that present on the hands and feet, intraabdominal emboli that presents as damage to the kidneys or spleen, and neurologic manifestations such as seizures or weakness. In other words, infection of the heart affects the whole body.</p>
+<p><img src="https://yoyomanzoor.github.io/Yoyo/images/janeway.jpg" class="img-fluid" alt="Janeway Lesions"> <em>Right: Janeway lesions and Osler nodes on a hand</em></p>
+<p>Similarly, consider the idea that whatever enters the heart (spiritually) will perfuse the entire body. Just like the physical heart, there is a constant pressure being applied by the spiritual heart. Whatever seed is planted in it, the rest of the body and actions must follow. It’s the most powerful motivator. Take the example of a person that has planted the love of a video game in their heart. They will quickly find themselves addicted to playing the game they love, and spend as much time as they can playing that game. When they are not playing the game, they are thinking ‘how many hours until I can play again.’ They may even go further, buying things that remind them of the game like paraphernalia. You can replace ‘video game’ in this example with a person or another thing.</p>
+<arabic-text>
+<blockquote class="blockquote">
+<div style="text-align:right">
+<p>قال النَّبِيَّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ: ” مَنْهُومَانِ لَا يَشْبَعَانِ: مَنْهُومٌ فِي الْعِلْمِ لَا يَشْبَعُ مِنْهُ وَمَنْهُومٌ فِي الدُّنْيَا لَا يَشْبَعُ مِنْهَا «. رَوَى الْبَيْهَقِيُّ الْأَحَادِيثَ الثَّلَاثَةَ فِي» شُعَبِ الْإِيمَانِ</p>
+</div>
+<br> Two greedy ones never attain satisfaction: he who is greedy for knowledge can never get enough of it, and he who is greedy for worldly goods can never get enough of them <br><br> Mishkat al-Massabih 260
+</blockquote>
+<p></p>
+<p>It is for this reason that the heart of a believer is consider a garden, where the seed of <em>iman</em> must be planted. If the garden is maintained and protected, the rest of the body will follow.</p>
+<p>Now consider that the physical heart is in a sheltered place, deep in our body. Endocarditis does not happen by the infectious source entering the heart directly, it must get there from outside the body, such as through heart surgery or infection of the bloodstream. Similarly, the spiritual heart also has access points. As Imam al-Ghazali points out, the spiritual heart is accessed by the eyes, the ears, the mouth, the stomach, and the limbs. Once the seed of <em>iman</em> is planted, it must be maintained by guarding those access points. Thus, as mentioned in the earlier <em>hadith</em>, it is of utmost importance to not even get close to things that will sway the heart and influence our <em>iman</em> to save our spiritual heart from an endocarditis. It is important to guard the eyes and ears, to watch our tongue, eat Halal, and act in a manner befitting a Muslim, since each of these things will help keep the heart pure and allow the rest of the body to follow suit.</p>
+
+
+
+</arabic-text></arabic-text> ]]></description>
+  <category>deen</category>
+  <category>medical</category>
+  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-06-heart.html</guid>
+  <pubDate>Tue, 06 Feb 2024 18:24:31 GMT</pubDate>
+</item>
+<item>
+  <title>git init this website</title>
+  <link>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-05-init.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>It is currently 9:30 PM. I have to wake up tomorrow at like 4:30, prechart, and get to 5:45 rounds. This is a terrible idea, but yesterday I saw <a href="https://github.com/alshedivat/al-folio">this webpage template</a> and I decided to use it today. I should probably be doing UWorld or studying patients or doing something else, but instead here I am.</p>
+<p>To be fair, I had been planning on starting a blog of some sort and a place to keep my more formal writings for a while. I have been storing personal memos and writing drafts since starting medical school that I told myself I would eventually polish and publish. Hopefully by initializing this platform, I will be motivated to finish those pieces.</p>
+<p>Plus this gives me a platform to share my processes for things I have been doing, from art stuff to programming things.</p>
+<p>It’s a funny thing how we find motivation at the least opportune times.</p>
+<p><em>Update</em> I found <a href="https://github.com/cotes2020/jekyll-theme-chirpy">yet another jekyll theme</a>!</p>
+
+
+
+ ]]></description>
+  <category>programming</category>
+  <category>website</category>
+  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-05-init.html</guid>
+  <pubDate>Tue, 06 Feb 2024 02:29:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

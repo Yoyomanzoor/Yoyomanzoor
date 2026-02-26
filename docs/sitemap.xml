@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yoyomanzoor.github.io/Yoyo/index.html</loc>
-    <lastmod>2026-02-23T18:11:50.407Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</loc>
-    <lastmod>2026-02-23T19:27:38.935Z</lastmod>
+    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-09-hyprland-rice.html</loc>
+    <lastmod>2026-02-26T15:14:37.009Z</lastmod>
   </url>
   <url>
     <loc>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-05-init.html</loc>
-    <lastmod>2026-02-23T18:27:08.051Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-20-starting-a-new-website.html</loc>
-    <lastmod>2026-02-23T18:11:50.407Z</lastmod>
+    <lastmod>2026-02-26T15:14:37.007Z</lastmod>
   </url>
   <url>
     <loc>https://yoyomanzoor.github.io/Yoyo/about.html</loc>
-    <lastmod>2026-02-23T18:11:50.381Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-06-heart.html</loc>
-    <lastmod>2026-02-23T18:22:12.322Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-09-hyprland-rice.html</loc>
-    <lastmod>2026-02-23T18:37:29.775Z</lastmod>
+    <lastmod>2026-02-26T15:14:36.971Z</lastmod>
   </url>
   <url>
     <loc>https://yoyomanzoor.github.io/Yoyo/blog.html</loc>
-    <lastmod>2026-02-23T18:11:50.381Z</lastmod>
+    <lastmod>2026-02-26T15:14:36.971Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-06-heart.html</loc>
+    <lastmod>2026-02-26T15:14:37.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</loc>
+    <lastmod>2026-02-26T15:14:37.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yoyomanzoor.github.io/Yoyo/index.html</loc>
+    <lastmod>2026-02-26T15:15:43.030Z</lastmod>
   </url>
 </urlset>
