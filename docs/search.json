@@ -1,10 +1,24 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Yoyomanzoor",
+    "objectID": "drafts/2026-03-11-distribution-mapping.html",
+    "href": "drafts/2026-03-11-distribution-mapping.html",
+    "title": "KL Divergence",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "The information content of an event is a measure of how surprising the event is. The more probable an event is, the less surprising it is and the less information it conveys. Conversely, the less probable an event is, the more surprising it is and the more information it conveys. It can be modeled as the negative logarithm of the probability of the event:\n\\[I(p) = -\\text{log}_2(p)\\]\n\n\nThe probability of heads in a fair coin flip is \\(p = 0.5\\). Thus, \\(I(p) = \\text{log}_2 \\left(\\frac{1}{0.5}\\right) = \\text{log}_2 \\left(2\\right) = 1\\). The information content is 1 bit."
+  },
+  {
+    "objectID": "drafts/2026-03-11-distribution-mapping.html#surprisal",
+    "href": "drafts/2026-03-11-distribution-mapping.html#surprisal",
+    "title": "KL Divergence",
+    "section": "",
+    "text": "The information content of an event is a measure of how surprising the event is. The more probable an event is, the less surprising it is and the less information it conveys. Conversely, the less probable an event is, the more surprising it is and the more information it conveys. It can be modeled as the negative logarithm of the probability of the event:\n\\[I(p) = -\\text{log}_2(p)\\]\n\n\nThe probability of heads in a fair coin flip is \\(p = 0.5\\). Thus, \\(I(p) = \\text{log}_2 \\left(\\frac{1}{0.5}\\right) = \\text{log}_2 \\left(2\\right) = 1\\). The information content is 1 bit."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Forms\n\n\n\nphilosophy\n\n\n\nThoughts on the intelligible and sensible realms.\n\n\n\n\n\nApr 21, 2026\n\n\nYoyomanzoor\n\n\n\n\n\n\n\n\n\n\n\n\nCosine Similarity\n\n\n\nmath\n\n\n\nReview of cosine similarity\n\n\n\n\n\nFeb 23, 2026\n\n\nYoyomanzoor\n\n\n\n\n\n\n\n\n\n\n\n\nStarting a new website!\n\n\n\ncode\n\n\n\nNotes on setting up a new website using Quarto and GitHub Pages.\n\n\n\n\n\nFeb 20, 2026\n\n\nYoyomanzoor\n\n\n\n\n\n\n\n\n\n\n\n\nhyprland rice\n\n\n\nprogramming\n\nlinux\n\n\n\nMy Arch Rice\n\n\n\n\n\nFeb 9, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nthe piece of meat the guides the body\n\n\n\ndeen\n\nmedical\n\n\n\nReflection on the heart and iman\n\n\n\n\n\nFeb 6, 2024\n\n\n\n\n\n\n\n\n\n\n\n\ngit init this website\n\n\n\nprogramming\n\nwebsite\n\n\n\nA terrible decision\n\n\n\n\n\nFeb 5, 2024\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2024-02-05-init.html",
@@ -84,10 +98,17 @@
     "text": "Summary\nGeometrically, all \\(\\mathbb{R}^{m \\times n}\\) matrices form vector space \\(\\mathbb{R}^{m \\cdot n}\\)\nThe Frobenius norm is the length of a matrix in this vector space. The Frobenius inner product is the dot product in this vector space. The cosine similarity is the cosine of the angle between two matrices in this vector space."
   },
   {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Blog",
+    "objectID": "posts/2026-04-21-intelligible-and-sensible.html",
+    "href": "posts/2026-04-21-intelligible-and-sensible.html",
+    "title": "Forms",
     "section": "",
-    "text": "Cosine Similarity\n\n\n\nmath\n\n\n\nReview of cosine similarity\n\n\n\n\n\nFeb 23, 2026\n\n\nYoyomanzoor\n\n\n\n\n\n\n\n\n\n\n\n\nStarting a new website!\n\n\n\ncode\n\n\n\nNotes on setting up a new website using Quarto and GitHub Pages.\n\n\n\n\n\nFeb 20, 2026\n\n\nYoyomanzoor\n\n\n\n\n\n\n\n\n\n\n\n\nhyprland rice\n\n\n\nprogramming\n\nlinux\n\n\n\nMy Arch Rice\n\n\n\n\n\nFeb 9, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nthe piece of meat the guides the body\n\n\n\ndeen\n\nmedical\n\n\n\nReflection on the heart and iman\n\n\n\n\n\nFeb 6, 2024\n\n\n\n\n\n\n\n\n\n\n\n\ngit init this website\n\n\n\nprogramming\n\nwebsite\n\n\n\nA terrible decision\n\n\n\n\n\nFeb 5, 2024\n\n\n\n\n\nNo matching items"
+    "text": "Introduction\nIn 2018, I naively joined a class, CLST 267, Scientific and Medical Terminology at Loyola, thinking it would be a class on, well… medical terminology. Perhaps we would learn words in their medical context, like the clinical definition of depression, or technical words like nephrolithiasis. Instead, it was a course listed in the classics and taught by one Kirk Shellko. Dr. Shellko would lecture with a slight grin, almost bemused, as he would explain the worldview of Democritus and Hippocrates. As if a stipulative fiat is the setup for a good joke. The class was on how scientific and medical thought became canonized through Greek thought into its modern formulation, a history and philosophy course, not a class on kidney failiure and psychomodulatory drugs. At first, I was disappointed, but then I was intrigued.\n\nOver the years, I’ve come to greater appreciate the value of such learning. It was during CLST 267 that I first synthesized exactly the philosophy underlying the science I was practicing in the lab and was exposed to Thomas Kuhn’s approach to scientific paradigm and revolution. Even more beautiful was when I was exposed to how these same ideas was filtered through the lens of Muslim Philosophers, such as Avicenna and Ghazali. Again and again, I find myself thinking about many of these fundamental concepts in philosophy and how they inform and are informed. Currently, while reviewing Al-’Aqīdah At-Taḥāwī, I spuriously felt I wanted to take time to dictate some of these thoughts, from condensing my sparse notes in a historical overview to my current synthesis and reflections to a review based on ’aq̣īdah.\nI pray Allah grants me tawfīq to finish these notes with completeness and rigor and find great benefit in the process of compilation as well as in review."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Yoyomanzoor",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   }
 ]

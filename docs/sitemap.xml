@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yoyomanzoor.github.io/Yoyo/index.html</loc>
-    <lastmod>2026-02-23T18:11:50.407Z</lastmod>
+    <loc>https://yoyomanzoor.github.io/Yoyo/drafts/2026-03-11-distribution-mapping.html</loc>
+    <lastmod>2026-03-11T12:58:32.935Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yoyomanzoor.github.io/Yoyo/blog.html</loc>
+    <lastmod>2026-02-23T18:11:50.381Z</lastmod>
   </url>
   <url>
     <loc>https://yoyomanzoor.github.io/Yoyo/posts/2024-02-05-init.html</loc>
@@ -29,7 +33,11 @@
     <lastmod>2026-02-23T19:27:38.935Z</lastmod>
   </url>
   <url>
-    <loc>https://yoyomanzoor.github.io/Yoyo/blog.html</loc>
-    <lastmod>2026-02-23T18:11:50.381Z</lastmod>
+    <loc>https://yoyomanzoor.github.io/Yoyo/posts/2026-04-21-intelligible-and-sensible.html</loc>
+    <lastmod>2026-04-21T18:29:59.899Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yoyomanzoor.github.io/Yoyo/index.html</loc>
+    <lastmod>2026-02-23T18:11:50.407Z</lastmod>
   </url>
 </urlset>
