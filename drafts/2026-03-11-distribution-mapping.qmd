@@ -1,0 +1,20 @@
+---
+title: "KL Divergence"
+description: "How KL divergence is a result of information entropy"
+author: "Yoyomanzoor"
+date: "2026-03-11"
+categories:
+    - math
+---
+
+## surprisal
+
+The information content of an event is a measure of how surprising the event is. The more probable an event is, the less surprising it is and the less information it conveys. Conversely, the less probable an event is, the more surprising it is and the more information it conveys. It can be modeled as the negative logarithm of the probability of the event:
+
+$$I(p) = -\text{log}_2(p)$$
+
+### examples
+
+The probability of heads in a fair coin flip is $p = 0.5$. Thus, $I(p) = \text{log}_2 \left(\frac{1}{0.5}\right) = \text{log}_2 \left(2\right) = 1$. The information content is 1 bit.
+
+

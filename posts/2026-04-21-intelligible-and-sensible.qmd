@@ -1,0 +1,29 @@
+---
+title: "Forms"
+description: "Thoughts on the intelligible and sensible realms."
+date: "2026-04-21"
+author: "Yoyomanzoor"
+categories:
+  - philosophy
+format:
+  html:
+    toc: true
+    toc-depth: 2
+  typst:
+    toc: true
+format-links:
+  - html
+  - format: typst
+    text: PDF
+    icon: file-pdf
+---
+
+# Introduction
+
+In 2018, I naively joined a class, CLST 267, Scientific and Medical Terminology at Loyola, thinking it would be a class on, well... medical terminology. Perhaps we would learn words in their medical context, like the clinical definition of depression, or technical words like nephrolithiasis. Instead, it was a course listed in the classics and taught by one Kirk Shellko. Dr. Shellko would lecture with a slight grin, almost bemused, as he would explain the worldview of Democritus and Hippocrates. As if a stipulative fiat is the setup for a good joke. The class was on how scientific and medical thought became canonized through Greek thought into its modern formulation, a history and philosophy course, not a class on kidney failiure and psychomodulatory drugs. At first, I was disappointed, but then I was intrigued.
+
+---
+
+Over the years, I've come to greater appreciate the value of such learning. It was during CLST 267 that I first synthesized exactly the philosophy underlying the science I was practicing in the lab and was exposed to Thomas Kuhn's approach to scientific paradigm and revolution. Even more beautiful was when I was exposed to how these same ideas was filtered through the lens of Muslim Philosophers, such as Avicenna and Ghazali. Again and again, I find myself thinking about many of these fundamental concepts in philosophy and how they inform and are informed. Currently, while reviewing *Al-'Aqīdah At-Taḥāwī*, I spuriously felt I wanted to take time to dictate some of these thoughts, from condensing my sparse notes in a historical overview to my current synthesis and reflections to a review based on 'aq̣īdah.
+
+I pray Allah grants me tawfīq to finish these notes with completeness and rigor and find great benefit in the process of compilation as well as in review.
