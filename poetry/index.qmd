@@ -1,0 +1,25 @@
+---
+title: "Poetry"
+listing:
+  id: poems
+  contents:
+    - "*/*.qmd"
+  template: listing.ejs
+  sort: "date desc"
+  date-format: "MMMM D, YYYY"
+  categories: false
+  feed: false
+  sort-ui: false
+  filter-ui: false
+---
+
+::: {.poetry-home}
+<div class="poetry-mark" aria-hidden="true"></div>
+<p class="poetry-kicker" lang="ar" dir="rtl">شعر</p>
+<h1>Poetry</h1>
+<div class="poetry-rule" aria-hidden="true"></div>
+<p class="poetry-lead">Arabic verse, with an English translation beneath each couplet.</p>
+
+::: {#poems}
+:::
+:::

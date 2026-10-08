@@ -13,11 +13,22 @@ website:
   favicon: "images/yoyo.png"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-      - href: blog.qmd
-        text: Blog
+      - icon: house
+        href: index.qmd
+        text: "<span></span>"
+        aria-label: Home
+      - icon: person
+        href: about.qmd
+        text: "<span></span>"
+        aria-label: About
+      - icon: journal-text
+        href: blog.qmd
+        text: "<span></span>"
+        aria-label: Blog
+      - icon: feather
+        href: poetry/index.qmd
+        text: "<span></span>"
+        aria-label: Poetry
     right:
       - icon: github
         href: https://github.com/Yoyomanzoor

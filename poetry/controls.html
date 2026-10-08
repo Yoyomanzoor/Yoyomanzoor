@@ -1,0 +1,178 @@
+<div class="poem-controls">
+  <div id="poem-controls-panel" class="poem-controls-panel" hidden>
+    <div class="poem-controls-head">
+      <p class="poem-controls-title">Appearance</p>
+      <button type="button" class="poem-controls-close" aria-label="Close appearance panel">&times;</button>
+    </div>
+
+    <fieldset>
+      <legend>Colorscheme</legend>
+      <div class="poem-swatches" role="group" aria-label="Colorscheme">
+        <button type="button" data-key="palette" data-value="qadr" aria-label="Night of Decree"></button>
+        <button type="button" data-key="palette" data-value="manuscript" aria-label="Manuscript"></button>
+        <button type="button" data-key="palette" data-value="andalus" aria-label="Andalus"></button>
+        <button type="button" data-key="palette" data-value="lamp" aria-label="Mosque lamp"></button>
+        <button type="button" data-key="palette" data-value="oasis" aria-label="Oasis"></button>
+        <button type="button" data-key="palette" data-value="ink" aria-label="Ink"></button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Gradient</legend>
+      <div class="poem-chips" role="group" aria-label="Gradient">
+        <button type="button" data-key="gradient" data-value="lamp">Lamp</button>
+        <button type="button" data-key="gradient" data-value="dawn">Dawn</button>
+        <button type="button" data-key="gradient" data-value="depth">Depth</button>
+        <button type="button" data-key="gradient" data-value="mihrab">Mihrab</button>
+        <button type="button" data-key="gradient" data-value="still">Still</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Font</legend>
+      <label class="poem-field" for="poem-font-ar">Arabic</label>
+      <select id="poem-font-ar" data-key="ar">
+        <option value="amiri">Amiri</option>
+        <option value="scheherazade">Scheherazade</option>
+        <option value="naskh">Noto Naskh</option>
+        <option value="lateef">Lateef</option>
+        <option value="ruqaa">Aref Ruqaa</option>
+      </select>
+      <label class="poem-field" for="poem-font-en">English</label>
+      <select id="poem-font-en" data-key="en">
+        <option value="cormorant">Cormorant</option>
+        <option value="garamond">EB Garamond</option>
+        <option value="baskerville">Libre Baskerville</option>
+        <option value="crimson">Crimson</option>
+        <option value="spectral">Spectral</option>
+      </select>
+    </fieldset>
+
+    <fieldset>
+      <legend>Appearance</legend>
+      <label class="poem-field" for="poem-scale">Type size</label>
+      <input id="poem-scale" data-key="scale" type="range" min="0.85" max="1.35" step="0.01" value="1">
+      <label class="poem-field" for="poem-pattern">Pattern</label>
+      <input id="poem-pattern" data-key="pattern" type="range" min="0.04" max="0.55" step="0.01" value="0.24">
+      <label class="poem-field" for="poem-sheet">Page veil</label>
+      <input id="poem-sheet" data-key="sheet" type="range" min="0.72" max="1" step="0.01" value="0.94">
+      <label class="poem-check"><input data-key="translation" type="checkbox" checked> English translation</label>
+      <label class="poem-check"><input data-key="numbers" type="checkbox"> Verse numbers</label>
+    </fieldset>
+
+    <button type="button" class="poem-reset">Reset</button>
+  </div>
+  <button type="button" class="poem-controls-toggle" aria-expanded="false" aria-controls="poem-controls-panel">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="5" y="5" width="14" height="14" transform="rotate(45 12 12)" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <rect x="5" y="5" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+    Appearance
+  </button>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var panel = document.getElementById("poem-controls-panel");
+  var toggle = document.querySelector(".poem-controls-toggle");
+  var closeBtn = document.querySelector(".poem-controls-close");
+  var resetBtn = document.querySelector(".poem-reset");
+  if (!panel || !toggle) return;
+
+  var defaults = {
+    palette: "qadr",
+    gradient: "lamp",
+    ar: "amiri",
+    en: "cormorant",
+    scale: "1",
+    pattern: "0.24",
+    sheet: "0.94",
+    translation: "true",
+    numbers: "false"
+  };
+  var cssVars = { scale: "--poem-scale", pattern: "--pattern-opacity", sheet: "--sheet-alpha" };
+
+  function current() {
+    var state = {};
+    Object.keys(defaults).forEach(function (key) {
+      state[key] = root.getAttribute("data-" + key) || defaults[key];
+    });
+    return state;
+  }
+
+  function apply(state, persist) {
+    Object.keys(defaults).forEach(function (key) {
+      var value = state[key] === undefined || state[key] === null || state[key] === "" ? defaults[key] : String(state[key]);
+      root.setAttribute("data-" + key, value);
+      if (cssVars[key]) root.style.setProperty(cssVars[key], value);
+    });
+    if (persist) localStorage.setItem("poetry-appearance", JSON.stringify(current()));
+    syncForm();
+  }
+
+  function syncForm() {
+    var state = current();
+    panel.querySelectorAll("[data-key]").forEach(function (el) {
+      var key = el.getAttribute("data-key");
+      var value = state[key];
+      if (el.matches("button")) {
+        el.setAttribute("aria-pressed", el.getAttribute("data-value") === value ? "true" : "false");
+      } else if (el.type === "checkbox") {
+        el.checked = value === "true";
+      } else {
+        el.value = value;
+      }
+    });
+  }
+
+  function openPanel() {
+    panel.hidden = false;
+    toggle.setAttribute("aria-expanded", "true");
+    var first = panel.querySelector("button, select, input");
+    if (first) first.focus();
+  }
+
+  function closePanel() {
+    panel.hidden = true;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.focus();
+  }
+
+  toggle.addEventListener("click", function () {
+    if (panel.hidden) openPanel();
+    else closePanel();
+  });
+  closeBtn.addEventListener("click", closePanel);
+  resetBtn.addEventListener("click", function () {
+    localStorage.removeItem("poetry-appearance");
+    apply(defaults, false);
+  });
+
+  panel.addEventListener("click", function (event) {
+    var button = event.target.closest("button[data-key]");
+    if (!button) return;
+    var state = current();
+    state[button.getAttribute("data-key")] = button.getAttribute("data-value");
+    apply(state, true);
+  });
+
+  panel.addEventListener("input", function (event) {
+    var el = event.target;
+    if (!el.getAttribute || !el.getAttribute("data-key") || el.matches("button")) return;
+    var state = current();
+    state[el.getAttribute("data-key")] = el.type === "checkbox" ? (el.checked ? "true" : "false") : el.value;
+    apply(state, true);
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && !panel.hidden) closePanel();
+  });
+
+  document.addEventListener("click", function (event) {
+    if (panel.hidden) return;
+    if (!event.target.closest(".poem-controls")) closePanel();
+  });
+
+  syncForm();
+})();
+</script>

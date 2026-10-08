@@ -1,0 +1,50 @@
+---
+title: "The Arrow Does Not Miss"
+subtitle: "ما في المَقامِ لِذي عَقلٍ وَذي أَدَبِ"
+author: "Imam al-Shāfiʿī"
+date: 2026-05-25
+categories:
+  - al-Shāfiʿī
+description: "Still water spoils. The arrow strikes only once it leaves the bow."
+---
+
+<!--
+Each couplet is a bayt: two Arabic hemistichs, a line of three asterisks,
+then your English. The two Arabic paragraphs sit side by side on a wide screen,
+the first on the right.
+
+::: bayt
+صدر البيت
+
+عجز البيت
+
+***
+
+English translation of the couplet.
+:::
+-->
+
+::: bayt
+أتَهزَأُ بالدُعاءِ وتَزدريه
+
+وما تَدري بما صنَع الدعاءُ
+
+***
+
+Do you scorn _dua_ and make light of it?
+
+But what do you know of what _dua_ has wrought?
+:::
+
+::: bayt
+سِهامُ الليلِ لا تُخطي ولكن
+
+لَها أمدٌ ولِلأمدِ انقِضاءُ
+
+***
+
+The arrows of the night do miss,
+
+but they have a reach, and all reaches find their end.
+
+:::

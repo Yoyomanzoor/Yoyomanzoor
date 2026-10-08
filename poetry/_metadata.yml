@@ -1,0 +1,44 @@
+filters:
+  - bayt.lua
+
+format:
+  html:
+    toc: false
+    page-layout: full
+    css: poetry.css
+    include-in-header:
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=EB+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Lateef:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;700&family=Scheherazade+New:wght@400;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+          <script>
+          (function () {
+            var root = document.documentElement;
+            root.classList.add("poetry-root");
+            var defaults = {
+              palette: "qadr",
+              gradient: "lamp",
+              ar: "amiri",
+              en: "cormorant",
+              scale: "1",
+              pattern: "0.24",
+              sheet: "0.94",
+              translation: "true",
+              numbers: "false"
+            };
+            var saved = {};
+            try {
+              saved = JSON.parse(localStorage.getItem("poetry-appearance") || "{}") || {};
+            } catch (e) {}
+            Object.keys(defaults).forEach(function (key) {
+              var value = saved[key];
+              if (value === undefined || value === null || value === "") value = defaults[key];
+              root.setAttribute("data-" + key, String(value));
+            });
+            root.style.setProperty("--poem-scale", root.getAttribute("data-scale"));
+            root.style.setProperty("--pattern-opacity", root.getAttribute("data-pattern"));
+            root.style.setProperty("--sheet-alpha", root.getAttribute("data-sheet"));
+          })();
+          </script>
+    include-after-body:
+      - file: controls.html

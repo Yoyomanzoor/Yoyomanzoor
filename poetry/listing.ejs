@@ -1,0 +1,31 @@
+```{=html}
+<div class="poem-shelf">
+<% for (const item of items) { %>
+<%
+  let poet = item.author;
+  if (Array.isArray(poet)) {
+    poet = poet.map(function (a) {
+      if (a && typeof a === "object") return a.name || "";
+      return a || "";
+    }).filter(Boolean).join(", ");
+  } else if (poet && typeof poet === "object") {
+    poet = poet.name || "";
+  }
+  let cats = item.categories;
+  if (Array.isArray(cats)) cats = cats.join(" · ");
+  let when = item.date || "";
+  if (when && typeof when !== "string") when = "";
+%>
+<a class="poem-card" href="<%- item.path %>">
+<% if (cats) { %><p class="poem-card-cat"><%= cats %></p><% } %>
+<h2 class="poem-card-title"><%= item.title %></h2>
+<% if (item.subtitle) { %><p class="poem-card-ar" lang="ar" dir="rtl"><%= item.subtitle %></p><% } %>
+<% if (item.description) { %><p class="poem-card-desc"><%= item.description %></p><% } %>
+<p class="poem-card-meta"><% if (poet) { %><span><%= poet %></span><% } %><% if (poet && when) { %><span class="poem-card-dot" aria-hidden="true">·</span><% } %><% if (when) { %><span><%= when %></span><% } %></p>
+</a>
+<% } %>
+</div>
+<% if (!items.length) { %>
+<p class="poetry-empty">No poems yet.</p>
+<% } %>
+```

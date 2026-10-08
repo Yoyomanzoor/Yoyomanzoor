@@ -9,7 +9,7 @@
 <link>https://yoyomanzoor.github.io/Yoyo/</link>
 <atom:link href="https://yoyomanzoor.github.io/Yoyo/index.xml" rel="self" type="application/rss+xml"/>
 <description>Yoyomanzoor&#39;s personal site</description>
-<generator>quarto-1.9.37</generator>
+<generator>quarto-1.10.19</generator>
 <lastBuildDate>Tue, 21 Apr 2026 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Forms</title>
@@ -72,7 +72,7 @@
 <section id="cosine-similarity" class="level2">
 <h2 class="anchored" data-anchor-id="cosine-similarity">Cosine similarity</h2>
 <p>Reviewing the law of cosines, for two vectors <img src="https://latex.codecogs.com/png.latex?u"> and <img src="https://latex.codecogs.com/png.latex?v"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, the cosine of the angle <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> between them is given by: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7Bu%20%5Ccdot%20v%7D%7B%7C%7Cu%7C%7C%20%5Ccdot%20%7C%7Cv%7C%7C%7D"></p>
-<p>The cosine similarity between two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> can be defined analogously using the Frobenius inner product and Frobenius norms: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%7D%7B%7C%7CA%7C%7C_F%20%5Ccdot%20%7C%7CB%7C%7C_F%7D"></p>
+<p>The cosine similarity between two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> can be defined analogously using the Frobenius inner product and Frobenius norms: <!-- Empty group keeps Pandoc from gluing the F subscript to \cdot, which Typst reads as Fdot. --> <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%7D%7B%7C%7CA%7C%7C_F%20%7B%7D%20%5Ccdot%20%7C%7CB%7C%7C_F%7D"></p>
 <p>For example, if we have two matrices: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D,%20%5Cquad%20B%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
 <p>We can calculate the cosine similarity as follows:</p>
 <ol type="1">
