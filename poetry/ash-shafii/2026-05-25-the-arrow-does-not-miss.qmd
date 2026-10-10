@@ -1,11 +1,11 @@
 ---
-title: "The Arrow Does Not Miss"
-subtitle: "ما في المَقامِ لِذي عَقلٍ وَذي أَدَبِ"
+title: "The Arrows of the Night Do Not Miss"
+subtitle: "أتَهزَأُ بالدُعاءِ وتَزدريه"
 author: "Imam al-Shāfiʿī"
 date: 2026-05-25
 categories:
   - al-Shāfiʿī
-description: "Still water spoils. The arrow strikes only once it leaves the bow."
+description: "Every dua hits its mark, even the one shot alone in the dark."
 ---
 
 <!--
