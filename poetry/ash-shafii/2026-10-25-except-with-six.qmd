@@ -2,7 +2,6 @@
 title: "Except with Six"
 subtitle: "إلا بستة"
 author: "الإمام الشافعي"
-date: 2026-10-24
 categories:
   - الشافعي
   - قافية النون

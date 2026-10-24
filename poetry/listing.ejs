@@ -17,11 +17,11 @@
   if (when && typeof when !== "string") when = "";
 %>
 <a class="poem-card" href="<%- item.path %>">
-<% if (cats) { %><p class="poem-card-cat"><%= cats %></p><% } %>
+<% if (cats) { %><p class="poem-card-cat" lang="ar" dir="rtl"><%= cats %></p><% } %>
 <h2 class="poem-card-title"><%= item.title %></h2>
 <% if (item.subtitle) { %><p class="poem-card-ar" lang="ar" dir="rtl"><%= item.subtitle %></p><% } %>
 <% if (item.description) { %><p class="poem-card-desc"><%= item.description %></p><% } %>
-<p class="poem-card-meta"><% if (poet) { %><span><%= poet %></span><% } %><% if (poet && when) { %><span class="poem-card-dot" aria-hidden="true">·</span><% } %><% if (when) { %><span><%= when %></span><% } %></p>
+<p class="poem-card-meta"><% if (poet) { %><span class="poem-card-poet" lang="ar" dir="rtl"><%= poet %></span><% } %><% if (poet && when) { %><span class="poem-card-dot" aria-hidden="true">·</span><% } %><% if (when) { %><span class="poem-card-date"><%= when %></span><% } %></p>
 </a>
 <% } %>
 </div>

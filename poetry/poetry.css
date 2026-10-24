@@ -293,10 +293,23 @@ html.poetry-root main.content:has(.poetry-home) #title-block-header {
 .poem-card-cat,
 .poem-card-meta {
   margin: 0;
-  font-size: 0.74rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: var(--accent);
+}
+
+.poem-card-cat,
+.poem-card-poet {
+  font-family: var(--font-ar);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.2rem;
+  line-height: 1.85;
+  letter-spacing: 0;
+  text-transform: none;
+  direction: rtl;
+}
+
+.poem-card-cat {
+  text-align: center;
 }
 
 .poem-card-title {
@@ -333,11 +346,18 @@ html.poetry-root main.content:has(.poetry-home) #title-block-header {
 .poem-card-meta {
   margin-top: auto;
   display: flex;
+  align-items: baseline;
   justify-content: center;
   gap: 0.45rem;
-  letter-spacing: 0.08em;
-  text-transform: none;
   color: var(--ink-soft);
+}
+
+.poem-card-date,
+.poem-card-dot {
+  font-family: var(--font-en);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
 .poetry-empty {
@@ -379,7 +399,44 @@ html.poetry-root main.content:has(.bayt) h1.title {
 }
 
 html.poetry-root main.content:has(.bayt) .quarto-categories {
-  display: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.35rem 0.7rem;
+  margin: 0.45rem 0 0;
+  padding: 0;
+  direction: rtl;
+}
+
+html.poetry-root main.content:has(.bayt) .quarto-category {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  opacity: 1;
+  background: none;
+  font-family: var(--font-ar);
+  font-weight: 400;
+  font-style: normal;
+  font-size: calc(1.15rem * var(--poem-scale));
+  line-height: 1.85;
+  letter-spacing: 0;
+  text-transform: none;
+  direction: rtl;
+  color: var(--accent);
+}
+
+html.poetry-root main.content:has(.bayt) .quarto-category a {
+  color: inherit;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+html.poetry-root main.content:has(.bayt) .quarto-category + .quarto-category::before {
+  content: "·";
+  margin-inline-end: 0.7rem;
+  font-family: var(--font-en);
+  letter-spacing: 0;
 }
 
 html.poetry-root main.content:has(.bayt) .subtitle {
@@ -416,12 +473,14 @@ html.poetry-root main.content:has(.bayt)::after {
   mask: var(--ornament) center / contain no-repeat;
 }
 
-html.poetry-root main.content:has(.bayt) .quarto-title-meta {
+html.poetry-root main.content:has(.bayt) #title-block-header.quarto-title-block.default .quarto-title-meta {
   display: flex;
   justify-content: center;
   gap: 0.4rem;
-  margin-top: 0.85rem;
-  font-family: var(--font-en);
+  width: auto;
+  margin: 0.45rem 0 0;
+  font-family: var(--font-ar);
+  grid-column: auto;
 }
 
 html.poetry-root main.content:has(.bayt) .quarto-title-meta-heading,
@@ -433,9 +492,14 @@ html.poetry-root main.content:has(.bayt) .quarto-title-meta-contents,
 html.poetry-root main.content:has(.bayt) .quarto-title-meta-contents p {
   margin: 0;
   color: var(--accent);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-ar);
+  font-weight: 400;
+  font-style: normal;
+  font-size: calc(1.28rem * var(--poem-scale));
+  line-height: 1.9;
+  letter-spacing: 0;
+  text-transform: none;
+  direction: rtl;
 }
 
 .bayt {

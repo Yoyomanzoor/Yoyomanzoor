@@ -2,7 +2,6 @@
 title: "The Arrows of the Night Do Not Miss"
 subtitle: "أتَهزَأُ بالدُعاءِ وتَزدريه"
 author: "الإمام الشافعي"
-date: 2026-05-25
 categories:
   - الشافعي
   - قافية الهمزة
