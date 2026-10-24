@@ -448,7 +448,7 @@ Arabic verse, with an English translation beneath each couplet.
 <p class="poem-card-cat">الشافعي · قافية النون</p>
 <h2 class="poem-card-title anchored">Except with Six</h2>
 <p class="poem-card-ar" lang="ar" dir="rtl">إلا بستة</p>
-<p class="poem-card-desc">أخي لَن تَنالَ العِلمَ إلا بِسِتَّةٍ</p>
+<p class="poem-card-desc">Learning requires six things.</p>
 <p class="poem-card-meta"><span>الإمام الشافعي</span><span class="poem-card-dot" aria-hidden="true">·</span><span>October 24, 2026</span></p>
 </a>
 
@@ -1061,6 +1061,14 @@ Arabic verse, with an English translation beneath each couplet.
 
   syncForm();
 })();
+</script>
+<script>
+document.querySelectorAll(".bayt a[role='doc-noteref']").forEach(function (ref) {
+  ref.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (ref._tippy) ref._tippy.show();
+  });
+});
 </script>
 
 

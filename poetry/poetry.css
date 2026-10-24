@@ -502,76 +502,10 @@ html.poetry-root[data-numbers="true"] .bayt::before {
   margin-top: 0.2rem;
 }
 
-/* Footnotes sit on the sheet. Quarto's appendix is a white panel. */
-html.poetry-root main.content:has(.bayt) #quarto-appendix.default {
-  background: transparent;
-  border: none;
-  margin-top: 0.15rem;
-  padding-top: 0.95rem;
-  color: var(--ink-soft);
-  z-index: auto;
-}
-
-html.poetry-root main.content:has(.bayt) #quarto-appendix.default section,
-html.poetry-root main.content:has(.bayt) #quarto-appendix.default section *[role="doc-endnotes"],
-html.poetry-root main.content:has(.bayt) #quarto-appendix.default section > *:not(a) {
-  opacity: 1;
-}
-
-html.poetry-root main.content:has(.bayt) #footnotes .quarto-appendix-heading {
-  margin: 0 0 0.65rem;
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 0.72rem !important;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--accent);
-  opacity: 1;
-}
-
-html.poetry-root main.content:has(.bayt) #footnotes .anchorjs-link {
+/* Keep the note list in the DOM so Quarto can copy it into the hover
+   tooltip, but don't show the appendix on the sheet. */
+html.poetry-root main.content:has(.bayt) #quarto-appendix.default:has(#footnotes) {
   display: none !important;
-}
-
-html.poetry-root main.content:has(.bayt) .footnotes ol {
-  max-width: 38rem;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-  counter-reset: poem-fn;
-}
-
-html.poetry-root main.content:has(.bayt) .footnotes li {
-  margin: 0.7rem 0 0;
-  text-align: center;
-  counter-increment: poem-fn;
-}
-
-html.poetry-root main.content:has(.bayt) .footnotes li:has(.poem-note-ar) {
-  direction: rtl;
-}
-
-html.poetry-root main.content:has(.bayt) .footnotes li:has(.poem-note-en) {
-  direction: ltr;
-}
-
-html.poetry-root main.content:has(.bayt) .footnotes li p {
-  margin: 0;
-  line-height: 2;
-  text-align: center;
-}
-
-html.poetry-root main.content:has(.bayt) .footnotes li p::before {
-  content: counter(poem-fn);
-  font-family: var(--font-en);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--accent);
-  margin-inline-end: 0.45rem;
-  vertical-align: super;
 }
 
 html.poetry-root .poem-note-ar {
@@ -590,13 +524,8 @@ html.poetry-root .poem-note-en {
   color: var(--ink-soft);
 }
 
-html.poetry-root main.content:has(.bayt) .footnotes .footnote-back {
-  font-family: var(--font-en);
-  font-style: normal;
-  font-size: 0.85rem;
-  color: var(--accent);
-  text-decoration: none;
-  margin-inline-start: 0.4rem;
+html.poetry-root .tippy-box .footnote-back {
+  display: none;
 }
 
 html.poetry-root .bayt .footnote-ref {
@@ -632,6 +561,14 @@ html.poetry-root .tippy-box[data-theme~="quarto"] .tippy-content p {
   line-height: 1.85;
   text-align: center;
   flex: none;
+}
+
+html.poetry-root .tippy-box .tippy-content:has(.poem-note-ar) {
+  direction: rtl;
+}
+
+html.poetry-root .tippy-box .tippy-content:has(.poem-note-en) {
+  direction: ltr;
 }
 
 /* Controls */

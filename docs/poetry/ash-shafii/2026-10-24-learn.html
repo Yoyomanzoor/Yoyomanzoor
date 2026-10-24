@@ -404,7 +404,7 @@ English translation of the couplet.
 </div>
 <div class="en" lang="en">
 <p>Learn what you can and you will be a king.</p>
-<p>A don’t be ignoramus and remain imprisoned.</p>
+<p>And don’t be ignorant and remain imprisoned.</p>
 </div>
 </div>
 <div class="bayt">
@@ -414,7 +414,7 @@ English translation of the couplet.
 </div>
 <div class="en" lang="en">
 <p>Learn an aspect of knowledge every day,</p>
-<p>And you will see the ignoramuses all as donkeys.</p>
+<p>You will see the ignorant all as donkeys.</p>
 </div>
 </div>
 
@@ -1018,6 +1018,14 @@ English translation of the couplet.
 
   syncForm();
 })();
+</script>
+<script>
+document.querySelectorAll(".bayt a[role='doc-noteref']").forEach(function (ref) {
+  ref.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (ref._tippy) ref._tippy.show();
+  });
+});
 </script>
 
 

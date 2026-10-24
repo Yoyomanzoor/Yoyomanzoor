@@ -42,3 +42,12 @@ format:
           </script>
     include-after-body:
       - file: controls.html
+      - text: |
+          <script>
+          document.querySelectorAll(".bayt a[role='doc-noteref']").forEach(function (ref) {
+            ref.addEventListener("click", function (event) {
+              event.preventDefault();
+              if (ref._tippy) ref._tippy.show();
+            });
+          });
+          </script>

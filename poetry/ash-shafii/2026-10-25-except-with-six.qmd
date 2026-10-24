@@ -6,7 +6,7 @@ date: 2026-10-24
 categories:
   - الشافعي
   - قافية النون
-description: ""
+description: "Learning requires six things."
 ---
 
 ::: bayt
