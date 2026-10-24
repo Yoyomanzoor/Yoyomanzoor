@@ -1,0 +1,54 @@
+---
+title: "Learn"
+subtitle: "تعلم ما استطعت"
+author: "الإمام الشافعي"
+date: 2026-10-24
+categories:
+  - الشافعي
+  - قافية الراء
+description: "Learn what you can."
+---
+
+<!--
+Each couplet is a bayt: two Arabic hemistichs, a line of three asterisks,
+then your English. The two Arabic paragraphs sit side by side on a wide screen,
+the first on the right.
+
+::: bayt
+صدر البيت
+
+عجز البيت
+
+***
+
+English translation of the couplet.
+:::
+-->
+
+::: bayt
+تعلم ما استطعتَ تَكُنْ أميراً
+
+وَلا تَكُ جاهِلاً تَبقى أسيراً
+
+***
+
+Learn what you can and you will be a king.
+
+A don't be ignoramus and remain imprisoned.
+
+:::
+
+::: bayt
+تعلًم كُلَّ يَومٍ حرفَ علمٍ
+
+ترى الجُهّالَ كُلَّهم حَميراً[^1]
+
+[^1]: يدعو الى التعلم وعدم الستهتاز (انقياد الهوى) بالحرف الواحد من العلم لأن هذا له شأنه في جَنيِ ثمرات المعرفة، وهكذا يصبح الجهّال حميرا بالقياس إلى متعلم الحرف
+
+***
+
+Learn an aspect of knowledge every day,
+
+And you will see the ignoramuses all as donkeys.
+
+:::

@@ -1,10 +1,11 @@
 ---
 title: "The Arrows of the Night Do Not Miss"
 subtitle: "أتَهزَأُ بالدُعاءِ وتَزدريه"
-author: "Imam al-Shāfiʿī"
+author: "الإمام الشافعي"
 date: 2026-05-25
 categories:
-  - al-Shāfiʿī
+  - الشافعي
+  - قافية الهمزة
 description: "Every dua hits its mark, even the one shot alone in the dark."
 ---
 
