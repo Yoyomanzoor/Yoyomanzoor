@@ -1,0 +1,50 @@
+---
+title: "Except with Six"
+subtitle: "إلا بستة"
+author: "الإمام الشافعي"
+date: 2026-10-24
+categories:
+  - الشافعي
+  - قافية النون
+description: ""
+---
+
+::: bayt
+
+أخي لَن تَنالَ العِلمَ إلا بِسِتَّةٍ
+
+سَأنبِيكَ[^1] عَن تَفصيلِها بِبَيانِ[^2]
+
+[^1]: أنبِيكَ أي أنبئك أخبرك
+
+[^2]: أي الوضوح
+
+***
+
+[O] my brother, you will not attain knowledge except with six,
+
+I will show you their details with clarity.
+
+:::
+
+::: bayt
+
+ذَكاءً وَحِرصٌ واجتِهادٌ وبُلغَةٌ[^3]
+
+وصُحبَةُ أُستاذٍ وطولُ زَمانِ[^4]
+
+[^3]: أي بلغة العيش
+
+[^4]: أي الحاجة إلى زمن طويل
+
+***
+
+Intelligence, motivation, diligence, and attainment,[^5]
+
+Companionship of a teacher and a long time.[^6]
+
+[^5]: Attaining adulthood/maturity
+
+[^6]: Striving for a long time
+
+:::

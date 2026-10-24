@@ -470,7 +470,7 @@ html.poetry-root[data-numbers="true"] .bayt::before {
   gap: 0.35rem 1.6rem;
 }
 
-.ar p {
+.ar > p {
   flex: 1 1 0;
   margin: 0;
   font-family: var(--font-ar);
@@ -487,7 +487,7 @@ html.poetry-root[data-numbers="true"] .bayt::before {
   margin: 0.85rem auto 0;
 }
 
-.en p {
+.en > p {
   margin: 0;
   font-family: var(--font-en);
   font-style: italic;
@@ -498,8 +498,140 @@ html.poetry-root[data-numbers="true"] .bayt::before {
   color: var(--ink-soft);
 }
 
-.en p + p {
+.en > p + p {
   margin-top: 0.2rem;
+}
+
+/* Footnotes sit on the sheet. Quarto's appendix is a white panel. */
+html.poetry-root main.content:has(.bayt) #quarto-appendix.default {
+  background: transparent;
+  border: none;
+  margin-top: 0.15rem;
+  padding-top: 0.95rem;
+  color: var(--ink-soft);
+  z-index: auto;
+}
+
+html.poetry-root main.content:has(.bayt) #quarto-appendix.default section,
+html.poetry-root main.content:has(.bayt) #quarto-appendix.default section *[role="doc-endnotes"],
+html.poetry-root main.content:has(.bayt) #quarto-appendix.default section > *:not(a) {
+  opacity: 1;
+}
+
+html.poetry-root main.content:has(.bayt) #footnotes .quarto-appendix-heading {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--accent);
+  opacity: 1;
+}
+
+html.poetry-root main.content:has(.bayt) #footnotes .anchorjs-link {
+  display: none !important;
+}
+
+html.poetry-root main.content:has(.bayt) .footnotes ol {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  counter-reset: poem-fn;
+}
+
+html.poetry-root main.content:has(.bayt) .footnotes li {
+  margin: 0.7rem 0 0;
+  text-align: center;
+  counter-increment: poem-fn;
+}
+
+html.poetry-root main.content:has(.bayt) .footnotes li:has(.poem-note-ar) {
+  direction: rtl;
+}
+
+html.poetry-root main.content:has(.bayt) .footnotes li:has(.poem-note-en) {
+  direction: ltr;
+}
+
+html.poetry-root main.content:has(.bayt) .footnotes li p {
+  margin: 0;
+  line-height: 2;
+  text-align: center;
+}
+
+html.poetry-root main.content:has(.bayt) .footnotes li p::before {
+  content: counter(poem-fn);
+  font-family: var(--font-en);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin-inline-end: 0.45rem;
+  vertical-align: super;
+}
+
+html.poetry-root .poem-note-ar {
+  font-family: var(--font-ar);
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(1.22rem * var(--poem-scale));
+  color: var(--ink-soft);
+}
+
+html.poetry-root .poem-note-en {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-weight: 400;
+  font-size: calc(1.05rem * var(--poem-scale));
+  color: var(--ink-soft);
+}
+
+html.poetry-root main.content:has(.bayt) .footnotes .footnote-back {
+  font-family: var(--font-en);
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+  margin-inline-start: 0.4rem;
+}
+
+html.poetry-root .bayt .footnote-ref {
+  font-family: var(--font-en);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 0;
+  text-decoration: none;
+  margin-inline-start: 0.12em;
+}
+
+html.poetry-root .bayt .footnote-ref sup {
+  font-size: 0.52em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+html.poetry-root .tippy-box[data-theme~="quarto"] {
+  background-color: rgba(var(--sheet-r), var(--sheet-g), var(--sheet-b), 0.98);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  font-size: 1.02rem;
+  line-height: 1.85;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+}
+
+html.poetry-root .tippy-box[data-theme~="quarto"] .tippy-content,
+html.poetry-root .tippy-box[data-theme~="quarto"] .tippy-content p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.85;
+  text-align: center;
+  flex: none;
 }
 
 /* Controls */
@@ -686,7 +818,7 @@ html.poetry-root[data-numbers="true"] .bayt::before {
     gap: 0.15rem;
   }
 
-  .ar p {
+  .ar > p {
     max-width: none;
     font-size: calc(1.48rem * var(--poem-scale));
   }
