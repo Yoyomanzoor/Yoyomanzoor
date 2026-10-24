@@ -1,4 +1,25 @@
 ```{=html}
+<%
+  const tagCounts = {};
+  for (const item of items) {
+    const cats = Array.isArray(item.categories) ? item.categories : [];
+    for (const cat of cats) tagCounts[cat] = (tagCounts[cat] || 0) + 1;
+  }
+  const poemTags = Object.keys(tagCounts).sort(function (a, b) {
+    return a.localeCompare(b, "ar");
+  });
+%>
+<% if (!items.length) { %>
+<p class="poetry-empty">No poems yet.</p>
+<% } else { %>
+<div class="poetry-browse">
+<nav class="poem-tags" aria-label="Filter by tag">
+  <p class="poem-tags-kicker" lang="ar" dir="rtl">وسوم</p>
+  <button type="button" class="poem-tag is-active" data-tag="" lang="ar" dir="rtl" aria-pressed="true">الكل</button>
+  <% for (const tag of poemTags) { %>
+  <button type="button" class="poem-tag" data-tag="<%= tag %>" lang="ar" dir="rtl" aria-pressed="false"><%= tag %><span class="poem-tag-count"><%= tagCounts[tag] %></span></button>
+  <% } %>
+</nav>
 <div class="poem-shelf">
 <% for (const item of items) { %>
 <%
@@ -11,12 +32,13 @@
   } else if (poet && typeof poet === "object") {
     poet = poet.name || "";
   }
-  let cats = item.categories;
-  if (Array.isArray(cats)) cats = cats.join(" · ");
+  const catList = Array.isArray(item.categories) ? item.categories : [];
+  const cats = catList.join(" · ");
+  const tagAttr = catList.join("|");
   let when = item.date || "";
   if (when && typeof when !== "string") when = "";
 %>
-<a class="poem-card" href="<%- item.path %>">
+<a class="poem-card" href="<%- item.path %>" data-tags="<%= tagAttr %>">
 <% if (cats) { %><p class="poem-card-cat" lang="ar" dir="rtl"><%= cats %></p><% } %>
 <h2 class="poem-card-title"><%= item.title %></h2>
 <% if (item.subtitle) { %><p class="poem-card-ar" lang="ar" dir="rtl"><%= item.subtitle %></p><% } %>
@@ -25,7 +47,48 @@
 </a>
 <% } %>
 </div>
-<% if (!items.length) { %>
-<p class="poetry-empty">No poems yet.</p>
+<p class="poetry-empty poem-tags-empty" hidden>No poems with these tags.</p>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector(".poem-tags");
+  var empty = document.querySelector(".poem-tags-empty");
+  if (!nav) return;
+
+  function selected() {
+    return Array.from(nav.querySelectorAll(".poem-tag.is-active"))
+      .map(function (el) { return el.getAttribute("data-tag"); })
+      .filter(Boolean);
+  }
+
+  function apply() {
+    var tags = selected();
+    var shown = 0;
+    document.querySelectorAll(".poem-card").forEach(function (card) {
+      var have = (card.getAttribute("data-tags") || "").split("|").filter(Boolean);
+      var ok = tags.every(function (tag) { return have.indexOf(tag) !== -1; });
+      card.hidden = !ok;
+      if (ok) shown += 1;
+    });
+    nav.querySelectorAll(".poem-tag").forEach(function (el) {
+      var on = el.getAttribute("data-tag") ? el.classList.contains("is-active") : tags.length === 0;
+      el.classList.toggle("is-active", on);
+      el.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    if (empty) empty.hidden = shown !== 0;
+  }
+
+  nav.addEventListener("click", function (event) {
+    var button = event.target.closest(".poem-tag");
+    if (!button) return;
+    if (!button.getAttribute("data-tag")) {
+      nav.querySelectorAll(".poem-tag").forEach(function (el) { el.classList.remove("is-active"); });
+    } else {
+      button.classList.toggle("is-active");
+    }
+    apply();
+  });
+})();
+</script>
 <% } %>
 ```

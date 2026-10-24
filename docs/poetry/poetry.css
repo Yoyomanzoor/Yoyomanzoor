@@ -259,17 +259,84 @@ html.poetry-root main.content:has(.poetry-home) #title-block-header {
   line-height: 1.55;
 }
 
-.poem-shelf {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.15rem;
+.poetry-browse {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12rem;
+  grid-template-areas: "shelf tags";
+  gap: 1.5rem 2.2rem;
+  align-items: start;
   margin-top: 2.6rem;
   text-align: initial;
 }
 
+.poem-tags {
+  grid-area: tags;
+  position: sticky;
+  top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  direction: rtl;
+  text-align: right;
+}
+
+.poem-tags-kicker {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-ar);
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: var(--accent);
+}
+
+.poem-tag {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.12rem 0;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-ar);
+  font-size: 1.15rem;
+  line-height: 1.8;
+  cursor: pointer;
+}
+
+.poem-tag:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.poem-tag.is-active {
+  color: var(--accent);
+}
+
+.poem-tag-count {
+  font-family: var(--font-en);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.poem-tags-empty {
+  grid-area: shelf;
+  margin: 1.5rem 0 0;
+}
+
+.poem-shelf {
+  grid-area: shelf;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.15rem;
+  margin-top: 0;
+  text-align: initial;
+}
+
 .poem-card {
-  flex: 1 1 20rem;
+  flex: 1 1 18rem;
   max-width: 28rem;
   display: flex;
   flex-direction: column;
@@ -281,6 +348,10 @@ html.poetry-root main.content:has(.poetry-home) #title-block-header {
   border: 1px solid var(--rule);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
   transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.poem-card[hidden] {
+  display: none !important;
 }
 
 .poem-card:hover {
@@ -804,6 +875,28 @@ html.poetry-root .tippy-box .tippy-content:has(.poem-note-en) {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.68rem;
+}
+
+@media (max-width: 860px) {
+  .poetry-browse {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "tags"
+      "shelf";
+  }
+
+  .poem-tags {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2rem 0.9rem;
+  }
+
+  .poem-tags-kicker {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 @media (max-width: 720px) {
