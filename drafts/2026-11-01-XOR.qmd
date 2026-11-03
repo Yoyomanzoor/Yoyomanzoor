@@ -152,7 +152,6 @@ This once again follows the form of @eq-affineeq, and follows the contradiction 
 
 This is also a good opportunity to look at another (more geometric) proof for why linear combinations alone can't solve $\text{XOR}$.
 
-
 ::: {#thm-midline}
 ### Proof by midline: n-dimensional linear models will not solve $\text{XOR}$.
 
@@ -169,7 +168,11 @@ x_3 = px_1 + qx_2 + r
 \end{gathered}
 $$ {#eq-affine3d}
 
-The transformed points can be notated as $z_{x_1,x_2}$, where $z_{0,0} = \begin{bmatrix}0\\0\\r\\C\end{bmatrix}$ and $z_{0,1} = \begin{bmatrix}0\\1\\q+r\\C\end{bmatrix}$.  The midline between these points can be called $m$, where $m_0$ is between the endpoints $z_{0,0}$ and $z_{1,1}$ and $m_1$ is between the endpoints $z$z_{0,1}$ and $z_{0,1}$. Since $C$ is a constant and beyond the linear map, it will be ignored for the sake of simplicity. Note that these midpoints are of endpoints decided _a priori_ based on how they should classify in the $\text{XOR}$ function.
+The transformed points can be notated as $z_{x_1,x_2}$, where 
+
+$z_{0,0} = \begin{bmatrix}0\\0\\r\\C\end{bmatrix}$ and $z_{0,1} = \begin{bmatrix}0\\1\\q+r\\C\end{bmatrix}$.
+
+The midline between these points can be called $m$, where $m_0$ is between the endpoints $z_{0,0}$ and $z_{1,1}$ and $m_1$ is between the endpoints $z$z_{0,1}$ and $z_{0,1}$. Since $C$ is a constant and beyond the linear map, it will be ignored for the sake of simplicity. Note that these midpoints are of endpoints decided _a priori_ based on how they should classify in the $\text{XOR}$ function.
 
 Calculating the midpoints:
 
@@ -179,8 +182,8 @@ m_0 &= \frac{z_{0,0},z_{1,1}}{2}
 = \frac{
   \begin{bmatrix}0\\0\\r\end{bmatrix} +
   \begin{bmatrix}A\\B\\A+B+p+q+r\end{bmatrix}
-  }{2}\\
-&= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
+  }{2}
+= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
 \end{aligned}
 $$
 
@@ -190,8 +193,8 @@ m_1 &= \frac{z_{0,1},z_{1,0}}{2}
 = \frac{ 
   \begin{bmatrix}0\\B\\B+q+r\end{bmatrix} +
   \begin{bmatrix}A\\0\\A+p+r\end{bmatrix}
-  }{2}\\
-&= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
+  }{2}
+= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
 \end{aligned}
 $$
 
