@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yoyomanzoor">
+<meta name="dcterms.date" content="2026-02-23">
+<meta name="description" content="Why XOR requires nonlinear models">
+
+<title>XOR and breaking linear models – Yoyomanzoor</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../images/yoyo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-447e42e69aaa9833c0ba1b986f430b20.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5180ac5adf1831260f6fcee6d2b994a2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-037d0040f7538ce883687511990b1fbb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-5180ac5adf1831260f6fcee6d2b994a2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          toggle.setAttribute("aria-checked", alternate ? "true" : "false");
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455).
+    // Not run on load: stylesheets are set before first paint there, and
+    // scrolling would undo the scroll to a URL fragment (#14973).
+    // The one pixel nudge keeps the reader where they were.
+    const refreshSafariScrollbar = () => {
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        const scrollY = window.scrollY;
+        window.scrollTo(0, scrollY > 0 ? scrollY - 1 : 1);
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      refreshSafariScrollbar();
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Yoyomanzoor</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house" role="img" aria-label="Home">
+</i> 
+<span class="menu-text"><span></span></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> <i class="bi bi-person" role="img" aria-label="About">
+</i> 
+<span class="menu-text"><span></span></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../blog.html"> <i class="bi bi-journal-text" role="img" aria-label="Blog">
+</i> 
+<span class="menu-text"><span></span></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../poetry/index.html"> <i class="bi bi-feather" role="img" aria-label="Poetry">
+</i> 
+<span class="menu-text"><span></span></span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Yoyomanzoor"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <button type="button" role="switch" aria-checked="false" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi"></i></button>
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-textxor-problem-and-the-defeat-of-linear-models" id="toc-the-textxor-problem-and-the-defeat-of-linear-models" class="nav-link active" data-scroll-target="#the-textxor-problem-and-the-defeat-of-linear-models">The <span class="math inline">\(\text{XOR}\)</span> problem and the defeat of linear models</a>
+  <ul class="collapse">
+  <li><a href="#introduction-to-textxor" id="toc-introduction-to-textxor" class="nav-link" data-scroll-target="#introduction-to-textxor">Introduction to <span class="math inline">\(\text{XOR}\)</span></a></li>
+  <li><a href="#linear-model-approach" id="toc-linear-model-approach" class="nav-link" data-scroll-target="#linear-model-approach">Linear model approach</a></li>
+  <li><a href="#can-a-deeper-linear-model-solve-textxor" id="toc-can-a-deeper-linear-model-solve-textxor" class="nav-link" data-scroll-target="#can-a-deeper-linear-model-solve-textxor">Can a deeper linear model solve <span class="math inline">\(\text{XOR}\)</span>?</a></li>
+  <li><a href="#can-more-terms-in-a-linear-model-solve-textxor" id="toc-can-more-terms-in-a-linear-model-solve-textxor" class="nav-link" data-scroll-target="#can-more-terms-in-a-linear-model-solve-textxor">Can more terms in a linear model solve <span class="math inline">\(\text{XOR}\)</span>?</a></li>
+  <li><a href="#can-a-linear-model-containing-a-nonlinear-term-solve-textxor" id="toc-can-a-linear-model-containing-a-nonlinear-term-solve-textxor" class="nav-link" data-scroll-target="#can-a-linear-model-containing-a-nonlinear-term-solve-textxor">Can a linear model containing a nonlinear term solve <span class="math inline">\(\text{XOR}\)</span>?</a></li>
+  <li><a href="#do-nonlinear-terms-need-to-be-declared" id="toc-do-nonlinear-terms-need-to-be-declared" class="nav-link" data-scroll-target="#do-nonlinear-terms-need-to-be-declared">Do nonlinear terms need to be declared?</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2026-11-01-XOR.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">XOR and breaking linear models</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">math</div>
+    <div class="quarto-category">neural nets</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Why XOR requires nonlinear models
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yoyomanzoor </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 23, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-textxor-problem-and-the-defeat-of-linear-models" class="level2">
+<h2 class="anchored" data-anchor-id="the-textxor-problem-and-the-defeat-of-linear-models">The <span class="math inline">\(\text{XOR}\)</span> problem and the defeat of linear models</h2>
+<p>In this exercise, we will use the <span class="math inline">\(\text{XOR}\)</span> function to motivate nonlinear elements in linear models, then learned-parameter linear models with nonlinear elements. The goal is to find generalizable models that can solve a classifier question: given 2D binary inputs, can we solve <span class="math inline">\(\text{XOR}\)</span>?</p>
+<section id="introduction-to-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-textxor">Introduction to <span class="math inline">\(\text{XOR}\)</span></h3>
+<p>XOR is a function which takes two binary inputs, returning 1 for OR inputs and 0 for all others. It can be described as <span class="math inline">\(\text{XOR}:\{0,1\}\rightarrow \{0,1\}\)</span> and as a table with:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x_1\)</span></th>
+<th><span class="math inline">\(x_2\)</span></th>
+<th><span class="math inline">\(\text{XOR}(x_1,x_2)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="linear-model-approach" class="level3">
+<h3 class="anchored" data-anchor-id="linear-model-approach">Linear model approach</h3>
+<p>A simple question might be to predict the outputs with a useful model, such that inputing <span class="math inline">\(x=\{x_1,x_2\}\)</span> would correctly model <span class="math inline">\(\text{XOR}\)</span> with an output <span class="math inline">\(\hat{y}\)</span>. A naïve approach might be to use a linear model.</p>
+<p><span id="eq-linearmodel"><span class="math display">\[
+\hat{y} = w_1 x_1 + w_2 x_2 + b = w^\top x + b
+\tag{1}\]</span></span></p>
+<p>We can solve for each input and output of <span class="math inline">\(\text{XOR}\)</span>.</p>
+<p><span id="eq-contradition"><span class="math display">\[
+\begin{aligned}
+x_1=0,x_2=0,y=0,&amp;\quad 0=w_1(0) + w_2(0) + b,\quad b=0\\
+x_1=0,x_2=1,y=1,&amp;\quad 1=w_1(0) + w_2(1) + b,\quad b=1-w_2\\
+x_1=1,x_2=0,y=1,&amp;\quad 1=w_1(1) + w_2(0) + b,\quad b=1-w_1\\
+x_1=1,x_2=1,y=0,&amp;\quad 0=w_1(1) + w_2(1) + b,\quad b=-w_1 -w_2
+\end{aligned}
+\tag{2}\]</span></span></p>
+<p>This is a contradiction. Plugging in <span class="math inline">\(b=0\)</span>, <span class="math inline">\(w_1=w_2=1\)</span>, which contradicts with <span class="math inline">\(b= -w_1 -w_2\)</span>. Thus, this model cannot solve <span class="math inline">\(\text{XOR}\)</span>.</p>
+<p>This contradiction can be formalized with a more rigorous proof:</p>
+<div id="thm-contradiction" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Proof by contradiction: Two dimensional linear models will not solve <span class="math inline">\(\text{XOR}\)</span>.)</strong></span> &nbsp;</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>A general affine two dimensional model that maps <span class="math inline">\(\mathbb{R}^2 \rightarrow \mathbb{R}\)</span> can be defined as:</p>
+<p><span id="eq-affineeq"><span class="math display">\[
+f\left(x_1,x_2\right) = Ax_1+Bx_2 + C
+\tag{3}\]</span></span></p>
+<p>In order for <a href="#eq-affineeq" class="quarto-xref">Equation&nbsp;3</a> to solve <span class="math inline">\(\text{XOR}\)</span> <span class="math inline">\(f(0,0) + f(1,1) \neq f(0,1) + f(1,0)\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(0,0) + f(1,1) &amp;= A(0)+B(0)+C + A(1)+B(1)+C\\
+&amp;= A+B+2C\\
+f(0,1) + f(1,0) &amp;= A(0)+B(1)+C + A(1)+B(0)+C\\
+&amp;= A+B+2C
+\end{aligned}
+\]</span></p>
+<p>Thus, in a linear model, <span class="math inline">\(f(0,0) + f(1,1) = f(0,1) + f(1,0)\)</span>, which contradicts the <span class="math inline">\(\text{XOR}\)</span> function.</p>
+<p><span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="can-a-deeper-linear-model-solve-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="can-a-deeper-linear-model-solve-textxor">Can a deeper linear model solve <span class="math inline">\(\text{XOR}\)</span>?</h3>
+<p>Suppose more terms are added to the original linear model <a href="#eq-linearmodel" class="quarto-xref">Equation&nbsp;1</a>, as such:</p>
+<p><span id="eq-linearmodelmoreterms"><span class="math display">\[
+\begin{gathered}
+\hat{y} = w_1h_1+w_2h_2+b\\
+h_1 = a_1x_1+a_2x_2+c_1,\quad h_2 = a_3x_1+a_4x_2+c_2
+\end{gathered}
+\tag{4}\]</span></span></p>
+<p>This can be viewed as a nested linear model, where linear terms are themselves composed of linear terms:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-nested-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nested-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+
+<pre class="mermaid mermaid-js" data-label="fig-nested-model">flowchart LR
+    x1((x₁)) --&gt; h1((h₁))
+    x1((x₁)) --&gt; h2((h₂))
+    x2((x₂)) --&gt; h1((h₁))
+    x2((x₂)) --&gt; h2((h₂))
+    
+    h1((h₁)) --&gt; yhat((ŷ))
+    h2((h₂)) --&gt; yhat((ŷ))
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nested-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Architecture of the nested linear model.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A nested linear model can still be simplified to a similar form to the original linear model:</p>
+<p><span id="eq-linearmodellayerreductionproof"><span class="math display">\[
+\begin{aligned}
+\hat{y} &amp;= h_1\left(a_1x_1+a_2x_2+c_1\right) + h_2\left(a_3x_1+a_4x_2+c_2\right) + b\\
+&amp;= h_1a_1x_1 + h_1a_2x_2 + h_1c_1 + h_2a_3x_1 + h_2a_4x_2 + h_2c_2 + b\\
+&amp;= h_1a_1x_1 + h_2a_3x_1 + h_1a_2x_2 + h_2a_4x_2 + h_1c_1 + h_2c_2 + b\\
+&amp;= \left(h_1a_1 + h_2a_3\right)x_1 + \left(h_1a_2 + h_2a_4\right)x_2 + h_1c_1 + h_2c_2 + b\\
+\end{aligned}
+\tag{5}\]</span></span></p>
+<p>The overall model reduces to a single linear combination:</p>
+<p><span class="math display">\[
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + C\\
+A = h_1a_1 + h_2a_3,\quad B = h_1a_2 + h_2a_4
+\end{gathered}
+\]</span></p>
+<p>Since this model reduces to the same two dimensional affine model <a href="#eq-affineeq" class="quarto-xref">Equation&nbsp;3</a>, it too will follow the same contradiction in <a href="#eq-contradition" class="quarto-xref">Equation&nbsp;2</a>. So, a deeper linear model will not solve <span class="math inline">\(\text{XOR}\)</span>.</p>
+</section>
+<section id="can-more-terms-in-a-linear-model-solve-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="can-more-terms-in-a-linear-model-solve-textxor">Can more terms in a linear model solve <span class="math inline">\(\text{XOR}\)</span>?</h3>
+<p>Our proof <a href="#thm-contradiction" class="quarto-xref">Theorem&nbsp;1</a> showed that a linear model with 2 terms, equal to the input, does not solve <span class="math inline">\(\text{XOR}\)</span>. So what if there were more terms? Note, since the input is 2 dimensional, a third term must be some linear combination of the terms.</p>
+<p><span id="eq-linearmodel3d"><span class="math display">\[
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + Dx_3 + C\\
+x_3 = px_1 + qx_2 + r
+\end{gathered}
+\tag{6}\]</span></span></p>
+<p>Expanding this model:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{y} &amp;= Ax_1 + Bx_2 + D\left(px_1 + qx_2 + r\right) + C\\
+&amp;= (A+Dp)x_1 + (B+Dq)x_2 + Dr + C
+\end{aligned}
+\]</span></p>
+<p>This once again follows the form of <a href="#eq-affineeq" class="quarto-xref">Equation&nbsp;3</a>, and follows the contradiction of <a href="#thm-contradiction" class="quarto-xref">Theorem&nbsp;1</a>.</p>
+<p>This is also a good opportunity to look at another (more geometric) proof for why linear combinations alone can’t solve <span class="math inline">\(\text{XOR}\)</span>.</p>
+<div id="thm-midpoint" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Proof by midpoint: n-dimensional linear models will not solve <span class="math inline">\(\text{XOR}\)</span> with affine embeddings.)</strong></span> Here is a proof that generalizes to any linear model, regardless of depth (which is not explicitly stated, but inferred from the above work) and mapping <span class="math inline">\(\mathbb{R}^n \rightarrow \mathbb{R}\)</span>. It assumes that inputs are affine only.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>For any affine function <span class="math inline">\(f:\mathbb{R}^n \rightarrow \mathbb{R}\)</span>,</p>
+<p><span id="eq-generalaffine"><span class="math display">\[
+\hat{y} = w^\top x + b
+\tag{7}\]</span></span></p>
+<p>Suppose a function (e.g., a line) separates two classes of data if coefficients exist such that <span class="math inline">\(f(x) &gt; 0\)</span> for class 1 and <span class="math inline">\(f(x) &lt; 0\)</span> for class 2.</p>
+<p>Assume points <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are in class 1, and their midpoint is <span class="math inline">\(M_{P,Q}=\frac{P+Q}{2}\)</span>.</p>
+<!-- $f(P) > 0$ and $f(Q) > 0$, and $M\in (P,Q)$; thus, $P$, $Q$, $M$, and all points on the line between $P$ and $Q$ must satisfy $f(x)>0$. -->
+<p>The value of an affine function <span class="math inline">\(f\)</span> at the midpoint <span class="math inline">\(M\)</span> is equal to the average of its values at the endpoints <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> if <span class="math inline">\(f(M) = \frac{f(P) + f(Q)}{2}\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(M_{P,Q}) &amp;= w^\top M + D = w^\top \left(\frac{P + Q}{2}\right) + D\\
+&amp;= \frac{w^\top P + w^\top Q}{2} + D\\
+\\
+f(\text{average}_{P,Q}) &amp;= \frac{f(P) + f(Q)}{2} = \frac{\left(w^\top P + D\right) + \left(w^\top Q + D\right)}{2}\\
+&amp;= \frac{w^\top P + w^\top Q}{2} + D\\
+\end{aligned}
+\]</span></p>
+<p>Thus, <span class="math inline">\(f(M_{P,Q}) = f(\text{average}_{P,Q})\)</span>. Since <span class="math inline">\(f(P) &gt; 0\)</span> and <span class="math inline">\(f(Q) &gt; 0\)</span>, <span class="math inline">\(f(M_{P,Q}) &gt; 0\)</span>.</p>
+<p>Suppose there are points <span class="math inline">\(R\)</span> and <span class="math inline">\(S\)</span> where <span class="math inline">\(f(R) &lt; 0\)</span> and <span class="math inline">\(f(S) &lt; 0\)</span>. These points will be in class 2. Following the algebra above, <span class="math inline">\(f(M_{R,S}) &lt; 0\)</span> if <span class="math inline">\(f\)</span> separates class 1 and class 2.</p>
+<p>For the <span class="math inline">\(\text{XOR}\)</span> function, assign <span class="math inline">\(P=(0,0), Q=(1,1)\)</span> in class 1 (due to equivalent output) and <span class="math inline">\(R=(0,1), S=(1,0)\)</span> in class 2. Then,</p>
+<p><span class="math display">\[
+\begin{gathered}
+M_{P,Q} = \frac{\begin{bmatrix}0&amp;0\end{bmatrix} + \begin{bmatrix}1&amp;1\end{bmatrix}}{2} = \begin{bmatrix}\frac{1}{2}&amp;\frac{1}{2}\end{bmatrix}\\
+M_{R,S} = \frac{\begin{bmatrix}0&amp;1\end{bmatrix} + \begin{bmatrix}1&amp;0\end{bmatrix}}{2} = \begin{bmatrix}\frac{1}{2}&amp;\frac{1}{2}\end{bmatrix}
+\end{gathered}
+\]</span></p>
+<p>Since <span class="math inline">\(M_{P,Q} = M_{R,S}\)</span>, there is no <span class="math inline">\(f\)</span> that satisfies <span class="math inline">\(f(M_{P,Q}) &gt; 0\)</span> and <span class="math inline">\(f(M_{R,S}) &lt; 0\)</span> and separates between these classes for <span class="math inline">\(\text{XOR}\)</span>. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+<p>The geometric motivation is that the midpoint geometry is unchanged regardless of linear transformation. An intuitive understanding could be learned from a worked example before the generalized proof.</p>
+<p>Beginning with the affine function <span class="math inline">\(\mathbb{R}^3 \rightarrow \mathbb{R}\)</span>:</p>
+<p><span id="eq-affine3d"><span class="math display">\[
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + Dx_3 + C\\
+x_3 = px_1 + qx_2 + r
+\end{gathered}
+\tag{8}\]</span></span></p>
+<p>The transformed points can be notated as <span class="math inline">\(z_{x_1,x_2}\)</span>, where</p>
+<p><span class="math inline">\(z_{0,0} = \begin{bmatrix}0\\0\\r\\C\end{bmatrix}\)</span> and <span class="math inline">\(z_{0,1} = \begin{bmatrix}0\\1\\q+r\\C\end{bmatrix}\)</span>.</p>
+<p>The midpoint between these points can be called <span class="math inline">\(m\)</span>, where <span class="math inline">\(m_0\)</span> is between the endpoints <span class="math inline">\(z_{0,0}\)</span> and <span class="math inline">\(z_{1,1}\)</span> and <span class="math inline">\(m_1\)</span> is between the endpoints <span class="math inline">\(z_{0,1}\)</span> and <span class="math inline">\(z_{1,0}\)</span>. Since <span class="math inline">\(C\)</span> is a simply the bias term for prediction, it can be ignored for the sake of simplicity. Note that these midpoints are of endpoints decided <em>a priori</em> based on how they should classify in the <span class="math inline">\(\text{XOR}\)</span> function.</p>
+<p>Calculating the midpoints:</p>
+<p><span class="math display">\[
+\begin{aligned}
+m_0 &amp;= \frac{z_{0,0},z_{1,1}}{2}
+= \frac{
+  \begin{bmatrix}0\\0\\r\end{bmatrix} +
+  \begin{bmatrix}A\\B\\A+B+p+q+r\end{bmatrix}
+  }{2}
+= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+m_1 &amp;= \frac{z_{0,1},z_{1,0}}{2}
+= \frac{
+  \begin{bmatrix}0\\B\\B+q+r\end{bmatrix} +
+  \begin{bmatrix}A\\0\\A+p+r\end{bmatrix}
+  }{2}
+= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
+\end{aligned}
+\]</span></p>
+<p>Thus, <span class="math inline">\(m_0 = m_1\)</span>, which won’t solve <span class="math inline">\(\text{XOR}\)</span> per <a href="#thm-midpoint" class="quarto-xref">Theorem&nbsp;2</a>.</p>
+</section>
+<section id="can-a-linear-model-containing-a-nonlinear-term-solve-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="can-a-linear-model-containing-a-nonlinear-term-solve-textxor">Can a linear model containing a nonlinear term solve <span class="math inline">\(\text{XOR}\)</span>?</h3>
+<p>Changing the model to:</p>
+<p><span id="eq-nonlinearmodel1"><span class="math display">\[
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + Dx_3 + C\\
+x_3 = x_1x_2
+\end{gathered}
+\tag{9}\]</span></span></p>
+<p>Following <a href="#thm-contradiction" class="quarto-xref">Theorem&nbsp;1</a> with this new model:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(0,0)+f(1,1) &amp;= A(0)+B(0)+D(0)+C + A(1)+B(1)+D(1)+C\\
+&amp;= A+B+D+2C\\
+f(0,1)+f(1,0) &amp;= A(0)+B(1)+D(0)+C + A(1)+B(0)+D(0)+C\\
+&amp;= A+B+2C
+\end{aligned}
+\]</span></p>
+<p>This does not follow the same contradiction. Similarly, the midpoints will not be equivalent since <span class="math inline">\(f(P)+f(Q) \neq f(R)+f(S)\)</span> and there must exist a classifying function <span class="math inline">\(f\)</span>.</p>
+<p><span class="math display">\[
+\begin{gathered}
+f(0,0)=C=0\\
+f(1,1)=A+B+D+C=0\\
+f(0,1)=B+C=1\quad B=1\\
+f(1,0)=A+C=1\quad A=1\\
+1+1+D+0=0\quad D=-2
+\end{gathered}
+\]</span></p>
+<p>So, <span class="math inline">\(\hat{y} = x_1+x_2-2x_1x_2\)</span> is a solution to <span class="math inline">\(\text{XOR}\)</span>.</p>
+<p>It is clear that the model is a linear prediction in nonlinear transformed space with more succint notation:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{y} &amp;= Ax_1+Bx_2+D(x_1x_2)+C\\
+&amp;=w^\top \phi(x) + b
+\end{aligned}
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\begin{gathered}
+w^\top =
+\begin{bmatrix}
+A&amp;B&amp;D
+\end{bmatrix}
+\quad
+\phi =
+\begin{bmatrix}
+x_1\\x_2\\x_1x_2
+\end{bmatrix}
+\end{gathered}
+\]</span></p>
+</section>
+<section id="do-nonlinear-terms-need-to-be-declared" class="level3">
+<h3 class="anchored" data-anchor-id="do-nonlinear-terms-need-to-be-declared">Do nonlinear terms need to be declared?</h3>
+<p>Above, a nonlinear term was guessed and was found to solve <span class="math inline">\(\text{XOR}\)</span>. A more generalizable learning function would be to not directly specify this term. For example, applying a generic nonlinear function to the output of the original simple affine equation <a href="#eq-linearmodel" class="quarto-xref">Equation&nbsp;1</a>.</p>
+<p><span id="eq-generalnonlinear"><span class="math display">\[
+\hat{y} = g(w_1x_1+w_2x_2+b)
+\tag{10}\]</span></span></p>
+<p>where <span class="math inline">\(g\)</span> is any nonlinear function. Suppose <span class="math inline">\(g(z) = z^2\)</span>, then</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{y} &amp;= g(w_1x_1+w_2x_2+b)\\
+&amp;= (w_1x_1+w_2x_2+b)^2\\
+&amp;= (w_1x_1)^2 + (w_2x_2)^2 + b^2 + 2w_1x_1w_2x_2 + 2w_1x_1b + 2w_2x_2b
+\end{aligned}
+\]</span></p>
+<p>The same interaction term, <span class="math inline">\(x_1x_2\)</span>, appears here as well. Without solving, this means there will be a solution to <span class="math inline">\(\text{XOR}\)</span> if this model is added to <a href="#eq-linearmodel" class="quarto-xref">Equation&nbsp;1</a>. For exercise of solving, the model can be simplified to drop the bias term and make the algebra simpler.</p>
+<p><span class="math display">\[
+\begin{gathered}
+\hat{y} = w_1x_1 + w_2x_2 + w_3(x_1 + x_2)^2\\
+f(0,0) = 0\quad f(1,1) = w_1 + w_2 + 4w_3 = 1\\
+f(0,1) = w_2 + w_3 = 1\\
+f(1,0) = w_1 + w_3 = 1
+\end{gathered}
+\]</span></p>
+<p>Solving as a system of linear equations with row substitution. Rows can be added or multiplied together:</p>
+<p><span class="math display">\[
+\begin{gathered}
+\left[
+\begin{array}{ccc|c}
+1 &amp; 1 &amp; 4 &amp; 0 \\
+0 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 0 &amp; 1 &amp; 1 \\
+\end{array}
+\right]
+\xrightarrow{R_1 \leftarrow R_1 - R_3}
+\left[
+\begin{array}{ccc|c}
+0 &amp; 1 &amp; 3 &amp; -1 \\
+0 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 0 &amp; 1 &amp; 1 \\
+\end{array}
+\right]
+\xrightarrow{R_1 \leftarrow R_1 - R_2}
+\left[
+\begin{array}{ccc|c}
+0 &amp; 0 &amp; 2 &amp; -2 \\
+0 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 0 &amp; 1 &amp; 1 \\
+\end{array}
+\right]\\
+\\
+w_3 = -1\quad w_1 = 2\quad w_2 = 2
+\end{gathered}
+\]</span></p>
+<p>Showing equivalence to <a href="#eq-nonlinearmodel1" class="quarto-xref">Equation&nbsp;9</a>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{y} &amp;= 2x_1 + 2x_2 - (x_1 + x_2)^2\\
+&amp;= 2x_1 + 2x_2 - (x_1^2 + x_2^2 + 2x_1x_2)\\
+&amp;= (2x_1-x_1^2) + (2x_2-x_2^2) - 2x_1x_2\\
+&amp;\text{since elements in x are binary, } x_i^2=x_i\\
+&amp;= x_1 + x_2 - 2x_1x_2
+\end{aligned}
+\]</span></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const toggle = window.document.createElement('button');
+      toggle.type = "button";
+      toggle.setAttribute("role", "switch");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.classList.add('top-right');
+      toggle.classList.add('quarto-color-scheme-toggle');
+      toggle.setAttribute("aria-label", "Toggle dark mode");
+      toggle.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      toggle.appendChild(i);
+      // Put the toggle in a landmark of its own, so that landmark navigation
+      // can reach it.
+      //
+      // The container is always a fresh direct child of body, and the toggle is
+      // never moved into page furniture that the theme or the author controls.
+      // The toggle is positioned against the page, so any ancestor that
+      // establishes a containing block captures it: a positioned element or a
+      // grid for position: absolute, and transform, filter, will-change or
+      // contain for position: fixed. A direct child of body has none of these
+      // to inherit, and the shift when one appears is silent and visual.
+      //
+      // ARIA says a document should have at most one banner, and axe reports a
+      // duplicate whether or not the banners carry distinct labels. So use a
+      // header when the page has no banner yet, and a named region otherwise.
+      //
+      // A header is a banner wherever it sits, unless it is inside sectioning
+      // content, so this cannot just look at the children of body: a custom
+      // page layout wraps the title block header in a plain div. An explicit
+      // role="banner" always counts.
+      const sectioning = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
+      const hasBanner = Array.from(
+        window.document.querySelectorAll('header:not([role]), [role="banner"]')
+      ).some(function(el) {
+        return el.hasAttribute("role") || el.closest(sectioning) === null;
+      });
+      const container = window.document.createElement(hasBanner ? "div" : "header");
+      if (hasBanner) {
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Toggle dark mode");
+      }
+      container.classList.add('quarto-color-scheme-toggle-container');
+      container.appendChild(toggle);
+      window.document.body.appendChild(container);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/yoyomanzoor\.github\.io\/Yoyo");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,430 @@
+---
+title: "XOR and breaking linear models"
+description: "Why XOR requires nonlinear models"
+author: "Yoyomanzoor"
+date: "2026-02-23"
+categories:
+    - math
+    - neural nets
+format:
+  html:
+    code-fold: true
+    toc: true
+    toc-depth: 3
+  typst:
+    toc: true
+format-links:
+  - html
+  - format: typst
+    text: PDF
+    icon: file-pdf
+---
+
+## The $\text{XOR}$ problem and the defeat of linear models
+
+In this exercise, we will use the $\text{XOR}$ function to motivate nonlinear
+elements in linear models, then learned-parameter linear models with nonlinear
+elements. The goal is to find generalizable models that can solve a classifier
+question: given 2D binary inputs, can we solve $\text{XOR}$?
+
+### Introduction to $\text{XOR}$
+
+XOR is a function which takes two binary inputs, returning 1 for OR inputs and 0
+for all others. It can be described as $\text{XOR}:\{0,1\}\rightarrow \{0,1\}$
+and as a table with:
+
+| $x_1$ | $x_2$ | $\text{XOR}(x_1,x_2)$ |
+|------|------|---------------------|
+| 0    | 0    | 0                   |
+| 0    | 1    | 1                   |
+| 1    | 0    | 1                   |
+| 1    | 1    | 0                   |
+
+### Linear model approach
+
+A simple question might be to predict the outputs with a useful model, such that
+inputing $x=\{x_1,x_2\}$ would correctly model $\text{XOR}$ with an output
+$\hat{y}$. A naïve approach might be to use a linear model.
+
+$$
+\hat{y} = w_1 x_1 + w_2 x_2 + b = w^\top x + b
+$$ {#eq-linearmodel}
+
+We can solve for each input and output of $\text{XOR}$.
+
+$$
+\begin{aligned}
+x_1=0,x_2=0,y=0,&\quad 0=w_1(0) + w_2(0) + b,\quad b=0\\
+x_1=0,x_2=1,y=1,&\quad 1=w_1(0) + w_2(1) + b,\quad b=1-w_2\\
+x_1=1,x_2=0,y=1,&\quad 1=w_1(1) + w_2(0) + b,\quad b=1-w_1\\
+x_1=1,x_2=1,y=0,&\quad 0=w_1(1) + w_2(1) + b,\quad b=-w_1 -w_2
+\end{aligned}
+$$ {#eq-contradition}
+
+This is a contradiction. Plugging in $b=0$, $w_1=w_2=1$, which contradicts with
+$b= -w_1 -w_2$. Thus, this model cannot solve $\text{XOR}$.
+
+This contradiction can be formalized with a more rigorous proof:
+
+::: {#thm-contradiction}
+### Proof by contradiction: Two dimensional linear models will not solve $\text{XOR}$.
+
+:::
+:::{.proof}
+A general affine two dimensional model that maps $\mathbb{R}^2 \rightarrow \mathbb{R}$ can be defined as:
+
+$$
+f\left(x_1,x_2\right) = Ax_1+Bx_2 + C
+$$ {#eq-affineeq}
+
+In order for @eq-affineeq to solve $\text{XOR}$ $f(0,0) + f(1,1) \neq f(0,1) + f(1,0)$.
+
+$$
+\begin{aligned}
+f(0,0) + f(1,1) &= A(0)+B(0)+C + A(1)+B(1)+C\\
+&= A+B+2C\\
+f(0,1) + f(1,0) &= A(0)+B(1)+C + A(1)+B(0)+C\\
+&= A+B+2C
+\end{aligned}
+$$
+
+Thus, in a linear model, $f(0,0) + f(1,1) = f(0,1) + f(1,0)$, which contradicts
+the $\text{XOR}$ function.
+
+$\blacksquare$
+:::
+
+### Can a deeper linear model solve $\text{XOR}$?
+
+Suppose more terms are added to the original linear model @eq-linearmodel, as such:
+
+$$
+\begin{gathered}
+\hat{y} = w_1h_1+w_2h_2+b\\
+h_1 = a_1x_1+a_2x_2+c_1,\quad h_2 = a_3x_1+a_4x_2+c_2
+\end{gathered}
+$$ {#eq-linearmodelmoreterms}
+
+This can be viewed as a nested linear model, where linear terms are themselves
+composed of linear terms:
+
+```{mermaid}
+%%| label: fig-nested-model
+%%| fig-cap: "Architecture of the nested linear model."
+flowchart LR
+    x1((x₁)) --> h1((h₁))
+    x1((x₁)) --> h2((h₂))
+    x2((x₂)) --> h1((h₁))
+    x2((x₂)) --> h2((h₂))
+    
+    h1((h₁)) --> yhat((ŷ))
+    h2((h₂)) --> yhat((ŷ))
+```
+
+A nested linear model can still be simplified to a similar form to the original
+linear model:
+
+$$
+\begin{aligned}
+\hat{y} &= h_1\left(a_1x_1+a_2x_2+c_1\right) + h_2\left(a_3x_1+a_4x_2+c_2\right) + b\\
+&= h_1a_1x_1 + h_1a_2x_2 + h_1c_1 + h_2a_3x_1 + h_2a_4x_2 + h_2c_2 + b\\
+&= h_1a_1x_1 + h_2a_3x_1 + h_1a_2x_2 + h_2a_4x_2 + h_1c_1 + h_2c_2 + b\\
+&= \left(h_1a_1 + h_2a_3\right)x_1 + \left(h_1a_2 + h_2a_4\right)x_2 + h_1c_1 + h_2c_2 + b\\
+\end{aligned}
+$$ {#eq-linearmodellayerreductionproof}
+
+The overall model reduces to a single linear combination:
+
+$$
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + C\\
+A = h_1a_1 + h_2a_3,\quad B = h_1a_2 + h_2a_4
+\end{gathered}
+$$
+
+Since this model reduces to the same two dimensional affine model @eq-affineeq,
+it too will follow the same contradiction in @eq-contradition. So, a deeper
+linear model will not solve $\text{XOR}$.
+
+### Can more terms in a linear model solve $\text{XOR}$?
+
+Our proof @thm-contradiction showed that a linear model with 2 terms, equal to
+the input, does not solve $\text{XOR}$. So what if there were more terms? Note,
+since the input is 2 dimensional, a third term must be some linear combination
+of the terms.
+
+$$
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + Dx_3 + C\\
+x_3 = px_1 + qx_2 + r
+\end{gathered}
+$$ {#eq-linearmodel3d}
+
+Expanding this model:
+
+$$
+\begin{aligned}
+\hat{y} &= Ax_1 + Bx_2 + D\left(px_1 + qx_2 + r\right) + C\\
+&= (A+Dp)x_1 + (B+Dq)x_2 + Dr + C
+\end{aligned}
+$$
+
+This once again follows the form of @eq-affineeq, and follows the contradiction
+of @thm-contradiction.
+
+This is also a good opportunity to look at another (more geometric) proof for
+why linear combinations alone can't solve $\text{XOR}$.
+
+::: {#thm-midpoint}
+### Proof by midpoint: n-dimensional linear models will not solve $\text{XOR}$ with affine embeddings.
+
+Here is a proof that generalizes to any linear model, regardless of depth (which
+is not explicitly stated, but inferred from the above work) and mapping
+$\mathbb{R}^n \rightarrow \mathbb{R}$. It assumes that inputs are affine only.
+
+:::
+:::{.proof}
+
+For any affine function $f:\mathbb{R}^n \rightarrow \mathbb{R}$,
+
+$$
+\hat{y} = w^\top x + b
+$$ {#eq-generalaffine}
+
+Suppose a function (e.g., a line) separates two classes of data if coefficients
+exist such that $f(x) > 0$ for class 1 and $f(x) < 0$ for class 2.
+
+Assume points $P$ and $Q$ are in class 1, and their midpoint is
+$M_{P,Q}=\frac{P+Q}{2}$.
+
+<!-- $f(P) > 0$ and $f(Q) > 0$, and $M\in (P,Q)$; thus, $P$, $Q$, $M$, and all points on the line between $P$ and $Q$ must satisfy $f(x)>0$. -->
+
+The value of an affine function $f$ at the midpoint $M$ is equal to the average
+of its values at the endpoints $P$ and $Q$ if $f(M) = \frac{f(P) + f(Q)}{2}$.
+
+$$
+\begin{aligned}
+f(M_{P,Q}) &= w^\top M + D = w^\top \left(\frac{P + Q}{2}\right) + D\\
+&= \frac{w^\top P + w^\top Q}{2} + D\\
+\\
+f(\text{average}_{P,Q}) &= \frac{f(P) + f(Q)}{2} = \frac{\left(w^\top P + D\right) + \left(w^\top Q + D\right)}{2}\\
+&= \frac{w^\top P + w^\top Q}{2} + D\\
+\end{aligned}
+$$
+
+Thus, $f(M_{P,Q}) = f(\text{average}_{P,Q})$. Since $f(P) > 0$ and $f(Q) > 0$,
+$f(M_{P,Q}) > 0$.
+
+Suppose there are points $R$ and $S$ where $f(R) < 0$ and $f(S) < 0$. These
+points will be in class 2. Following the algebra above, $f(M_{R,S}) < 0$ if $f$
+separates class 1 and class 2.
+
+For the $\text{XOR}$ function, assign $P=(0,0), Q=(1,1)$ in class 1 (due to
+equivalent output) and $R=(0,1), S=(1,0)$ in class 2. Then,
+
+$$
+\begin{gathered}
+M_{P,Q} = \frac{\begin{bmatrix}0&0\end{bmatrix} + \begin{bmatrix}1&1\end{bmatrix}}{2} = \begin{bmatrix}\frac{1}{2}&\frac{1}{2}\end{bmatrix}\\
+M_{R,S} = \frac{\begin{bmatrix}0&1\end{bmatrix} + \begin{bmatrix}1&0\end{bmatrix}}{2} = \begin{bmatrix}\frac{1}{2}&\frac{1}{2}\end{bmatrix}
+\end{gathered}
+$$
+
+Since $M_{P,Q} = M_{R,S}$, there is no $f$ that satisfies $f(M_{P,Q}) > 0$ and
+$f(M_{R,S}) < 0$ and separates between these classes for $\text{XOR}$.
+$\blacksquare$
+
+:::
+
+The geometric motivation is that the midpoint geometry is unchanged regardless
+of linear transformation. An intuitive understanding could be learned from a
+worked example before the generalized proof.
+
+Beginning with the affine function $\mathbb{R}^3 \rightarrow \mathbb{R}$:
+
+$$
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + Dx_3 + C\\
+x_3 = px_1 + qx_2 + r
+\end{gathered}
+$$ {#eq-affine3d}
+
+The transformed points can be notated as $z_{x_1,x_2}$, where 
+
+$z_{0,0} = \begin{bmatrix}0\\0\\r\\C\end{bmatrix}$ and $z_{0,1} = \begin{bmatrix}0\\1\\q+r\\C\end{bmatrix}$.
+
+The midpoint between these points can be called $m$, where $m_0$ is between the
+endpoints $z_{0,0}$ and $z_{1,1}$ and $m_1$ is between the endpoints $z_{0,1}$
+and $z_{1,0}$. Since $C$ is a simply the bias term for prediction, it can be
+ignored for the sake of simplicity. Note that these midpoints are of endpoints
+decided _a priori_ based on how they should classify in the $\text{XOR}$
+function.
+
+Calculating the midpoints:
+
+$$
+\begin{aligned}
+m_0 &= \frac{z_{0,0},z_{1,1}}{2}
+= \frac{
+  \begin{bmatrix}0\\0\\r\end{bmatrix} +
+  \begin{bmatrix}A\\B\\A+B+p+q+r\end{bmatrix}
+  }{2}
+= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+m_1 &= \frac{z_{0,1},z_{1,0}}{2}
+= \frac{ 
+  \begin{bmatrix}0\\B\\B+q+r\end{bmatrix} +
+  \begin{bmatrix}A\\0\\A+p+r\end{bmatrix}
+  }{2}
+= \frac{ \begin{bmatrix}A\\B\\A+B+p+q+2r\end{bmatrix} }{2}
+\end{aligned}
+$$
+
+Thus, $m_0 = m_1$, which won't solve $\text{XOR}$ per @thm-midpoint.
+
+### Can a linear model containing a nonlinear term solve $\text{XOR}$?
+
+Changing the model to:
+
+$$
+\begin{gathered}
+\hat{y} = Ax_1 + Bx_2 + Dx_3 + C\\
+x_3 = x_1x_2
+\end{gathered}
+$$ {#eq-nonlinearmodel1}
+
+Following @thm-contradiction with this new model:
+
+$$
+\begin{aligned}
+f(0,0)+f(1,1) &= A(0)+B(0)+D(0)+C + A(1)+B(1)+D(1)+C\\
+&= A+B+D+2C\\
+f(0,1)+f(1,0) &= A(0)+B(1)+D(0)+C + A(1)+B(0)+D(0)+C\\
+&= A+B+2C
+\end{aligned}
+$$
+
+This does not follow the same contradiction. Similarly, the midpoints will not
+be equivalent since $f(P)+f(Q) \neq f(R)+f(S)$ and there must exist a
+classifying function $f$.
+
+$$
+\begin{gathered}
+f(0,0)=C=0\\
+f(1,1)=A+B+D+C=0\\
+f(0,1)=B+C=1\quad B=1\\
+f(1,0)=A+C=1\quad A=1\\
+1+1+D+0=0\quad D=-2
+\end{gathered}
+$$
+
+So, $\hat{y} = x_1+x_2-2x_1x_2$ is a solution to $\text{XOR}$.
+
+It is clear that the model is a linear prediction in nonlinear transformed space
+with more succint notation:
+
+$$
+\begin{aligned}
+\hat{y} &= Ax_1+Bx_2+D(x_1x_2)+C\\
+&=w^\top \phi(x) + b
+\end{aligned}
+$$
+
+where
+
+$$
+\begin{gathered}
+w^\top =
+\begin{bmatrix}
+A&B&D
+\end{bmatrix}
+\quad
+\phi =
+\begin{bmatrix}
+x_1\\x_2\\x_1x_2
+\end{bmatrix}
+\end{gathered}
+$$
+
+### Do nonlinear terms need to be declared?
+
+Above, a nonlinear term was guessed and was found to solve $\text{XOR}$. A more
+generalizable learning function would be to not directly specify this term. For
+example, applying a generic nonlinear function to the output of the original
+simple affine equation @eq-linearmodel.
+
+$$
+\hat{y} = g(w_1x_1+w_2x_2+b)
+$$ {#eq-generalnonlinear}
+
+where $g$ is any nonlinear function. Suppose $g(z) = z^2$, then
+
+$$
+\begin{aligned}
+\hat{y} &= g(w_1x_1+w_2x_2+b)\\
+&= (w_1x_1+w_2x_2+b)^2\\
+&= (w_1x_1)^2 + (w_2x_2)^2 + b^2 + 2w_1x_1w_2x_2 + 2w_1x_1b + 2w_2x_2b
+\end{aligned}
+$$
+
+The same interaction term, $x_1x_2$, appears here as well. Without solving, this
+means there will be a solution to $\text{XOR}$ if this model is added to
+@eq-linearmodel.  For exercise of solving, the model can be simplified to drop
+the bias term and make the algebra simpler.
+
+$$
+\begin{gathered}
+\hat{y} = w_1x_1 + w_2x_2 + w_3(x_1 + x_2)^2\\
+f(0,0) = 0\quad f(1,1) = w_1 + w_2 + 4w_3 = 1\\
+f(0,1) = w_2 + w_3 = 1\\
+f(1,0) = w_1 + w_3 = 1
+\end{gathered}
+$$
+
+Solving as a system of linear equations with row substitution. Rows can be added or multiplied together:
+
+$$
+\begin{gathered}
+\left[
+\begin{array}{ccc|c}
+ 1 & 1 & 4 & 0 \\
+ 0 & 1 & 1 & 1 \\
+ 1 & 0 & 1 & 1 \\
+\end{array}
+\right]
+\xrightarrow{R_1 \leftarrow R_1 - R_3}
+\left[
+\begin{array}{ccc|c}
+ 0 & 1 & 3 & -1 \\
+ 0 & 1 & 1 & 1 \\
+ 1 & 0 & 1 & 1 \\
+\end{array}
+\right]
+\xrightarrow{R_1 \leftarrow R_1 - R_2}
+\left[
+\begin{array}{ccc|c}
+ 0 & 0 & 2 & -2 \\
+ 0 & 1 & 1 & 1 \\
+ 1 & 0 & 1 & 1 \\
+\end{array}
+\right]\\
+\\
+w_3 = -1\quad w_1 = 2\quad w_2 = 2
+\end{gathered}
+$$
+
+Showing equivalence to @eq-nonlinearmodel1:
+
+$$
+\begin{aligned}
+\hat{y} &= 2x_1 + 2x_2 - (x_1 + x_2)^2\\
+&= 2x_1 + 2x_2 - (x_1^2 + x_2^2 + 2x_1x_2)\\
+&= (2x_1-x_1^2) + (2x_2-x_2^2) - 2x_1x_2\\
+&\text{since elements in x are binary, } x_i^2=x_i\\
+&= x_1 + x_2 - 2x_1x_2
+\end{aligned}
+$$
+

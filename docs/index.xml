@@ -9,7 +9,7 @@
 <link>https://yoyomanzoor.github.io/Yoyo/</link>
 <atom:link href="https://yoyomanzoor.github.io/Yoyo/index.xml" rel="self" type="application/rss+xml"/>
 <description>Yoyomanzoor&#39;s personal site</description>
-<generator>quarto-1.10.19</generator>
+<generator>quarto-1.11.9</generator>
 <lastBuildDate>Tue, 21 Apr 2026 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Forms</title>
@@ -35,6 +35,183 @@
   <category>philosophy</category>
   <guid>https://yoyomanzoor.github.io/Yoyo/posts/2026-04-21-intelligible-and-sensible.html</guid>
   <pubDate>Tue, 21 Apr 2026 04:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>XOR and breaking linear models</title>
+  <dc:creator>Yoyomanzoor </dc:creator>
+  <link>https://yoyomanzoor.github.io/Yoyo/posts/2026-11-01-XOR.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-textxor-problem-and-the-defeat-of-linear-models" class="level2">
+<h2 class="anchored" data-anchor-id="the-textxor-problem-and-the-defeat-of-linear-models">The <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> problem and the defeat of linear models</h2>
+<p>In this exercise, we will use the <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> function to motivate nonlinear elements in linear models, then learned-parameter linear models with nonlinear elements. The goal is to find generalizable models that can solve a classifier question: given 2D binary inputs, can we solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">?</p>
+<section id="introduction-to-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-textxor">Introduction to <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"></h3>
+<p>XOR is a function which takes two binary inputs, returning 1 for OR inputs and 0 for all others. It can be described as <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D:%5C%7B0,1%5C%7D%5Crightarrow%20%5C%7B0,1%5C%7D"> and as a table with:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?x_1"></th>
+<th><img src="https://latex.codecogs.com/png.latex?x_2"></th>
+<th><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D(x_1,x_2)"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="linear-model-approach" class="level3">
+<h3 class="anchored" data-anchor-id="linear-model-approach">Linear model approach</h3>
+<p>A simple question might be to predict the outputs with a useful model, such that inputing <img src="https://latex.codecogs.com/png.latex?x=%5C%7Bx_1,x_2%5C%7D"> would correctly model <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> with an output <img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D">. A naïve approach might be to use a linear model.</p>
+<p><span id="eq-linearmodel"><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7By%7D%20=%20w_1%20x_1%20+%20w_2%20x_2%20+%20b%20=%20w%5E%5Ctop%20x%20+%20b%0A%5Ctag%7B1%7D"></span></p>
+<p>We can solve for each input and output of <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">.</p>
+<p><span id="eq-contradition"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Ax_1=0,x_2=0,y=0,&amp;%5Cquad%200=w_1(0)%20+%20w_2(0)%20+%20b,%5Cquad%20b=0%5C%5C%0Ax_1=0,x_2=1,y=1,&amp;%5Cquad%201=w_1(0)%20+%20w_2(1)%20+%20b,%5Cquad%20b=1-w_2%5C%5C%0Ax_1=1,x_2=0,y=1,&amp;%5Cquad%201=w_1(1)%20+%20w_2(0)%20+%20b,%5Cquad%20b=1-w_1%5C%5C%0Ax_1=1,x_2=1,y=0,&amp;%5Cquad%200=w_1(1)%20+%20w_2(1)%20+%20b,%5Cquad%20b=-w_1%20-w_2%0A%5Cend%7Baligned%7D%0A%5Ctag%7B2%7D"></span></p>
+<p>This is a contradiction. Plugging in <img src="https://latex.codecogs.com/png.latex?b=0">, <img src="https://latex.codecogs.com/png.latex?w_1=w_2=1">, which contradicts with <img src="https://latex.codecogs.com/png.latex?b=%20-w_1%20-w_2">. Thus, this model cannot solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">.</p>
+<p>This contradiction can be formalized with a more rigorous proof:</p>
+<div id="thm-contradiction" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Proof by contradiction: Two dimensional linear models will not solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">.)</strong></span> &nbsp;</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>A general affine two dimensional model that maps <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E2%20%5Crightarrow%20%5Cmathbb%7BR%7D"> can be defined as:</p>
+<p><span id="eq-affineeq"><img src="https://latex.codecogs.com/png.latex?%0Af%5Cleft(x_1,x_2%5Cright)%20=%20Ax_1+Bx_2%20+%20C%0A%5Ctag%7B3%7D"></span></p>
+<p>In order for Equation&nbsp;3 to solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> <img src="https://latex.codecogs.com/png.latex?f(0,0)%20+%20f(1,1)%20%5Cneq%20f(0,1)%20+%20f(1,0)">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Af(0,0)%20+%20f(1,1)%20&amp;=%20A(0)+B(0)+C%20+%20A(1)+B(1)+C%5C%5C%0A&amp;=%20A+B+2C%5C%5C%0Af(0,1)%20+%20f(1,0)%20&amp;=%20A(0)+B(1)+C%20+%20A(1)+B(0)+C%5C%5C%0A&amp;=%20A+B+2C%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Thus, in a linear model, <img src="https://latex.codecogs.com/png.latex?f(0,0)%20+%20f(1,1)%20=%20f(0,1)%20+%20f(1,0)">, which contradicts the <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> function.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+</div>
+</section>
+<section id="can-a-deeper-linear-model-solve-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="can-a-deeper-linear-model-solve-textxor">Can a deeper linear model solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">?</h3>
+<p>Suppose more terms are added to the original linear model Equation&nbsp;1, as such:</p>
+<p><span id="eq-linearmodelmoreterms"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20w_1h_1+w_2h_2+b%5C%5C%0Ah_1%20=%20a_1x_1+a_2x_2+c_1,%5Cquad%20h_2%20=%20a_3x_1+a_4x_2+c_2%0A%5Cend%7Bgathered%7D%0A%5Ctag%7B4%7D"></span></p>
+<p>This can be viewed as a nested linear model, where linear terms are themselves composed of linear terms:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-nested-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nested-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+
+<pre class="mermaid mermaid-js" data-label="fig-nested-model">flowchart LR
+    x1((x₁)) --&gt; h1((h₁))
+    x1((x₁)) --&gt; h2((h₂))
+    x2((x₂)) --&gt; h1((h₁))
+    x2((x₂)) --&gt; h2((h₂))
+    
+    h1((h₁)) --&gt; yhat((ŷ))
+    h2((h₂)) --&gt; yhat((ŷ))
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nested-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Architecture of the nested linear model.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A nested linear model can still be simplified to a similar form to the original linear model:</p>
+<p><span id="eq-linearmodellayerreductionproof"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Chat%7By%7D%20&amp;=%20h_1%5Cleft(a_1x_1+a_2x_2+c_1%5Cright)%20+%20h_2%5Cleft(a_3x_1+a_4x_2+c_2%5Cright)%20+%20b%5C%5C%0A&amp;=%20h_1a_1x_1%20+%20h_1a_2x_2%20+%20h_1c_1%20+%20h_2a_3x_1%20+%20h_2a_4x_2%20+%20h_2c_2%20+%20b%5C%5C%0A&amp;=%20h_1a_1x_1%20+%20h_2a_3x_1%20+%20h_1a_2x_2%20+%20h_2a_4x_2%20+%20h_1c_1%20+%20h_2c_2%20+%20b%5C%5C%0A&amp;=%20%5Cleft(h_1a_1%20+%20h_2a_3%5Cright)x_1%20+%20%5Cleft(h_1a_2%20+%20h_2a_4%5Cright)x_2%20+%20h_1c_1%20+%20h_2c_2%20+%20b%5C%5C%0A%5Cend%7Baligned%7D%0A%5Ctag%7B5%7D"></span></p>
+<p>The overall model reduces to a single linear combination:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20Ax_1%20+%20Bx_2%20+%20C%5C%5C%0AA%20=%20h_1a_1%20+%20h_2a_3,%5Cquad%20B%20=%20h_1a_2%20+%20h_2a_4%0A%5Cend%7Bgathered%7D%0A"></p>
+<p>Since this model reduces to the same two dimensional affine model Equation&nbsp;3, it too will follow the same contradiction in Equation&nbsp;2. So, a deeper linear model will not solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">.</p>
+</section>
+<section id="can-more-terms-in-a-linear-model-solve-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="can-more-terms-in-a-linear-model-solve-textxor">Can more terms in a linear model solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">?</h3>
+<p>Our proof Theorem&nbsp;1 showed that a linear model with 2 terms, equal to the input, does not solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">. So what if there were more terms? Note, since the input is 2 dimensional, a third term must be some linear combination of the terms.</p>
+<p><span id="eq-linearmodel3d"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20Ax_1%20+%20Bx_2%20+%20Dx_3%20+%20C%5C%5C%0Ax_3%20=%20px_1%20+%20qx_2%20+%20r%0A%5Cend%7Bgathered%7D%0A%5Ctag%7B6%7D"></span></p>
+<p>Expanding this model:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Chat%7By%7D%20&amp;=%20Ax_1%20+%20Bx_2%20+%20D%5Cleft(px_1%20+%20qx_2%20+%20r%5Cright)%20+%20C%5C%5C%0A&amp;=%20(A+Dp)x_1%20+%20(B+Dq)x_2%20+%20Dr%20+%20C%0A%5Cend%7Baligned%7D%0A"></p>
+<p>This once again follows the form of Equation&nbsp;3, and follows the contradiction of Theorem&nbsp;1.</p>
+<p>This is also a good opportunity to look at another (more geometric) proof for why linear combinations alone can’t solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">.</p>
+<div id="thm-midpoint" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Proof by midpoint: n-dimensional linear models will not solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> with affine embeddings.)</strong></span> Here is a proof that generalizes to any linear model, regardless of depth (which is not explicitly stated, but inferred from the above work) and mapping <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En%20%5Crightarrow%20%5Cmathbb%7BR%7D">. It assumes that inputs are affine only.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>For any affine function <img src="https://latex.codecogs.com/png.latex?f:%5Cmathbb%7BR%7D%5En%20%5Crightarrow%20%5Cmathbb%7BR%7D">,</p>
+<p><span id="eq-generalaffine"><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7By%7D%20=%20w%5E%5Ctop%20x%20+%20b%0A%5Ctag%7B7%7D"></span></p>
+<p>Suppose a function (e.g., a line) separates two classes of data if coefficients exist such that <img src="https://latex.codecogs.com/png.latex?f(x)%20%3E%200"> for class 1 and <img src="https://latex.codecogs.com/png.latex?f(x)%20%3C%200"> for class 2.</p>
+<p>Assume points <img src="https://latex.codecogs.com/png.latex?P"> and <img src="https://latex.codecogs.com/png.latex?Q"> are in class 1, and their midpoint is <img src="https://latex.codecogs.com/png.latex?M_%7BP,Q%7D=%5Cfrac%7BP+Q%7D%7B2%7D">.</p>
+<!-- $f(P) > 0$ and $f(Q) > 0$, and $M\in (P,Q)$; thus, $P$, $Q$, $M$, and all points on the line between $P$ and $Q$ must satisfy $f(x)>0$. -->
+<p>The value of an affine function <img src="https://latex.codecogs.com/png.latex?f"> at the midpoint <img src="https://latex.codecogs.com/png.latex?M"> is equal to the average of its values at the endpoints <img src="https://latex.codecogs.com/png.latex?P"> and <img src="https://latex.codecogs.com/png.latex?Q"> if <img src="https://latex.codecogs.com/png.latex?f(M)%20=%20%5Cfrac%7Bf(P)%20+%20f(Q)%7D%7B2%7D">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Af(M_%7BP,Q%7D)%20&amp;=%20w%5E%5Ctop%20M%20+%20D%20=%20w%5E%5Ctop%20%5Cleft(%5Cfrac%7BP%20+%20Q%7D%7B2%7D%5Cright)%20+%20D%5C%5C%0A&amp;=%20%5Cfrac%7Bw%5E%5Ctop%20P%20+%20w%5E%5Ctop%20Q%7D%7B2%7D%20+%20D%5C%5C%0A%5C%5C%0Af(%5Ctext%7Baverage%7D_%7BP,Q%7D)%20&amp;=%20%5Cfrac%7Bf(P)%20+%20f(Q)%7D%7B2%7D%20=%20%5Cfrac%7B%5Cleft(w%5E%5Ctop%20P%20+%20D%5Cright)%20+%20%5Cleft(w%5E%5Ctop%20Q%20+%20D%5Cright)%7D%7B2%7D%5C%5C%0A&amp;=%20%5Cfrac%7Bw%5E%5Ctop%20P%20+%20w%5E%5Ctop%20Q%7D%7B2%7D%20+%20D%5C%5C%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Thus, <img src="https://latex.codecogs.com/png.latex?f(M_%7BP,Q%7D)%20=%20f(%5Ctext%7Baverage%7D_%7BP,Q%7D)">. Since <img src="https://latex.codecogs.com/png.latex?f(P)%20%3E%200"> and <img src="https://latex.codecogs.com/png.latex?f(Q)%20%3E%200">, <img src="https://latex.codecogs.com/png.latex?f(M_%7BP,Q%7D)%20%3E%200">.</p>
+<p>Suppose there are points <img src="https://latex.codecogs.com/png.latex?R"> and <img src="https://latex.codecogs.com/png.latex?S"> where <img src="https://latex.codecogs.com/png.latex?f(R)%20%3C%200"> and <img src="https://latex.codecogs.com/png.latex?f(S)%20%3C%200">. These points will be in class 2. Following the algebra above, <img src="https://latex.codecogs.com/png.latex?f(M_%7BR,S%7D)%20%3C%200"> if <img src="https://latex.codecogs.com/png.latex?f"> separates class 1 and class 2.</p>
+<p>For the <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> function, assign <img src="https://latex.codecogs.com/png.latex?P=(0,0),%20Q=(1,1)"> in class 1 (due to equivalent output) and <img src="https://latex.codecogs.com/png.latex?R=(0,1),%20S=(1,0)"> in class 2. Then,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0AM_%7BP,Q%7D%20=%20%5Cfrac%7B%5Cbegin%7Bbmatrix%7D0&amp;0%5Cend%7Bbmatrix%7D%20+%20%5Cbegin%7Bbmatrix%7D1&amp;1%5Cend%7Bbmatrix%7D%7D%7B2%7D%20=%20%5Cbegin%7Bbmatrix%7D%5Cfrac%7B1%7D%7B2%7D&amp;%5Cfrac%7B1%7D%7B2%7D%5Cend%7Bbmatrix%7D%5C%5C%0AM_%7BR,S%7D%20=%20%5Cfrac%7B%5Cbegin%7Bbmatrix%7D0&amp;1%5Cend%7Bbmatrix%7D%20+%20%5Cbegin%7Bbmatrix%7D1&amp;0%5Cend%7Bbmatrix%7D%7D%7B2%7D%20=%20%5Cbegin%7Bbmatrix%7D%5Cfrac%7B1%7D%7B2%7D&amp;%5Cfrac%7B1%7D%7B2%7D%5Cend%7Bbmatrix%7D%0A%5Cend%7Bgathered%7D%0A"></p>
+<p>Since <img src="https://latex.codecogs.com/png.latex?M_%7BP,Q%7D%20=%20M_%7BR,S%7D">, there is no <img src="https://latex.codecogs.com/png.latex?f"> that satisfies <img src="https://latex.codecogs.com/png.latex?f(M_%7BP,Q%7D)%20%3E%200"> and <img src="https://latex.codecogs.com/png.latex?f(M_%7BR,S%7D)%20%3C%200"> and separates between these classes for <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+</div>
+<p>The geometric motivation is that the midpoint geometry is unchanged regardless of linear transformation. An intuitive understanding could be learned from a worked example before the generalized proof.</p>
+<p>Beginning with the affine function <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E3%20%5Crightarrow%20%5Cmathbb%7BR%7D">:</p>
+<p><span id="eq-affine3d"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20Ax_1%20+%20Bx_2%20+%20Dx_3%20+%20C%5C%5C%0Ax_3%20=%20px_1%20+%20qx_2%20+%20r%0A%5Cend%7Bgathered%7D%0A%5Ctag%7B8%7D"></span></p>
+<p>The transformed points can be notated as <img src="https://latex.codecogs.com/png.latex?z_%7Bx_1,x_2%7D">, where</p>
+<p><img src="https://latex.codecogs.com/png.latex?z_%7B0,0%7D%20=%20%5Cbegin%7Bbmatrix%7D0%5C%5C0%5C%5Cr%5C%5CC%5Cend%7Bbmatrix%7D"> and <img src="https://latex.codecogs.com/png.latex?z_%7B0,1%7D%20=%20%5Cbegin%7Bbmatrix%7D0%5C%5C1%5C%5Cq+r%5C%5CC%5Cend%7Bbmatrix%7D">.</p>
+<p>The midpoint between these points can be called <img src="https://latex.codecogs.com/png.latex?m">, where <img src="https://latex.codecogs.com/png.latex?m_0"> is between the endpoints <img src="https://latex.codecogs.com/png.latex?z_%7B0,0%7D"> and <img src="https://latex.codecogs.com/png.latex?z_%7B1,1%7D"> and <img src="https://latex.codecogs.com/png.latex?m_1"> is between the endpoints <img src="https://latex.codecogs.com/png.latex?z_%7B0,1%7D"> and <img src="https://latex.codecogs.com/png.latex?z_%7B1,0%7D">. Since <img src="https://latex.codecogs.com/png.latex?C"> is a simply the bias term for prediction, it can be ignored for the sake of simplicity. Note that these midpoints are of endpoints decided <em>a priori</em> based on how they should classify in the <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> function.</p>
+<p>Calculating the midpoints:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Am_0%20&amp;=%20%5Cfrac%7Bz_%7B0,0%7D,z_%7B1,1%7D%7D%7B2%7D%0A=%20%5Cfrac%7B%0A%20%20%5Cbegin%7Bbmatrix%7D0%5C%5C0%5C%5Cr%5Cend%7Bbmatrix%7D%20+%0A%20%20%5Cbegin%7Bbmatrix%7DA%5C%5CB%5C%5CA+B+p+q+r%5Cend%7Bbmatrix%7D%0A%20%20%7D%7B2%7D%0A=%20%5Cfrac%7B%20%5Cbegin%7Bbmatrix%7DA%5C%5CB%5C%5CA+B+p+q+2r%5Cend%7Bbmatrix%7D%20%7D%7B2%7D%0A%5Cend%7Baligned%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Am_1%20&amp;=%20%5Cfrac%7Bz_%7B0,1%7D,z_%7B1,0%7D%7D%7B2%7D%0A=%20%5Cfrac%7B%0A%20%20%5Cbegin%7Bbmatrix%7D0%5C%5CB%5C%5CB+q+r%5Cend%7Bbmatrix%7D%20+%0A%20%20%5Cbegin%7Bbmatrix%7DA%5C%5C0%5C%5CA+p+r%5Cend%7Bbmatrix%7D%0A%20%20%7D%7B2%7D%0A=%20%5Cfrac%7B%20%5Cbegin%7Bbmatrix%7DA%5C%5CB%5C%5CA+B+p+q+2r%5Cend%7Bbmatrix%7D%20%7D%7B2%7D%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Thus, <img src="https://latex.codecogs.com/png.latex?m_0%20=%20m_1">, which won’t solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> per Theorem&nbsp;2.</p>
+</section>
+<section id="can-a-linear-model-containing-a-nonlinear-term-solve-textxor" class="level3">
+<h3 class="anchored" data-anchor-id="can-a-linear-model-containing-a-nonlinear-term-solve-textxor">Can a linear model containing a nonlinear term solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">?</h3>
+<p>Changing the model to:</p>
+<p><span id="eq-nonlinearmodel1"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20Ax_1%20+%20Bx_2%20+%20Dx_3%20+%20C%5C%5C%0Ax_3%20=%20x_1x_2%0A%5Cend%7Bgathered%7D%0A%5Ctag%7B9%7D"></span></p>
+<p>Following Theorem&nbsp;1 with this new model:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Af(0,0)+f(1,1)%20&amp;=%20A(0)+B(0)+D(0)+C%20+%20A(1)+B(1)+D(1)+C%5C%5C%0A&amp;=%20A+B+D+2C%5C%5C%0Af(0,1)+f(1,0)%20&amp;=%20A(0)+B(1)+D(0)+C%20+%20A(1)+B(0)+D(0)+C%5C%5C%0A&amp;=%20A+B+2C%0A%5Cend%7Baligned%7D%0A"></p>
+<p>This does not follow the same contradiction. Similarly, the midpoints will not be equivalent since <img src="https://latex.codecogs.com/png.latex?f(P)+f(Q)%20%5Cneq%20f(R)+f(S)"> and there must exist a classifying function <img src="https://latex.codecogs.com/png.latex?f">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0Af(0,0)=C=0%5C%5C%0Af(1,1)=A+B+D+C=0%5C%5C%0Af(0,1)=B+C=1%5Cquad%20B=1%5C%5C%0Af(1,0)=A+C=1%5Cquad%20A=1%5C%5C%0A1+1+D+0=0%5Cquad%20D=-2%0A%5Cend%7Bgathered%7D%0A"></p>
+<p>So, <img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D%20=%20x_1+x_2-2x_1x_2"> is a solution to <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">.</p>
+<p>It is clear that the model is a linear prediction in nonlinear transformed space with more succint notation:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Chat%7By%7D%20&amp;=%20Ax_1+Bx_2+D(x_1x_2)+C%5C%5C%0A&amp;=w%5E%5Ctop%20%5Cphi(x)%20+%20b%0A%5Cend%7Baligned%7D%0A"></p>
+<p>where</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0Aw%5E%5Ctop%20=%0A%5Cbegin%7Bbmatrix%7D%0AA&amp;B&amp;D%0A%5Cend%7Bbmatrix%7D%0A%5Cquad%0A%5Cphi%20=%0A%5Cbegin%7Bbmatrix%7D%0Ax_1%5C%5Cx_2%5C%5Cx_1x_2%0A%5Cend%7Bbmatrix%7D%0A%5Cend%7Bgathered%7D%0A"></p>
+</section>
+<section id="do-nonlinear-terms-need-to-be-declared" class="level3">
+<h3 class="anchored" data-anchor-id="do-nonlinear-terms-need-to-be-declared">Do nonlinear terms need to be declared?</h3>
+<p>Above, a nonlinear term was guessed and was found to solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">. A more generalizable learning function would be to not directly specify this term. For example, applying a generic nonlinear function to the output of the original simple affine equation Equation&nbsp;1.</p>
+<p><span id="eq-generalnonlinear"><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7By%7D%20=%20g(w_1x_1+w_2x_2+b)%0A%5Ctag%7B10%7D"></span></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?g"> is any nonlinear function. Suppose <img src="https://latex.codecogs.com/png.latex?g(z)%20=%20z%5E2">, then</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Chat%7By%7D%20&amp;=%20g(w_1x_1+w_2x_2+b)%5C%5C%0A&amp;=%20(w_1x_1+w_2x_2+b)%5E2%5C%5C%0A&amp;=%20(w_1x_1)%5E2%20+%20(w_2x_2)%5E2%20+%20b%5E2%20+%202w_1x_1w_2x_2%20+%202w_1x_1b%20+%202w_2x_2b%0A%5Cend%7Baligned%7D%0A"></p>
+<p>The same interaction term, <img src="https://latex.codecogs.com/png.latex?x_1x_2">, appears here as well. Without solving, this means there will be a solution to <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> if this model is added to Equation&nbsp;1. For exercise of solving, the model can be simplified to drop the bias term and make the algebra simpler.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20w_1x_1%20+%20w_2x_2%20+%20w_3(x_1%20+%20x_2)%5E2%5C%5C%0Af(0,0)%20=%200%5Cquad%20f(1,1)%20=%20w_1%20+%20w_2%20+%204w_3%20=%201%5C%5C%0Af(0,1)%20=%20w_2%20+%20w_3%20=%201%5C%5C%0Af(1,0)%20=%20w_1%20+%20w_3%20=%201%0A%5Cend%7Bgathered%7D%0A"></p>
+<p>Solving as a system of linear equations with row substitution. Rows can be added or multiplied together:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Cleft%5B%0A%5Cbegin%7Barray%7D%7Bccc%7Cc%7D%0A1%20&amp;%201%20&amp;%204%20&amp;%200%20%5C%5C%0A0%20&amp;%201%20&amp;%201%20&amp;%201%20%5C%5C%0A1%20&amp;%200%20&amp;%201%20&amp;%201%20%5C%5C%0A%5Cend%7Barray%7D%0A%5Cright%5D%0A%5Cxrightarrow%7BR_1%20%5Cleftarrow%20R_1%20-%20R_3%7D%0A%5Cleft%5B%0A%5Cbegin%7Barray%7D%7Bccc%7Cc%7D%0A0%20&amp;%201%20&amp;%203%20&amp;%20-1%20%5C%5C%0A0%20&amp;%201%20&amp;%201%20&amp;%201%20%5C%5C%0A1%20&amp;%200%20&amp;%201%20&amp;%201%20%5C%5C%0A%5Cend%7Barray%7D%0A%5Cright%5D%0A%5Cxrightarrow%7BR_1%20%5Cleftarrow%20R_1%20-%20R_2%7D%0A%5Cleft%5B%0A%5Cbegin%7Barray%7D%7Bccc%7Cc%7D%0A0%20&amp;%200%20&amp;%202%20&amp;%20-2%20%5C%5C%0A0%20&amp;%201%20&amp;%201%20&amp;%201%20%5C%5C%0A1%20&amp;%200%20&amp;%201%20&amp;%201%20%5C%5C%0A%5Cend%7Barray%7D%0A%5Cright%5D%5C%5C%0A%5C%5C%0Aw_3%20=%20-1%5Cquad%20w_1%20=%202%5Cquad%20w_2%20=%202%0A%5Cend%7Bgathered%7D%0A"></p>
+<p>Showing equivalence to Equation&nbsp;9:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Chat%7By%7D%20&amp;=%202x_1%20+%202x_2%20-%20(x_1%20+%20x_2)%5E2%5C%5C%0A&amp;=%202x_1%20+%202x_2%20-%20(x_1%5E2%20+%20x_2%5E2%20+%202x_1x_2)%5C%5C%0A&amp;=%20(2x_1-x_1%5E2)%20+%20(2x_2-x_2%5E2)%20-%202x_1x_2%5C%5C%0A&amp;%5Ctext%7Bsince%20elements%20in%20x%20are%20binary,%20%7D%20x_i%5E2=x_i%5C%5C%0A&amp;=%20x_1%20+%20x_2%20-%202x_1x_2%0A%5Cend%7Baligned%7D%0A"></p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>math</category>
+  <category>neural nets</category>
+  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2026-11-01-XOR.html</guid>
+  <pubDate>Mon, 23 Feb 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Cosine Similarity</title>
