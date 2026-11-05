@@ -9,7 +9,7 @@
 <link>https://yoyomanzoor.github.io/Yoyo/</link>
 <atom:link href="https://yoyomanzoor.github.io/Yoyo/index.xml" rel="self" type="application/rss+xml"/>
 <description>Yoyomanzoor&#39;s personal site</description>
-<generator>quarto-1.11.9</generator>
+<generator>quarto-1.10.19</generator>
 <lastBuildDate>Tue, 21 Apr 2026 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Forms</title>
@@ -35,6 +35,65 @@
   <category>philosophy</category>
   <guid>https://yoyomanzoor.github.io/Yoyo/posts/2026-04-21-intelligible-and-sensible.html</guid>
   <pubDate>Tue, 21 Apr 2026 04:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Cosine Similarity</title>
+  <dc:creator>Yoyomanzoor </dc:creator>
+  <link>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="frobenius-norm" class="level2">
+<h2 class="anchored" data-anchor-id="frobenius-norm">Frobenius norm</h2>
+<p>The Frobenius norm of a matrix <img src="https://latex.codecogs.com/png.latex?A"> is defined as <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B%5Csum_%7Bi,j%7D%20A_%7Bij%7D%5E2%7D"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?A_%7Bij%7D"> are the elements of the matrix <img src="https://latex.codecogs.com/png.latex?A">, and the sum is taken over all rows <img src="https://latex.codecogs.com/png.latex?i"> and columns <img src="https://latex.codecogs.com/png.latex?j"> of the matrix.</p>
+<p>For example, if we have a matrix: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D"></p>
+<p>The Frobenius norm of <img src="https://latex.codecogs.com/png.latex?A"> would be calculated as: <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B1%5E2%20+%202%5E2%20+%203%5E2%20+%204%5E2%20+%205%5E2%20+%206%5E2%7D%20=%20%5Csqrt%7B1%20+%204%20+%209%20+%2016%20+%2025%20+%2036%7D%20=%20%5Csqrt%7B91%7D"></p>
+<p>The interpretation of the Frobenius norm is the Euclidean length of the matrix when it is flattened into one long vector. In the case of our matrix <img src="https://latex.codecogs.com/png.latex?A%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B3%20%5Ctimes%202%7D">, it is literally the distance from the origin to the point in 6-dimensional space <img src="https://latex.codecogs.com/png.latex?%5Cleft(3%20%5Ccdot%202%5Cright)"> representing the magnitude of the elements of the matrix. It measures the overall magnitude of the matrix.</p>
+</section>
+<section id="frobenius-inner-product" class="level2">
+<h2 class="anchored" data-anchor-id="frobenius-inner-product">Frobenius inner product</h2>
+<p>The Frobenius inner product of two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> of the same dimensions is defined as: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%20=%20%5Csum_%7Bi,j%7D%20A_%7Bij%7D%20B_%7Bij%7D%20=%20%5Ctext%7Btr%7D%5Cleft(A%5ET%20B%5Cright)"></p>
+<p>This is essentially the sum of the products of corresponding elements from the two matrices. It can be thought of as a generalization of the dot product for vectors to matrices.</p>
+<p>For example, if we have two matrices: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D,%20%5Cquad%20B%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%208%20&amp;%209%20%5Cend%7Bbmatrix%7D"></p>
+<p>We can reshape <img src="https://latex.codecogs.com/png.latex?B"> to match the dimensions of <img src="https://latex.codecogs.com/png.latex?A"> (if necessary) by embedding into a 3x2 matrix, for example: <img src="https://latex.codecogs.com/png.latex?B'%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi,j%7D%20A_%7Bij%7D%20B'_%7Bij%7D"> can be rewritten as <img src="https://latex.codecogs.com/png.latex?%5Csum%20A%20%5Ccirc%20B'">, which is the sum of the Hadamard product of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B'">. The Hadamard product is the element-wise product of two matrices of the same dimensions. In this case, it would be calculated as: <img src="https://latex.codecogs.com/png.latex?A%20%5Ccirc%20B'%20=%20%5Cbegin%7Bbmatrix%7D%201%20%5Ccdot%207%20&amp;%202%20%5Ccdot%200%20%5C%5C%203%20%5Ccdot%208%20&amp;%204%20%5Ccdot%200%20%5C%5C%205%20%5Ccdot%209%20&amp;%206%20%5Ccdot%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%2024%20&amp;%200%20%5C%5C%2045%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p>Then the Frobenius inner product would be calculated as: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F%20=%20%5Csum%20A%20%5Ccirc%20B'%20=%207%20+%200%20+%2024%20+%200%20+%2045%20+%200%20=%2076"></p>
+<p>To explore how the Frobenius inner product can be expressed as the trace of the product of the transpose of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B">, we can compute <img src="https://latex.codecogs.com/png.latex?A%5ET%20B">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?A%5ET%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%203%20&amp;%205%20%5C%5C%202%20&amp;%204%20&amp;%206%20%5Cend%7Bbmatrix%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?A%5ET%20B'%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%203%20&amp;%205%20%5C%5C%202%20&amp;%204%20&amp;%206%20%5Cend%7Bbmatrix%7D%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%20(1%20%5Ccdot%207%20+%203%20%5Ccdot%208%20+%205%20%5Ccdot%209)%20&amp;%20(1%20%5Ccdot%200%20+%203%20%5Ccdot%200%20+%205%20%5Ccdot%200)%20%5C%5C%20(2%20%5Ccdot%207%20+%204%20%5Ccdot%208%20+%206%20%5Ccdot%209)%20&amp;%20(2%20%5Ccdot%200%20+%204%20%5Ccdot%200%20+%206%20%5Ccdot%200)%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%2076%20&amp;%200%20%5C%5C%20(14%20+%2032%20+%2054)%20&amp;%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%2076%20&amp;%200%20%5C%5C%20(100)%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p>The trace of <img src="https://latex.codecogs.com/png.latex?A%5ET%20B'"> is the sum of the diagonal elements: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Btr%7D(A%5ET%20B')%20=%2076%20+%200%20=%2076"></p>
+<p>Thus, the Frobenius inner product <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F"> can indeed be expressed as the trace of the product of the transpose of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B'">, confirming that: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F%20=%20%5Ctext%7Btr%7D(A%5ET%20B')"></p>
+<p>The interpretation of the Frobenius inner product is the alignment of the matrices. The more dimensions that are aligned the larger the inner product. If the matrices are orthogonal, the inner product is zero. If they are perfectly aligned, the inner product is maximized. If they are opposite, the inner product is negative.</p>
+</section>
+<section id="cosine-similarity" class="level2">
+<h2 class="anchored" data-anchor-id="cosine-similarity">Cosine similarity</h2>
+<p>Reviewing the law of cosines, for two vectors <img src="https://latex.codecogs.com/png.latex?u"> and <img src="https://latex.codecogs.com/png.latex?v"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, the cosine of the angle <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> between them is given by: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7Bu%20%5Ccdot%20v%7D%7B%7C%7Cu%7C%7C%20%5Ccdot%20%7C%7Cv%7C%7C%7D"></p>
+<p>The cosine similarity between two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> can be defined analogously using the Frobenius inner product and Frobenius norms: <!-- Empty group keeps Pandoc from gluing the F subscript to \cdot, which Typst reads as Fdot. --> <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%7D%7B%7C%7CA%7C%7C_F%20%7B%7D%20%5Ccdot%20%7C%7CB%7C%7C_F%7D"></p>
+<p>For example, if we have two matrices: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D,%20%5Cquad%20B%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
+<p>We can calculate the cosine similarity as follows:</p>
+<ol type="1">
+<li>Calculate the Frobenius inner product <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F">: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%20=%2076"></li>
+<li>Calculate the Frobenius norms <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F"> and <img src="https://latex.codecogs.com/png.latex?%7C%7CB%7C%7C_F">: <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B91%7D"> <img src="https://latex.codecogs.com/png.latex?%7C%7CB%7C%7C_F%20=%20%5Csqrt%7B7%5E2%20+%200%5E2%20+%208%5E2%20+%200%5E2%20+%209%5E2%20+%200%5E2%7D%20=%20%5Csqrt%7B49%20+%200%20+%2064%20+%200%20+%2081%20+%200%7D%20=%20%5Csqrt%7B194%7D"></li>
+<li>Substitute these values into the cosine similarity formula: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B76%7D%7B%5Csqrt%7B91%7D%20%5Ccdot%20%5Csqrt%7B194%7D%7D%20%5Capprox%200.57"></li>
+</ol>
+<p>The intuition is to take the Frobenius inner product, which measures the alignment of the matrices, and normalize it by the product of their magnitudes (Frobenius norms). This gives us a measure of how similar the two matrices are in terms of their direction in the vector space, regardless of their magnitude. A cosine similarity of 1 means the matrices are perfectly aligned, 0 means they are orthogonal, and -1 means they are opposite.</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Geometrically, all <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> matrices form vector space <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ccdot%20n%7D"></p>
+<p>The Frobenius norm is the length of a matrix in this vector space. The Frobenius inner product is the dot product in this vector space. The cosine similarity is the cosine of the angle between two matrices in this vector space.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>math</category>
+  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</guid>
+  <pubDate>Mon, 23 Feb 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>XOR and breaking linear models</title>
@@ -115,7 +174,6 @@
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nested-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-
 <pre class="mermaid mermaid-js" data-label="fig-nested-model">flowchart LR
     x1((x₁)) --&gt; h1((h₁))
     x1((x₁)) --&gt; h2((h₂))
@@ -182,7 +240,7 @@ Figure&nbsp;1: Architecture of the nested linear model.
 <p><span id="eq-nonlinearmodel1"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20Ax_1%20+%20Bx_2%20+%20Dx_3%20+%20C%5C%5C%0Ax_3%20=%20x_1x_2%0A%5Cend%7Bgathered%7D%0A%5Ctag%7B9%7D"></span></p>
 <p>Following Theorem&nbsp;1 with this new model:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Af(0,0)+f(1,1)%20&amp;=%20A(0)+B(0)+D(0)+C%20+%20A(1)+B(1)+D(1)+C%5C%5C%0A&amp;=%20A+B+D+2C%5C%5C%0Af(0,1)+f(1,0)%20&amp;=%20A(0)+B(1)+D(0)+C%20+%20A(1)+B(0)+D(0)+C%5C%5C%0A&amp;=%20A+B+2C%0A%5Cend%7Baligned%7D%0A"></p>
-<p>This does not follow the same contradiction. Similarly, the midpoints will not be equivalent since <img src="https://latex.codecogs.com/png.latex?f(P)+f(Q)%20%5Cneq%20f(R)+f(S)"> and there must exist a classifying function <img src="https://latex.codecogs.com/png.latex?f">.</p>
+<p>This does not follow the same contradiction. Similarly, the midpoints will not be equivalent since <img src="https://latex.codecogs.com/png.latex?f(P)+f(Q)%20%5Cneq%20f(R)+f(S)"> and there must exist a classifying function <img src="https://latex.codecogs.com/png.latex?f">, per Theorem&nbsp;2.</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0Af(0,0)=C=0%5C%5C%0Af(1,1)=A+B+D+C=0%5C%5C%0Af(0,1)=B+C=1%5Cquad%20B=1%5C%5C%0Af(1,0)=A+C=1%5Cquad%20A=1%5C%5C%0A1+1+D+0=0%5Cquad%20D=-2%0A%5Cend%7Bgathered%7D%0A"></p>
 <p>So, <img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D%20=%20x_1+x_2-2x_1x_2"> is a solution to <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">.</p>
 <p>It is clear that the model is a linear prediction in nonlinear transformed space with more succint notation:</p>
@@ -192,16 +250,28 @@ Figure&nbsp;1: Architecture of the nested linear model.
 </section>
 <section id="do-nonlinear-terms-need-to-be-declared" class="level3">
 <h3 class="anchored" data-anchor-id="do-nonlinear-terms-need-to-be-declared">Do nonlinear terms need to be declared?</h3>
-<p>Above, a nonlinear term was guessed and was found to solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">. A more generalizable learning function would be to not directly specify this term. For example, applying a generic nonlinear function to the output of the original simple affine equation Equation&nbsp;1.</p>
-<p><span id="eq-generalnonlinear"><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7By%7D%20=%20g(w_1x_1+w_2x_2+b)%0A%5Ctag%7B10%7D"></span></p>
-<p>where <img src="https://latex.codecogs.com/png.latex?g"> is any nonlinear function. Suppose <img src="https://latex.codecogs.com/png.latex?g(z)%20=%20z%5E2">, then</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Chat%7By%7D%20&amp;=%20g(w_1x_1+w_2x_2+b)%5C%5C%0A&amp;=%20(w_1x_1+w_2x_2+b)%5E2%5C%5C%0A&amp;=%20(w_1x_1)%5E2%20+%20(w_2x_2)%5E2%20+%20b%5E2%20+%202w_1x_1w_2x_2%20+%202w_1x_1b%20+%202w_2x_2b%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Above, a nonlinear term was guessed and was found to solve <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D">. A more generalizable learning function would be to not directly specify this term. For example, applying a generic nonlinear function to the output of the simple affine equation Equation&nbsp;1.</p>
+<p><span id="eq-generalnonlinear"><img src="https://latex.codecogs.com/png.latex?%0A%5Csigma(w_1x_1+w_2x_2+b)%0A%5Ctag%7B10%7D"></span></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Csigma"> is any nonlinear function. Suppose <img src="https://latex.codecogs.com/png.latex?%5Csigma(z)%20=%20z%5E2">, then</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Csigma(w_1x_1+w_2x_2+b)%20&amp;=%20(w_1x_1+w_2x_2+b)%5E2%5C%5C%0A&amp;=%20(w_1x_1)%5E2%20+%20(w_2x_2)%5E2%20+%20b%5E2%20+%202w_1x_1w_2x_2%20+%202w_1x_1b%20+%202w_2x_2b%0A%5Cend%7Baligned%7D%0A"></p>
 <p>The same interaction term, <img src="https://latex.codecogs.com/png.latex?x_1x_2">, appears here as well. Without solving, this means there will be a solution to <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> if this model is added to Equation&nbsp;1. For exercise of solving, the model can be simplified to drop the bias term and make the algebra simpler.</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20w_1x_1%20+%20w_2x_2%20+%20w_3(x_1%20+%20x_2)%5E2%5C%5C%0Af(0,0)%20=%200%5Cquad%20f(1,1)%20=%20w_1%20+%20w_2%20+%204w_3%20=%201%5C%5C%0Af(0,1)%20=%20w_2%20+%20w_3%20=%201%5C%5C%0Af(1,0)%20=%20w_1%20+%20w_3%20=%201%0A%5Cend%7Bgathered%7D%0A"></p>
 <p>Solving as a system of linear equations with row substitution. Rows can be added or multiplied together:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Cleft%5B%0A%5Cbegin%7Barray%7D%7Bccc%7Cc%7D%0A1%20&amp;%201%20&amp;%204%20&amp;%200%20%5C%5C%0A0%20&amp;%201%20&amp;%201%20&amp;%201%20%5C%5C%0A1%20&amp;%200%20&amp;%201%20&amp;%201%20%5C%5C%0A%5Cend%7Barray%7D%0A%5Cright%5D%0A%5Cxrightarrow%7BR_1%20%5Cleftarrow%20R_1%20-%20R_3%7D%0A%5Cleft%5B%0A%5Cbegin%7Barray%7D%7Bccc%7Cc%7D%0A0%20&amp;%201%20&amp;%203%20&amp;%20-1%20%5C%5C%0A0%20&amp;%201%20&amp;%201%20&amp;%201%20%5C%5C%0A1%20&amp;%200%20&amp;%201%20&amp;%201%20%5C%5C%0A%5Cend%7Barray%7D%0A%5Cright%5D%0A%5Cxrightarrow%7BR_1%20%5Cleftarrow%20R_1%20-%20R_2%7D%0A%5Cleft%5B%0A%5Cbegin%7Barray%7D%7Bccc%7Cc%7D%0A0%20&amp;%200%20&amp;%202%20&amp;%20-2%20%5C%5C%0A0%20&amp;%201%20&amp;%201%20&amp;%201%20%5C%5C%0A1%20&amp;%200%20&amp;%201%20&amp;%201%20%5C%5C%0A%5Cend%7Barray%7D%0A%5Cright%5D%5C%5C%0A%5C%5C%0Aw_3%20=%20-1%5Cquad%20w_1%20=%202%5Cquad%20w_2%20=%202%0A%5Cend%7Bgathered%7D%0A"></p>
 <p>Showing equivalence to Equation&nbsp;9:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Chat%7By%7D%20&amp;=%202x_1%20+%202x_2%20-%20(x_1%20+%20x_2)%5E2%5C%5C%0A&amp;=%202x_1%20+%202x_2%20-%20(x_1%5E2%20+%20x_2%5E2%20+%202x_1x_2)%5C%5C%0A&amp;=%20(2x_1-x_1%5E2)%20+%20(2x_2-x_2%5E2)%20-%202x_1x_2%5C%5C%0A&amp;%5Ctext%7Bsince%20elements%20in%20x%20are%20binary,%20%7D%20x_i%5E2=x_i%5C%5C%0A&amp;=%20x_1%20+%20x_2%20-%202x_1x_2%0A%5Cend%7Baligned%7D%0A"></p>
+</section>
+<section id="what-if-all-the-terms-of-the-linear-model-are-nonlinear" class="level3">
+<h3 class="anchored" data-anchor-id="what-if-all-the-terms-of-the-linear-model-are-nonlinear">What if all the terms of the linear model are nonlinear?</h3>
+<p>Suppose Equation&nbsp;9 is updated to be:</p>
+<p><span id="eq-nonlinearmodel2"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bgathered%7D%0A%5Chat%7By%7D%20=%20v_1h_1%20+%20v_2h_2%5C%5C%0Ah_1%20=%20%5Csigma(a_1x_1+b_1x_2+c_1)%5C%5C%0Ah_2%20=%20%5Csigma(a_2x_1+b_2x_2+c_2)%5C%5C%0A%5Cend%7Bgathered%7D%0A%5Ctag%7B11%7D"></span></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Csigma"> is a nonlinear function. Continuing the previous example, <img src="https://latex.codecogs.com/png.latex?%5Csigma"> can be set to <img src="https://latex.codecogs.com/png.latex?z%5E2"> and bias term is dropped for simplicity, producing:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7By%7D%20=%20v_1(a_1x_1+b_1x_2)%5E2%20+%20v_2(a_2x_1+b_2x_2)%5E2%0A"></p>
+<p>In the space <img src="https://latex.codecogs.com/png.latex?%5Cphi(%5Ctextbf%7Bx%7D)%20=%20%5Cbegin%7Bbmatrix%7D(a_1x_1+b_1x_2)%5E2%5C%5C(a_2x_1+b_2x_2)%5E2%5Cend%7Bbmatrix%7D">, the midpoints would be:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AM_0%20&amp;=%20%5Cfrac%7B%5Cphi(0,0)%20+%20%5Cphi(1,1)%7D%7B2%7D%20%5Cquad%20M_1%20=%20%5Cfrac%7B%5Cphi(0,1)%20+%20%5Cphi(1,0)%7D%7B2%7D%5C%5C%0A%5Cphi(0,0)%20&amp;=%20%5Cbegin%7Bbmatrix%7D0%20%5C%5C%200%5Cend%7Bbmatrix%7D%5Cquad%20%5Cphi(1,1)%20=%20%5Cbegin%7Bbmatrix%7D%20(a_1+b_1)%5E2%20%5C%5C%20(a_2+b_2)%5E2%20%5Cend%7Bbmatrix%7D%5C%5C%0A%5Cphi(0,1)%20&amp;=%20%5Cbegin%7Bbmatrix%7D%20b_1%5E2%20%5C%5C%20b_2%5E2%20%5Cend%7Bbmatrix%7D%20%5Cquad%20%5Cphi(1,0)%20=%20%5Cbegin%7Bbmatrix%7D%20a_1%5E2%20%5C%5C%20a_2%5E2%20%5Cend%7Bbmatrix%7D%5C%5C%0AM_0-M_1%20&amp;=%20%5Cfrac%7B1%7D%7B2%7D%20%5Cleft%5B%20%5Cbegin%7Bbmatrix%7D%20(a_1+b_1)%5E2%20%5C%5C%20(a_2+b_2)%5E2%20%5Cend%7Bbmatrix%7D%20-%0A%5Cleft(%5Cbegin%7Bbmatrix%7D%20a_1%5E2%20%5C%5C%20a_2%5E2%20%5Cend%7Bbmatrix%7D%20+%20%5Cbegin%7Bbmatrix%7D%20b_1%5E2%20%5C%5C%20b_2%5E2%20%5Cend%7Bbmatrix%7D%20%5Cright)%5Cright%5D%5C%5C%0A&amp;=%20%5Cfrac%7B1%7D%7B2%7D%20%5Cleft%5B%20%5Cbegin%7Bbmatrix%7D%20(a_1+b_1)%5E2%20%5C%5C%20(a_2+b_2)%5E2%20%5Cend%7Bbmatrix%7D%20-%0A%5Cbegin%7Bbmatrix%7D%20a_1%5E2%20+%20b_1%5E2%20%5C%5C%20a_2%5E2%20+%20b_2%5E2%20%20%5Cend%7Bbmatrix%7D%20%5Cright%5D%5C%5C%0A&amp;%5Ctext%7Bsince%20%7D%20(x+y)%5E2%20-%20(x%5E2+y%5E2)%20=%202xy,%5C%5C%0A&amp;=%20%5Cfrac%7B1%7D%7B2%7D%20%5Cbegin%7Bbmatrix%7D%202a_1b_1%20%5C%5C%202a_2b_2%20%5Cend%7Bbmatrix%7D%5C%5C%0A&amp;=%20%5Cbegin%7Bbmatrix%7D%20a_1b_1%20%5C%5C%20a_2b_2%20%5Cend%7Bbmatrix%7D%5C%5C%0AM_0%20=%20M_1%20&amp;%5Ciff%20%5Cbegin%7Bcases%7D%0Aa_1b_1%20=%200%5C%5C%0Aa_2b_2%20=%200%0A%5Cend%7Bcases%7D%0A%5Cend%7Baligned%7D%0A"></p>
+<p>This means that if <img src="https://latex.codecogs.com/png.latex?a_1b_1%20=%200"> and <img src="https://latex.codecogs.com/png.latex?a_2b_2%20=%200"> then <img src="https://latex.codecogs.com/png.latex?M_0"> equals <img src="https://latex.codecogs.com/png.latex?M_1">. Conversely, since <img src="https://latex.codecogs.com/png.latex?M_0%20%5Cneq%20M_1"> otherwise, there exists values for parameters <img src="https://latex.codecogs.com/png.latex?a_1,a_2,b_1,b_2"> that can separate these classes.</p>
+<p>Now, using the desired final outputs of <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BXOR%7D"> where <img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D(0,0)=0">, <img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D(0,1)=1">, etc., additional constraints can be calculated. Since <img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D(M_0)"> must give a midpoint between zero and zero, and is thus zero and <img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D(M_1)"> must give a midpoint between one and one, and is thus one, the following constraint is found:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7By%7D(M_0)%20-%20%5Chat%7By%7D(M_0)%20=%20%5Ctextbf%7Bv%7D%5E%5Ctop%20(M_0-M_1)%20%5Cquad%20%5Ctext%7Bbecause%20%7D%20%5Chat%7By%7D%20%5Ctext%7B%20is%20linear%7D%0A"></p>
 
 
 </section>
@@ -214,63 +284,13 @@ Figure&nbsp;1: Architecture of the nested linear model.
   <pubDate>Mon, 23 Feb 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Cosine Similarity</title>
+  <title></title>
   <dc:creator>Yoyomanzoor </dc:creator>
-  <link>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="frobenius-norm" class="level2">
-<h2 class="anchored" data-anchor-id="frobenius-norm">Frobenius norm</h2>
-<p>The Frobenius norm of a matrix <img src="https://latex.codecogs.com/png.latex?A"> is defined as <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B%5Csum_%7Bi,j%7D%20A_%7Bij%7D%5E2%7D"></p>
-<p>where <img src="https://latex.codecogs.com/png.latex?A_%7Bij%7D"> are the elements of the matrix <img src="https://latex.codecogs.com/png.latex?A">, and the sum is taken over all rows <img src="https://latex.codecogs.com/png.latex?i"> and columns <img src="https://latex.codecogs.com/png.latex?j"> of the matrix.</p>
-<p>For example, if we have a matrix: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D"></p>
-<p>The Frobenius norm of <img src="https://latex.codecogs.com/png.latex?A"> would be calculated as: <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B1%5E2%20+%202%5E2%20+%203%5E2%20+%204%5E2%20+%205%5E2%20+%206%5E2%7D%20=%20%5Csqrt%7B1%20+%204%20+%209%20+%2016%20+%2025%20+%2036%7D%20=%20%5Csqrt%7B91%7D"></p>
-<p>The interpretation of the Frobenius norm is the Euclidean length of the matrix when it is flattened into one long vector. In the case of our matrix <img src="https://latex.codecogs.com/png.latex?A%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B3%20%5Ctimes%202%7D">, it is literally the distance from the origin to the point in 6-dimensional space <img src="https://latex.codecogs.com/png.latex?%5Cleft(3%20%5Ccdot%202%5Cright)"> representing the magnitude of the elements of the matrix. It measures the overall magnitude of the matrix.</p>
-</section>
-<section id="frobenius-inner-product" class="level2">
-<h2 class="anchored" data-anchor-id="frobenius-inner-product">Frobenius inner product</h2>
-<p>The Frobenius inner product of two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> of the same dimensions is defined as: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%20=%20%5Csum_%7Bi,j%7D%20A_%7Bij%7D%20B_%7Bij%7D%20=%20%5Ctext%7Btr%7D%5Cleft(A%5ET%20B%5Cright)"></p>
-<p>This is essentially the sum of the products of corresponding elements from the two matrices. It can be thought of as a generalization of the dot product for vectors to matrices.</p>
-<p>For example, if we have two matrices: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D,%20%5Cquad%20B%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%208%20&amp;%209%20%5Cend%7Bbmatrix%7D"></p>
-<p>We can reshape <img src="https://latex.codecogs.com/png.latex?B"> to match the dimensions of <img src="https://latex.codecogs.com/png.latex?A"> (if necessary) by embedding into a 3x2 matrix, for example: <img src="https://latex.codecogs.com/png.latex?B'%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi,j%7D%20A_%7Bij%7D%20B'_%7Bij%7D"> can be rewritten as <img src="https://latex.codecogs.com/png.latex?%5Csum%20A%20%5Ccirc%20B'">, which is the sum of the Hadamard product of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B'">. The Hadamard product is the element-wise product of two matrices of the same dimensions. In this case, it would be calculated as: <img src="https://latex.codecogs.com/png.latex?A%20%5Ccirc%20B'%20=%20%5Cbegin%7Bbmatrix%7D%201%20%5Ccdot%207%20&amp;%202%20%5Ccdot%200%20%5C%5C%203%20%5Ccdot%208%20&amp;%204%20%5Ccdot%200%20%5C%5C%205%20%5Ccdot%209%20&amp;%206%20%5Ccdot%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%2024%20&amp;%200%20%5C%5C%2045%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
-<p>Then the Frobenius inner product would be calculated as: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F%20=%20%5Csum%20A%20%5Ccirc%20B'%20=%207%20+%200%20+%2024%20+%200%20+%2045%20+%200%20=%2076"></p>
-<p>To explore how the Frobenius inner product can be expressed as the trace of the product of the transpose of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B">, we can compute <img src="https://latex.codecogs.com/png.latex?A%5ET%20B">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?A%5ET%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%203%20&amp;%205%20%5C%5C%202%20&amp;%204%20&amp;%206%20%5Cend%7Bbmatrix%7D"></p>
-<p><img src="https://latex.codecogs.com/png.latex?A%5ET%20B'%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%203%20&amp;%205%20%5C%5C%202%20&amp;%204%20&amp;%206%20%5Cend%7Bbmatrix%7D%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%20(1%20%5Ccdot%207%20+%203%20%5Ccdot%208%20+%205%20%5Ccdot%209)%20&amp;%20(1%20%5Ccdot%200%20+%203%20%5Ccdot%200%20+%205%20%5Ccdot%200)%20%5C%5C%20(2%20%5Ccdot%207%20+%204%20%5Ccdot%208%20+%206%20%5Ccdot%209)%20&amp;%20(2%20%5Ccdot%200%20+%204%20%5Ccdot%200%20+%206%20%5Ccdot%200)%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%2076%20&amp;%200%20%5C%5C%20(14%20+%2032%20+%2054)%20&amp;%200%20%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%2076%20&amp;%200%20%5C%5C%20(100)%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
-<p>The trace of <img src="https://latex.codecogs.com/png.latex?A%5ET%20B'"> is the sum of the diagonal elements: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Btr%7D(A%5ET%20B')%20=%2076%20+%200%20=%2076"></p>
-<p>Thus, the Frobenius inner product <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F"> can indeed be expressed as the trace of the product of the transpose of <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B'">, confirming that: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B'%20%5Cright%5Crangle_F%20=%20%5Ctext%7Btr%7D(A%5ET%20B')"></p>
-<p>The interpretation of the Frobenius inner product is the alignment of the matrices. The more dimensions that are aligned the larger the inner product. If the matrices are orthogonal, the inner product is zero. If they are perfectly aligned, the inner product is maximized. If they are opposite, the inner product is negative.</p>
-</section>
-<section id="cosine-similarity" class="level2">
-<h2 class="anchored" data-anchor-id="cosine-similarity">Cosine similarity</h2>
-<p>Reviewing the law of cosines, for two vectors <img src="https://latex.codecogs.com/png.latex?u"> and <img src="https://latex.codecogs.com/png.latex?v"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, the cosine of the angle <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> between them is given by: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7Bu%20%5Ccdot%20v%7D%7B%7C%7Cu%7C%7C%20%5Ccdot%20%7C%7Cv%7C%7C%7D"></p>
-<p>The cosine similarity between two matrices <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> can be defined analogously using the Frobenius inner product and Frobenius norms: <!-- Empty group keeps Pandoc from gluing the F subscript to \cdot, which Typst reads as Fdot. --> <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%7D%7B%7C%7CA%7C%7C_F%20%7B%7D%20%5Ccdot%20%7C%7CB%7C%7C_F%7D"></p>
-<p>For example, if we have two matrices: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%202%20%5C%5C%203%20&amp;%204%20%5C%5C%205%20&amp;%206%20%5Cend%7Bbmatrix%7D,%20%5Cquad%20B%20=%20%5Cbegin%7Bbmatrix%7D%207%20&amp;%200%20%5C%5C%208%20&amp;%200%20%5C%5C%209%20&amp;%200%20%5Cend%7Bbmatrix%7D"></p>
-<p>We can calculate the cosine similarity as follows:</p>
-<ol type="1">
-<li>Calculate the Frobenius inner product <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F">: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clangle%20A,%20B%20%5Cright%5Crangle_F%20=%2076"></li>
-<li>Calculate the Frobenius norms <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F"> and <img src="https://latex.codecogs.com/png.latex?%7C%7CB%7C%7C_F">: <img src="https://latex.codecogs.com/png.latex?%7C%7CA%7C%7C_F%20=%20%5Csqrt%7B91%7D"> <img src="https://latex.codecogs.com/png.latex?%7C%7CB%7C%7C_F%20=%20%5Csqrt%7B7%5E2%20+%200%5E2%20+%208%5E2%20+%200%5E2%20+%209%5E2%20+%200%5E2%7D%20=%20%5Csqrt%7B49%20+%200%20+%2064%20+%200%20+%2081%20+%200%7D%20=%20%5Csqrt%7B194%7D"></li>
-<li>Substitute these values into the cosine similarity formula: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bcos%7D(%5Ctheta)%20=%20%5Cfrac%7B76%7D%7B%5Csqrt%7B91%7D%20%5Ccdot%20%5Csqrt%7B194%7D%7D%20%5Capprox%200.57"></li>
-</ol>
-<p>The intuition is to take the Frobenius inner product, which measures the alignment of the matrices, and normalize it by the product of their magnitudes (Frobenius norms). This gives us a measure of how similar the two matrices are in terms of their direction in the vector space, regardless of their magnitude. A cosine similarity of 1 means the matrices are perfectly aligned, 0 means they are orthogonal, and -1 means they are opposite.</p>
-</section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>Geometrically, all <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ctimes%20n%7D"> matrices form vector space <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7Bm%20%5Ccdot%20n%7D"></p>
-<p>The Frobenius norm is the length of a matrix in this vector space. The Frobenius inner product is the dot product in this vector space. The cosine similarity is the cosine of the angle between two matrices in this vector space.</p>
-
-
-</section>
-
- ]]></description>
-  <category>math</category>
-  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-23-cosine-similarity.html</guid>
-  <pubDate>Mon, 23 Feb 2026 05:00:00 GMT</pubDate>
+  <link>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-20-starting-a-new-website.html</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>code</category>
+  <guid>https://yoyomanzoor.github.io/Yoyo/posts/2026-02-20-starting-a-new-website.html</guid>
+  <pubDate>Fri, 20 Feb 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>hyprland rice</title>

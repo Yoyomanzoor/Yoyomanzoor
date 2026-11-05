@@ -309,7 +309,7 @@ $$
 
 This does not follow the same contradiction. Similarly, the midpoints will not
 be equivalent since $f(P)+f(Q) \neq f(R)+f(S)$ and there must exist a
-classifying function $f$.
+classifying function $f$, per @thm-midpoint.
 
 $$
 \begin{gathered}
@@ -353,19 +353,18 @@ $$
 
 Above, a nonlinear term was guessed and was found to solve $\text{XOR}$. A more
 generalizable learning function would be to not directly specify this term. For
-example, applying a generic nonlinear function to the output of the original
+example, applying a generic nonlinear function to the output of the
 simple affine equation @eq-linearmodel.
 
 $$
-\hat{y} = g(w_1x_1+w_2x_2+b)
+\sigma(w_1x_1+w_2x_2+b)
 $$ {#eq-generalnonlinear}
 
-where $g$ is any nonlinear function. Suppose $g(z) = z^2$, then
+where $\sigma$ is any nonlinear function. Suppose $\sigma(z) = z^2$, then
 
 $$
 \begin{aligned}
-\hat{y} &= g(w_1x_1+w_2x_2+b)\\
-&= (w_1x_1+w_2x_2+b)^2\\
+\sigma(w_1x_1+w_2x_2+b) &= (w_1x_1+w_2x_2+b)^2\\
 &= (w_1x_1)^2 + (w_2x_2)^2 + b^2 + 2w_1x_1w_2x_2 + 2w_1x_1b + 2w_2x_2b
 \end{aligned}
 $$
@@ -428,3 +427,50 @@ $$
 \end{aligned}
 $$
 
+### What if all the terms of the linear model are nonlinear?
+
+Suppose @eq-nonlinearmodel1 is updated to be:
+
+$$
+\begin{gathered}
+\hat{y} = v_1h_1 + v_2h_2\\
+h_1 = \sigma(a_1x_1+b_1x_2+c_1)\\
+h_2 = \sigma(a_2x_1+b_2x_2+c_2)\\
+\end{gathered}
+$$ {#eq-nonlinearmodel2}
+
+where $\sigma$ is a nonlinear function. Continuing the previous example, $\sigma$ can
+be set to $z^2$ and bias term is dropped for simplicity, producing:
+
+$$
+\hat{y} = v_1(a_1x_1+b_1x_2)^2 + v_2(a_2x_1+b_2x_2)^2
+$$
+
+In the space $\phi(\textbf{x}) = \begin{bmatrix}(a_1x_1+b_1x_2)^2\\(a_2x_1+b_2x_2)^2\end{bmatrix}$, the midpoints would be:
+
+$$
+\begin{aligned}
+M_0 &= \frac{\phi(0,0) + \phi(1,1)}{2} \quad M_1 = \frac{\phi(0,1) + \phi(1,0)}{2}\\
+\phi(0,0) &= \begin{bmatrix}0 \\ 0\end{bmatrix}\quad \phi(1,1) = \begin{bmatrix} (a_1+b_1)^2 \\ (a_2+b_2)^2 \end{bmatrix}\\
+\phi(0,1) &= \begin{bmatrix} b_1^2 \\ b_2^2 \end{bmatrix} \quad \phi(1,0) = \begin{bmatrix} a_1^2 \\ a_2^2 \end{bmatrix}\\
+M_0-M_1 &= \frac{1}{2} \left[ \begin{bmatrix} (a_1+b_1)^2 \\ (a_2+b_2)^2 \end{bmatrix} -
+\left(\begin{bmatrix} a_1^2 \\ a_2^2 \end{bmatrix} + \begin{bmatrix} b_1^2 \\ b_2^2 \end{bmatrix} \right)\right]\\
+&= \frac{1}{2} \left[ \begin{bmatrix} (a_1+b_1)^2 \\ (a_2+b_2)^2 \end{bmatrix} -
+\begin{bmatrix} a_1^2 + b_1^2 \\ a_2^2 + b_2^2  \end{bmatrix} \right]\\
+&\text{since } (x+y)^2 - (x^2+y^2) = 2xy,\\
+&= \frac{1}{2} \begin{bmatrix} 2a_1b_1 \\ 2a_2b_2 \end{bmatrix}\\
+&= \begin{bmatrix} a_1b_1 \\ a_2b_2 \end{bmatrix}\\
+M_0 = M_1 &\iff \begin{cases}
+a_1b_1 = 0\\
+a_2b_2 = 0
+\end{cases}
+\end{aligned}
+$$
+
+This means that if $a_1b_1 = 0$ and $a_2b_2 = 0$ then $M_0$ equals $M_1$. Conversely, since $M_0 \neq M_1$ otherwise, there exists values for parameters $a_1,a_2,b_1,b_2$ that can separate these classes.
+
+Now, using the desired final outputs of $\text{XOR}$ where $\hat{y}(0,0)=0$, $\hat{y}(0,1)=1$, etc., additional constraints can be calculated. Since $\hat{y}(M_0)$ must give a midpoint between zero and zero, and is thus zero and $\hat{y}(M_1)$ must give a midpoint between one and one, and is thus one, the following constraint is found:
+
+$$
+\hat{y}(M_0) - \hat{y}(M_0) = \textbf{v}^\top (M_0-M_1) \quad \text{because } \hat{y} \text{ is linear}
+$$
